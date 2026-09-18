@@ -25,6 +25,9 @@ concurrency:
 jobs:
   raccolta:
     runs-on: ubuntu-latest
+    env:
+      # Indirizzo pubblico della piattaforma: e' quello che finisce nelle notifiche.
+      SITO_URL: https://bandi-sefinisseroleparole.vercel.app/
     steps:
       - uses: actions/checkout@v4
         with:
@@ -67,7 +70,6 @@ jobs:
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           EMAIL_DESTINATARI: ${{ secrets.EMAIL_DESTINATARI }}
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
-          SITO_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
           PROVA_NOTIFICHE: ${{ inputs.prova_notifiche }}
         run: npm run raccolta
 
@@ -78,7 +80,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          sito="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          sito="$SITO_URL"
           for tipo in allarme bandi; do
             if [ -f "notifiche/$tipo.md" ]; then
               printf '\nTutti i bandi, con i filtri: %s\n\ncc @%s\n' "$sito" "${{ github.repository_owner }}" >> "notifiche/$tipo.md"
