@@ -108,6 +108,17 @@ export const CONDIZIONI: { termine: string; motivo: string }[] = [
   { termine: 'associazione temporanea di scopo', motivo: 'serve la costituzione di un\'ATS' },
 ];
 
+/**
+ * Formule che rendono facoltativa una condizione. Nei testi completi dei bandi
+ * "partenariato" e "capofila" compaiono spesso come possibilita', non come
+ * obbligo: "possono candidarsi singolarmente o in piccoli partenariati"
+ * (CoPower, 2026) non chiede nessun partner.
+ */
+export const FACOLTATIVI: string[] = [
+  'singolarmente', 'facoltativ', 'eventual', 'possono anche', 'e possibile',
+  'e consentit', 'non obbligatori', 'a scelta',
+];
+
 // Nota di dominio: l'iscrizione al RUNTS non e' una condizione da segnalare.
 // Storie di Piazza e' un'APS, e un'APS e' iscritta al RUNTS per definizione:
 // metterla fra le CONDIZIONI marcherebbe in giallo proprio i bandi del terzo

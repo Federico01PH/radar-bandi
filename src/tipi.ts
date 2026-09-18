@@ -48,6 +48,11 @@ export type Bando = {
   pertinenza: number;
   /** Tipo bando, almeno un tema forte, non un atto amministrativo: e' cio' che si mostra e si notifica. */
   adattoAllaSerie: boolean;
+  /**
+   * ISO 8601 del momento in cui si e' letta la pagina completa del bando.
+   * Da allora ammissibilita', ente proposto e scadenza vengono da li', non dal feed.
+   */
+  approfonditoIl?: string;
   url: string;
   fonteId: string;
   /** ISO 8601 del primo avvistamento. */

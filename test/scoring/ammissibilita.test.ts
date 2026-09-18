@@ -205,4 +205,19 @@ describe('valutaAmmissibilita', () => {
     const r = valutaAmmissibilita('Bando', 'Destinatari del contributo sono le fondazioni e gli enti del territorio.');
     expect(r.entePropostoId).toBe('marcofalco');
   });
+
+  // Frasi reali dalla pagina del bando CoPower, 18 settembre 2026.
+  it('non scambia per requisito un partenariato facoltativo', () => {
+    const r = valutaAmmissibilita('Bando CoPower',
+      'Sono ammessi ETS non societari, fondazioni, associazioni. '
+      + 'Le organizzazioni possono candidarsi singolarmente o in piccoli partenariati (con un massimo di 2 Partner oltre al Capofila).');
+    expect(r.esito).toBe('verde');
+  });
+
+  it('non scambia per requisito una regola di budget che nomina il partenariato', () => {
+    const r = valutaAmmissibilita('Bando CoPower',
+      'Sono ammessi ETS non societari, fondazioni, associazioni. '
+      + 'Il contributo richiesto non puo superare il 40% della media delle entrate dell\'organizzazione o del partenariato.');
+    expect(r.esito).toBe('verde');
+  });
 });

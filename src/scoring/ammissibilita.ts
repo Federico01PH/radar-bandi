@@ -1,4 +1,4 @@
-import { ENTI, BLOCCHI, CONDIZIONI, SEGNALI_AMMISSIBILITA, AVVERSATIVE } from '../config.ts';
+import { ENTI, BLOCCHI, CONDIZIONI, SEGNALI_AMMISSIBILITA, AVVERSATIVE, FACOLTATIVI } from '../config.ts';
 import { appiattisci } from './pertinenza.ts';
 import type { Ammissibilita } from '../tipi.ts';
 
@@ -80,13 +80,31 @@ function fraseDiAmmissibilita(testo: string, termine: string): string | null {
 }
 
 /**
+ * Una condizione conta solo in una proposizione che parla di chi e' ammesso
+ * e che non la dichiara facoltativa. "Possono candidarsi singolarmente o in
+ * partenariato" non chiede nessun partner; "il contributo non puo' superare
+ * il 40% delle entrate del partenariato" e' una regola di budget. In entrambi
+ * i casi segnarlo in giallo manderebbe fuori strada (CoPower, 2026).
+ */
+function condizioneRichiesta(testo: string, termine: string): boolean {
+  for (const f of frasi(testo)) {
+    for (const p of proposizioni(appiattisci(f))) {
+      if (!contiene(p, termine)) continue;
+      if (FACOLTATIVI.some((s) => p.includes(s))) continue;
+      if (!SEGNALI_AMMISSIBILITA.some((s) => p.includes(appiattisci(s)))) continue;
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
  * Non risponde a "possiamo partecipare?" ma a "chi di noi firma la domanda?".
  * La produzione dispone di un'APS, di una Fondazione e di una societa' di
  * produzione audiovisiva, quindi la domanda utile e' quale ente usare.
  */
 export function valutaAmmissibilita(titolo: string, descrizione: string): EsitoAmmissibilita {
   const testo = `${titolo}. ${descrizione}`;
-  const piatto = appiattisci(testo);
 
   for (const { termine, motivo } of BLOCCHI) {
     const frase = fraseDiAmmissibilita(testo, termine);
@@ -117,7 +135,7 @@ export function valutaAmmissibilita(titolo: string, descrizione: string): EsitoA
   }
 
   for (const { termine, motivo: m } of CONDIZIONI) {
-    if (contiene(piatto, termine)) {
+    if (condizioneRichiesta(testo, termine)) {
       return { esito: 'giallo', entePropostoId, motivo: m };
     }
   }

@@ -7,6 +7,11 @@ on:
     - cron: '0 5 * * *'
     - cron: '0 6 * * *'
   workflow_dispatch:
+    inputs:
+      prova_notifiche:
+        description: "Manda anche un avviso di prova sui telefoni iscritti"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -32,7 +37,9 @@ jobs:
 
       - run: npm ci
 
-      - name: Salta se ha gia' girato nelle ultime 12 ore
+      # 90 minuti bastano a separare le due esecuzioni del mattino. Una finestra
+      # piu' lunga farebbe saltare la raccolta del giorno dopo a ogni avvio serale.
+      - name: Salta se ha gia' girato nell'ultima ora e mezza
         id: guardia
         run: |
           # Solo le esecuzioni pianificate si saltano: un avvio a mano parte sempre.
@@ -43,9 +50,9 @@ jobs:
           ultimo=$(git log -1 --format=%ct -- data/meta.json)
           ultimo=${ultimo:-0}
           adesso=$(date +%s)
-          if [ $((adesso - ultimo)) -lt 43200 ]; then
+          if [ $((adesso - ultimo)) -lt 5400 ]; then
             echo "salta=si" >> "$GITHUB_OUTPUT"
-            echo "Gia' eseguita meno di 12 ore fa, si salta."
+            echo "Gia' eseguita meno di 90 minuti fa, si salta."
           else
             echo "salta=no" >> "$GITHUB_OUTPUT"
           fi
@@ -59,6 +66,9 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           EMAIL_DESTINATARI: ${{ secrets.EMAIL_DESTINATARI }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          SITO_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+          PROVA_NOTIFICHE: ${{ inputs.prova_notifiche }}
         run: npm run raccolta
 
       # Senza email configurata la raccolta lascia qui le segnalazioni: aperte

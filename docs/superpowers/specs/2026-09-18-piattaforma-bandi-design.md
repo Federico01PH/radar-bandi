@@ -86,7 +86,8 @@ può essere modificato da chiunque sappia leggere HTML. La complessità richiest
 
 Il cron di GitHub Actions lavora **in UTC e non conosce l'ora legale**. Per avere l'esecuzione sempre
 al mattino presto in Italia si pianificano due orari, `05:00` e `06:00` UTC, e la raccolta si interrompe
-subito se ha già girato con successo nelle ultime 12 ore. Costa una riga di controllo ed evita che
+subito se ha già girato nell'ultima ora e mezza (non 12 ore: una finestra così lunga faceva saltare
+la raccolta del mattino dopo ogni avvio serale). Costa una riga di controllo ed evita che
 d'inverno il controllo arrivi alle 06:00 e d'estate alle 09:00.
 
 ```

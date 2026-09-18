@@ -38,6 +38,7 @@ let ordine = 'pertinenza';
 const ORDINAMENTI = {
   pertinenza: (a, b) => b.pertinenza - a.pertinenza || b.dataPubblicazione.localeCompare(a.dataPubblicazione),
   data: (a, b) => b.dataPubblicazione.localeCompare(a.dataPubblicazione),
+  scadenza: (a, b) => chiaveScadenza(a) - chiaveScadenza(b) || b.pertinenza - a.pertinenza,
 };
 
 function leggiArchivio(chiave, riserva) {
@@ -70,15 +71,35 @@ function hrefSicuro(url) {
 
 function giorniAllaScadenza(iso) {
   if (!iso) return null;
-  return Math.ceil((Date.parse(iso) - Date.now()) / 86400000);
+  const oggi = new Date();
+  const mezzanotte = Date.UTC(oggi.getFullYear(), oggi.getMonth(), oggi.getDate());
+  return Math.round((Date.parse(iso.slice(0, 10)) - mezzanotte) / 86400000);
+}
+
+function descriviScadenza(iso) {
+  const giorni = giorniAllaScadenza(iso);
+  if (giorni === null) return '';
+  const data = new Date(`${iso.slice(0, 10)}T12:00:00Z`).toLocaleDateString('it-IT');
+  if (giorni < 0) return ` · <strong class="scaduto">scaduto il ${data}</strong>`;
+  if (giorni === 0) return ' · <strong class="urgente">scade oggi</strong>';
+  if (giorni === 1) return ' · <strong class="urgente">scade domani</strong>';
+  const testo = `scade il ${data}, fra ${giorni} giorni`;
+  return giorni <= 7 ? ` · <strong class="urgente">${testo}</strong>` : ` · ${testo}`;
+}
+
+// Prima le scadenze vicine, poi quelle lontane, poi i bandi senza scadenza, per ultimi gli scaduti.
+function chiaveScadenza(b) {
+  const giorni = giorniAllaScadenza(b.scadenza);
+  if (giorni === null) return 1e6;
+  return giorni < 0 ? 2e6 - giorni : giorni;
 }
 
 function schedaHtml(b) {
   const etichette = eNuovo(b) ? '<span class="etichetta nuovo">nuovo</span>' : '';
   const ente = ENTI[b.entePropostoId] ?? null;
   const data = new Date(b.dataPubblicazione).toLocaleDateString('it-IT');
-  const giorni = giorniAllaScadenza(b.scadenza);
-  const messaggio = encodeURIComponent(`${b.titolo}\n${b.ente}\n${b.url}`);
+  const scadenza = b.scadenza ? `\nScadenza: ${new Date(`${b.scadenza.slice(0, 10)}T12:00:00Z`).toLocaleDateString('it-IT')}` : '';
+  const messaggio = encodeURIComponent(`${b.titolo}\n${b.ente}${scadenza}\n${b.url}`);
   const salvato = salvati.has(b.id);
 
   return `
@@ -87,7 +108,7 @@ function schedaHtml(b) {
       <p class="meta">
         ${esc(b.ente)} · ${esc(LIVELLI[b.livello] ?? b.livello)}
         · pubblicato il ${data}${b.dataIncerta ? ' (data non dichiarata dalla fonte)' : ''}
-        · pertinenza ${b.pertinenza}/100${giorni !== null ? ` · scade fra ${giorni} giorni` : ''}
+        · pertinenza ${b.pertinenza}/100${descriviScadenza(b.scadenza)}
       </p>
       ${b.descrizioneBreve ? `<p class="descrizione">${esc(b.descrizioneBreve)}</p>` : ''}
       <p class="presenta ${esc(b.ammissibilita)}">
@@ -118,7 +139,7 @@ function filtra() {
 
 function creaOrdinamento() {
   const contenitore = document.getElementById('ordine');
-  const voci = [['pertinenza', 'Più pertinenti'], ['data', 'Più recenti']];
+  const voci = [['pertinenza', 'Più pertinenti'], ['scadenza', 'Scadenza più vicina'], ['data', 'Più recenti']];
   const aggiorna = () => {
     contenitore.innerHTML = voci
       .map(([valore, etichetta]) =>

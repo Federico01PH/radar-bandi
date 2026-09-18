@@ -2,6 +2,7 @@ import { impronta } from './impronta.ts';
 import { calcolaPertinenza, esclusoDalTitolo } from '../scoring/pertinenza.ts';
 import { valutaAmmissibilita } from '../scoring/ammissibilita.ts';
 import { classifica, sembraUnBando } from '../scoring/tipo.ts';
+import { trovaScadenza } from '../scoring/scadenza.ts';
 import type { Bando, Livello, RisultatoGrezzo } from '../tipi.ts';
 
 const MAX_DESCRIZIONE = 400;
@@ -75,7 +76,45 @@ export function rivaluta(bando: Bando, soloBandi: boolean): Bando {
     new Date(bando.vistoIl),
     soloBandi,
   );
-  return { ...nuovo, dataIncerta: bando.dataIncerta, vistoIl: bando.vistoIl, salvato: bando.salvato };
+  return conservaApprofondimento(
+    { ...nuovo, dataIncerta: bando.dataIncerta, vistoIl: bando.vistoIl, salvato: bando.salvato },
+    bando,
+  );
+}
+
+/**
+ * Completa un bando con cio' che si legge nella sua pagina: chi puo'
+ * partecipare e la scadenza. Il testo del feed resta nell'analisi, perche'
+ * a volte e' li' e non nella pagina che si dice a chi e' rivolto.
+ */
+export function approfondisci(bando: Bando, testoPagina: string, adesso: Date): Bando {
+  const a = valutaAmmissibilita(bando.titolo, `${bando.descrizioneBreve} ${testoPagina}`);
+  return {
+    ...bando,
+    ammissibilita: a.esito,
+    entePropostoId: a.entePropostoId,
+    motivoAmmissibilita: a.motivo,
+    chiPuoPartecipare: a.motivo,
+    scadenza: trovaScadenza(testoPagina, adesso),
+    approfonditoIl: adesso.toISOString(),
+  };
+}
+
+/**
+ * Se un bando e' gia' stato approfondito, cio' che si e' letto nella pagina
+ * vale piu' di cio' che si ricava dalle due righe del feed: si conserva.
+ */
+function conservaApprofondimento(nuovo: Bando, vecchio: Bando): Bando {
+  if (!vecchio.approfonditoIl) return nuovo;
+  return {
+    ...nuovo,
+    ammissibilita: vecchio.ammissibilita,
+    entePropostoId: vecchio.entePropostoId,
+    motivoAmmissibilita: vecchio.motivoAmmissibilita,
+    chiPuoPartecipare: vecchio.chiPuoPartecipare,
+    scadenza: vecchio.scadenza,
+    approfonditoIl: vecchio.approfonditoIl,
+  };
 }
 
 export type EsitoFusione = {
@@ -102,11 +141,11 @@ export function fondi(archivio: Bando[], raccolti: Bando[]): EsitoFusione {
       nuovi.push(bando);
       continue;
     }
-    perId.set(bando.id, {
+    perId.set(bando.id, conservaApprofondimento({
       ...bando,
       vistoIl: esistente.vistoIl,
       salvato: esistente.salvato,
-    });
+    }, esistente));
   }
 
   const tutti = [...perId.values()].sort(

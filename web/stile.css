@@ -96,3 +96,5 @@ dialog button {
   border: 1px solid var(--evidenza); border-radius: 6px;
   background: var(--evidenza); color: var(--su-evidenza);
 }
+.meta .urgente { color: var(--giallo); }
+.meta .scaduto { color: var(--rosso); }
