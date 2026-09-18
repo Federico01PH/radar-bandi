@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { messaggiBandi, messaggioAllarme, messaggioProva, pubblicaNtfy } from '../../src/notify/ntfy.ts';
 import type { Bando } from '../../src/tipi.ts';
 
-const SITO = 'https://federico01ph.github.io/radar-bandi/';
+const SITO = 'https://bandi-sefinisseroleparole.vercel.app/';
 const TOPIC = 'radar-bandi-prova';
 
 function bando(over: Partial<Bando> = {}): Bando {

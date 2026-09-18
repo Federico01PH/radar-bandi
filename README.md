@@ -40,6 +40,16 @@ Nel repository: **Settings → Actions → General → Workflow permissions** �
 **Settings → Pages → Build and deployment → Source** → scegliere **GitHub Actions**.
 Il sito sarà all'indirizzo `https://<nome-utente>.github.io/<nome-repository>/`.
 
+**Un indirizzo senza il nome dell'account, facoltativo.** Quello di GitHub Pages contiene il nome utente.
+Per averne uno legato al progetto si importa il repository su [Vercel](https://vercel.com) (piano gratuito
+Hobby) con **Root Directory** `web` e nessun comando di build. La pagina è la stessa: fuori da GitHub Pages
+legge i bandi direttamente dal repository, quindi non serve ripubblicarla quando arrivano dati nuovi.
+Poi si scrive il nuovo indirizzo in `SITO_URL`, in cima a
+[`.github/workflows/raccolta.yml`](.github/workflows/raccolta.yml): è il link che finisce nelle notifiche.
+
+La produzione usa `https://bandi-sefinisseroleparole.vercel.app/`; l'indirizzo di GitHub Pages resta
+attivo come copia di riserva.
+
 ### 4. Le notifiche
 
 **Funzionano senza configurare niente.** Quando escono bandi nuovi, la raccolta apre una segnalazione
