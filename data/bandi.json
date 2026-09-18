@@ -49,7 +49,8 @@
     "url": "https://cinema.cultura.gov.it/avvisi/bando-per-la-concessione-di-contributi-ad-attivita-di-diffusione-della-cultura-cinematografica-svolte-dai-circoli-di-cultura-cinematografica-dalle-associazioni-nazionali-di-cultura-cinematografica-e-5/",
     "fonteId": "mic",
     "vistoIl": "2026-09-18T20:14:17.393Z",
-    "salvato": false
+    "salvato": false,
+    "approfonditoIl": "2026-09-18T21:14:11.446Z"
   },
   {
     "id": "249eab35a728c7c370e44599de500d7c53fa882edb29c667e25255ffea6bc5cd",
@@ -63,7 +64,7 @@
     ],
     "dataPubblicazione": "2026-09-18T14:51:59.000Z",
     "dataIncerta": false,
-    "scadenza": null,
+    "scadenza": "2026-09-25",
     "importo": null,
     "descrizioneBreve": "Si comunica che il termine previsto per la presentazione di proposte progettuali per la concessione di contributi per gli Avvisi del Piano Nazionale Cinema e Immagini per la Scuola 2026 è prorogato al 25 settembre 2026, ore 15:00. La proroga fa riferimento ai seguenti avvisi: Anno 2026 – Avviso pubblico per la presentazione di proposte […]",
     "requisiti": [],
@@ -76,7 +77,8 @@
     "url": "https://cinema.cultura.gov.it/avvisi/proroga-termine-per-linvio-delle-candidature-avvisi-del-piano-nazionale-cinema-e-immagini-per-la-scuola-2026/",
     "fonteId": "mic",
     "vistoIl": "2026-09-18T20:14:17.393Z",
-    "salvato": false
+    "salvato": false,
+    "approfonditoIl": "2026-09-18T21:14:11.446Z"
   },
   {
     "id": "2be5fbfd3d17da7d61e7222369763d5ec01f603417dcc672edeec62794dfe352",
@@ -641,20 +643,21 @@
     ],
     "dataPubblicazione": "2026-09-14T15:44:04.000Z",
     "dataIncerta": false,
-    "scadenza": null,
+    "scadenza": "2026-10-25",
     "importo": null,
     "descrizioneBreve": "Contributi per associazioni piccole e medie attive nella promozione della giustizia di genere in Italia, a sostegno di progetti per il superamento degli stereotipi di genere e la promozione della salute e dei diritti sessuali e riproduttivi, anche attraverso attività di sensibilizzazione, formazione, advocacy, comunicazione e rafforzamento organizzativo.",
     "requisiti": [],
-    "chiPuoPartecipare": null,
-    "ammissibilita": "ignota",
-    "entePropostoId": null,
-    "motivoAmmissibilita": null,
+    "chiPuoPartecipare": "Il bando è rivolto ad associazioni piccole e medie attive nella promozione della giustizia di genere in Italia e intende rafforzarne il ruolo, sostenendone le attività, favorendone il consolidamento organizzativo e promuovendo percorsi di connessione con altre realtà italiane ed europee.",
+    "ammissibilita": "verde",
+    "entePropostoId": "storiedipiazza",
+    "motivoAmmissibilita": "Il bando è rivolto ad associazioni piccole e medie attive nella promozione della giustizia di genere in Italia e intende rafforzarne il ruolo, sostenendone le attività, favorendone il consolidamento organizzativo e promuovendo percorsi di connessione con altre realtà italiane ed europee.",
     "pertinenza": 7,
     "adattoAllaSerie": true,
     "url": "https://infobandi.csvnet.it/progetti-oltre-gli-stereotipi-bando-per-iniziative-per-la-giustizia-di-genere/?utm_source=rss&utm_medium=rss&utm_campaign=progetti-oltre-gli-stereotipi-bando-per-iniziative-per-la-giustizia-di-genere",
     "fonteId": "infobandi",
     "vistoIl": "2026-09-18T20:14:17.393Z",
-    "salvato": false
+    "salvato": false,
+    "approfonditoIl": "2026-09-18T21:14:11.446Z"
   },
   {
     "id": "deb32a35bcab8e1843961d9b806bfef2c606b554e77451020e57b39f85c113b5",
@@ -671,10 +674,10 @@
     "importo": null,
     "descrizioneBreve": "Stanziati oltre 10,5 milioni di euro per il finanziamento di iniziative e progetti di interesse generale di rilevanza nazionale, da realizzare in almeno 10 Regioni, che concorrano al perseguimento degli obiettivi dell’Agenda 2030 per lo sviluppo sostenibile. Possono partecipare organizzazioni di volontariato, associazioni di promozione sociale e fondazioni del Terzo settore, singolarmente o in par",
     "requisiti": [],
-    "chiPuoPartecipare": "serve un partenariato formale",
-    "ammissibilita": "giallo",
+    "chiPuoPartecipare": "Possono partecipare organizzazioni di volontariato, associazioni di promozione sociale e fondazioni del Terzo settore, singolarmente o in partenariato, anche attraverso le reti associative.",
+    "ammissibilita": "verde",
     "entePropostoId": "marcofalco",
-    "motivoAmmissibilita": "serve un partenariato formale",
+    "motivoAmmissibilita": "Possono partecipare organizzazioni di volontariato, associazioni di promozione sociale e fondazioni del Terzo settore, singolarmente o in partenariato, anche attraverso le reti associative.",
     "pertinenza": 5,
     "adattoAllaSerie": false,
     "url": "https://infobandi.csvnet.it/avviso-2026-per-il-finanziamento-di-progetti-di-rilevanza-nazionale-del-terzo-settore/?utm_source=rss&utm_medium=rss&utm_campaign=avviso-2026-per-il-finanziamento-di-progetti-di-rilevanza-nazionale-del-terzo-settore",
@@ -1273,7 +1276,7 @@
     ],
     "dataPubblicazione": "2026-09-04T18:09:39.000Z",
     "dataIncerta": false,
-    "scadenza": null,
+    "scadenza": "2026-09-14",
     "importo": null,
     "descrizioneBreve": "Si avvisano gli utenti che il termine di scadenza per la presentazione delle domande del “Bando per la concessione di contributi a progetti speciali per il cinema e l’audiovisivo – Anno 2026” ( emanato con D.D.24 luglio 2026 n. 2366 ) è prorogato alle ore 23.59 di lunedì 14 settembre 2026. Documenti DD 2623 del 4.9.26 […]",
     "requisiti": [],
@@ -1286,7 +1289,8 @@
     "url": "https://cinema.cultura.gov.it/avvisi/proroga-per-la-presentazione-delle-domande-afferenti-al-bando-per-la-concessione-di-contributi-a-progetti-speciali-per-il-cinema-e-laudiovisivo-anno-2026/",
     "fonteId": "mic",
     "vistoIl": "2026-09-18T20:14:17.393Z",
-    "salvato": false
+    "salvato": false,
+    "approfonditoIl": "2026-09-18T21:14:11.446Z"
   },
   {
     "id": "b4c45b1240196f2cf6976ee351dcf3a834aaff423e601351ef9234158c8cd8df",
@@ -1555,20 +1559,21 @@
     ],
     "dataPubblicazione": "2026-08-31T12:05:07.000Z",
     "dataIncerta": false,
-    "scadenza": null,
+    "scadenza": "2026-11-23",
     "importo": null,
     "descrizioneBreve": "Sostegno a progetti realizzati in Italia da organizzazioni non profit per prevenire e contrastare la violenza di genere attraverso servizi di tutela e presa in carico inclusivi e interventi di prevenzione e riduzione delle pratiche dannose, con particolare attenzione a donne, ragazze e minori esposti a discriminazioni multiple.",
     "requisiti": [],
-    "chiPuoPartecipare": null,
-    "ammissibilita": "ignota",
-    "entePropostoId": null,
-    "motivoAmmissibilita": null,
+    "chiPuoPartecipare": "Sono ammessi ETS non societari, fondazioni, associazioni riconosciute e non riconosciute, comitati ed enti non ETS.",
+    "ammissibilita": "verde",
+    "entePropostoId": "marcofalco",
+    "motivoAmmissibilita": "Sono ammessi ETS non societari, fondazioni, associazioni riconosciute e non riconosciute, comitati ed enti non ETS.",
     "pertinenza": 17,
     "adattoAllaSerie": true,
     "url": "https://infobandi.csvnet.it/bando-copower-per-contrastare-la-violenza-di-genere-prima-fase/?utm_source=rss&utm_medium=rss&utm_campaign=bando-copower-per-contrastare-la-violenza-di-genere-prima-fase",
     "fonteId": "infobandi",
     "vistoIl": "2026-09-18T20:14:17.393Z",
-    "salvato": false
+    "salvato": false,
+    "approfonditoIl": "2026-09-18T21:14:11.446Z"
   },
   {
     "id": "b2931dfb0a8c70e3ac3589dec1b1e4202c8c981492f3d8985dfd86a520cde93d",
