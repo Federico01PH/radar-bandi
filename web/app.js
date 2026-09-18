@@ -242,9 +242,16 @@ function mostraPopup() {
   document.getElementById('popup').showModal();
 }
 
+// Su GitHub Pages e in locale i dati stanno accanto alla pagina. Sull'indirizzo
+// pubblico della piattaforma (Vercel) il sito e' pubblicato una volta sola e
+// legge i dati direttamente dal repository, aggiornati ogni mattina.
+const BASE_DATI = /(^|\.)github\.io$|^localhost$|^127\.0\.0\.1$/.test(location.hostname)
+  ? ''
+  : 'https://raw.githubusercontent.com/Federico01PH/radar-bandi/main/data/';
+
 async function caricaJson(percorso, riserva) {
   try {
-    const risposta = await fetch(percorso, { cache: 'no-store' });
+    const risposta = await fetch(BASE_DATI + percorso, { cache: 'no-store' });
     return risposta.ok ? await risposta.json() : riserva;
   } catch {
     return riserva;
