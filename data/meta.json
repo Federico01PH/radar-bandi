@@ -1,5 +1,34 @@
 {
-  "ultimoControllo": null,
+  "ultimoControllo": "2026-09-18T20:14:17.393Z",
   "soglia": 10,
-  "fonti": []
+  "fonti": [
+    {
+      "id": "mic",
+      "nome": "MiC — Direzione generale Cinema e audiovisivo"
+    },
+    {
+      "id": "infobandi",
+      "nome": "InfoBandi CSVnet"
+    },
+    {
+      "id": "ctvbiella",
+      "nome": "CTV Biella–Vercelli"
+    },
+    {
+      "id": "piemonte",
+      "nome": "Bandi Regione Piemonte"
+    },
+    {
+      "id": "crt",
+      "nome": "Fondazione CRT"
+    },
+    {
+      "id": "compagniasanpaolo",
+      "nome": "Fondazione Compagnia di San Paolo"
+    },
+    {
+      "id": "ang",
+      "nome": "Agenzia Nazionale Giovani"
+    }
+  ]
 }
