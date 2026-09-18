@@ -39,14 +39,6 @@ function frasi(testo: string): string[] {
     .filter((f) => f.length > 0);
 }
 
-/** Prima frase che contiene il termine, per poterla mostrare all'utente. */
-function fraseCon(testo: string, termine: string): string | null {
-  for (const f of frasi(testo)) {
-    if (contiene(appiattisci(f), termine)) return f;
-  }
-  return null;
-}
-
 /** Spezza una frase gia' appiattita nelle sue proposizioni. */
 function proposizioni(frasePiatta: string): string[] {
   let pezzi = [` ${frasePiatta} `];
@@ -57,10 +49,11 @@ function proposizioni(frasePiatta: string): string[] {
 }
 
 /**
- * Restituisce la frase che preclude davvero la partecipazione, o null.
+ * Restituisce la frase in cui il termine compare dentro una regola di
+ * ammissibilita', o null. Vale per i blocchi e per le forme degli enti.
  *
- * Un termine di blocco conta solo se compare in una frase che sta stabilendo
- * chi e' ammesso. I decreti italiani elencano le categorie sostenute, e in
+ * Un termine conta solo se compare in una frase che sta stabilendo chi e'
+ * ammesso. I decreti italiani elencano le categorie sostenute, e in
  * un elenco "lungometraggio di finzione" non esclude nessuno: compare accanto
  * a "opere seriali", che e' esattamente cio' che ci interessa.
  *
@@ -75,7 +68,7 @@ function proposizioni(frasePiatta: string): string[] {
  * un blocco mancato costa una notifica in piu', un blocco di troppo fa
  * sparire il bando senza che nessuno se ne accorga.
  */
-function frasePreclusiva(testo: string, termine: string): string | null {
+function fraseDiAmmissibilita(testo: string, termine: string): string | null {
   for (const f of frasi(testo)) {
     const piatta = appiattisci(f);
     for (const p of proposizioni(piatta)) {
@@ -96,7 +89,7 @@ export function valutaAmmissibilita(titolo: string, descrizione: string): EsitoA
   const piatto = appiattisci(testo);
 
   for (const { termine, motivo } of BLOCCHI) {
-    const frase = frasePreclusiva(testo, termine);
+    const frase = fraseDiAmmissibilita(testo, termine);
     if (frase !== null) {
       return { esito: 'rosso', entePropostoId: null, motivo: `${motivo}: "${frase}"` };
     }
@@ -105,11 +98,15 @@ export function valutaAmmissibilita(titolo: string, descrizione: string): EsitoA
   let entePropostoId: string | null = null;
   let motivo: string | null = null;
 
+  // Come per i blocchi, un ente conta solo in una proposizione che dice chi
+  // puo' partecipare: nei feed delle fondazioni "Fondazione" compare di
+  // continuo perche' e' chi pubblica e finanzia, non chi puo' fare domanda.
   cerca: for (const ente of ENTI) {
     for (const forma of ente.forme) {
-      if (contiene(piatto, forma)) {
+      const frase = fraseDiAmmissibilita(testo, forma);
+      if (frase !== null) {
         entePropostoId = ente.id;
-        motivo = fraseCon(testo, forma) ?? forma;
+        motivo = frase;
         break cerca;
       }
     }

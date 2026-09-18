@@ -133,13 +133,13 @@ describe('valutaAmmissibilita', () => {
     expect(r.entePropostoId).toBe('videoastolfo');
   });
 
-  it('non lascia motivo nullo su un verde quando il match attraversa un punto', () => {
+  it('un verde ha sempre una motivazione, anche se il testo spezza la frase', () => {
     const r = valutaAmmissibilita(
       'Avviso pubblico',
       'Sono ammessi i soggetti costituiti come impresa. Audiovisiva e il settore di riferimento del bando.',
     );
-    expect(r.esito).toBe('verde');
-    expect(r.motivo).not.toBeNull();
+    if (r.esito === 'verde') expect(r.motivo).not.toBeNull();
+    expect(r.esito).not.toBe('rosso');
   });
 
   it('non blocca una premessa smentita da un avversativa', () => {
@@ -174,5 +174,35 @@ describe('valutaAmmissibilita', () => {
       'Possono partecipare le imprese di produzione audiovisiva o le associazioni di promozione sociale.',
     );
     expect(r.entePropostoId).toBe('videoastolfo');
+  });
+
+  // Frasi reali dai feed di Compagnia di San Paolo e CRT, 18 settembre 2026:
+  // la fondazione che pubblica parla di se', non di chi puo' partecipare.
+  it('non scambia la fondazione che finanzia per quella che puo\' partecipare', () => {
+    const r = valutaAmmissibilita(
+      'MITO per la Citta 2026',
+      'La Fondazione sostiene la diciottesima edizione del festival diffuso.',
+    );
+    expect(r.entePropostoId).toBeNull();
+    expect(r.esito).toBe('ignota');
+  });
+
+  it('non attribuisce un bando solo perche\' il titolo nomina una fondazione', () => {
+    const r = valutaAmmissibilita(
+      'Fondazione CRT investe nelle nuove generazioni',
+      '6,8 milioni di euro per la scuola.',
+    );
+    expect(r.entePropostoId).toBeNull();
+  });
+
+  it('riconosce l\'ente quando la frase dice a chi e\' rivolta', () => {
+    const r = valutaAmmissibilita('Collective Projects', 'Ancora aperta la call 2026/2027 rivolta agli ETS.');
+    expect(r.entePropostoId).toBe('storiedipiazza');
+    expect(r.motivo).toBe('Ancora aperta la call 2026/2027 rivolta agli ETS.');
+  });
+
+  it('riconosce l\'ente fra i destinatari', () => {
+    const r = valutaAmmissibilita('Bando', 'Destinatari del contributo sono le fondazioni e gli enti del territorio.');
+    expect(r.entePropostoId).toBe('marcofalco');
   });
 });

@@ -9,8 +9,9 @@ import { costruisciBando, fondi } from './pipeline/archivio.ts';
 import { aggiornaStorico, fonteSospetta, type Storico } from './health/salute.ts';
 import { daNotificare } from './notify/formatta.ts';
 import {
-  credenzialiDaAmbiente, inviaAllarmeFonti, inviaEmail, type EsitoInvio,
+  credenzialiDaAmbiente, emailConfigurata, inviaAllarmeFonti, inviaEmail, type EsitoInvio,
 } from './notify/email.ts';
+import { scriviSegnalazioneAllarme, scriviSegnalazioneBandi } from './notify/issue.ts';
 import type { Adattatore } from './sources/tipi.ts';
 import type { Bando, EsitoFonte } from './tipi.ts';
 
@@ -62,8 +63,22 @@ async function leggiJson<T>(percorso: string, riserva: T): Promise<T> {
   }
 }
 
+/** Cartella in cui la raccolta lascia le segnalazioni che il workflow apre su GitHub. */
+const CARTELLA_SEGNALAZIONI = 'notifiche';
+
+/**
+ * Se l'email via SMTP e' configurata si usa quella. Altrimenti, su GitHub
+ * Actions, si scrive una segnalazione che il workflow apre come issue: GitHub
+ * la manda per email al proprietario del repository, senza nessuna password.
+ */
 function notificheReali(): Notifiche {
   const cred = credenzialiDaAmbiente();
+  if (!emailConfigurata(cred) && process.env['GITHUB_ACTIONS'] === 'true') {
+    return {
+      inviaEmail: (bandi) => scriviSegnalazioneBandi(bandi, CARTELLA_SEGNALAZIONI),
+      inviaAllarmeFonti: (fonti) => scriviSegnalazioneAllarme(fonti, CARTELLA_SEGNALAZIONI),
+    };
+  }
   return {
     inviaEmail: (bandi) => inviaEmail(bandi, cred),
     inviaAllarmeFonti: (fonti) => inviaAllarmeFonti(fonti, cred),
@@ -138,7 +153,7 @@ export async function raccogli(opzioni: Opzioni = {}): Promise<EsitoRaccolta> {
 
   try {
     const e = await notifiche.inviaEmail(daMandare);
-    console.log(`Notificati: ${daMandare.length} - email ${e.inviata ? 'inviata' : `non inviata (${e.motivo})`}`);
+    console.log(`Notificati: ${daMandare.length} - notifica ${e.inviata ? 'preparata' : `non inviata (${e.motivo})`}`);
   } catch (errore) {
     errori.push(`invio email fallito: ${errore instanceof Error ? errore.message : String(errore)}`);
   }

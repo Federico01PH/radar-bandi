@@ -13,6 +13,26 @@ function leggiData(voce: { isoDate?: string; pubDate?: string }): Date | null {
   return Number.isNaN(d.getTime()) ? null : d;
 }
 
+function perRegex(testo: string): string {
+  return testo.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
+ * WordPress chiude ogni voce del feed con una firma fissa: "L'articolo <titolo>
+ * proviene da <sito>." Sui feed delle fondazioni il sito si chiama "Fondazione
+ * ...", e quella parola bastava ad attribuire ogni voce alla Fondazione Marco
+ * Falco citando la firma come motivazione. La firma si toglie solo se contiene
+ * il titolo esatto della voce, cosi' un testo vero che comincia con "L'articolo"
+ * non viene mai tagliato.
+ */
+export function senzaFirmaWordpress(descrizione: string, titolo: string): string {
+  const t = perRegex(titolo);
+  return descrizione
+    .replace(new RegExp(`\\s*L['’]articolo\\s+${t}\\s+proviene da\\s[\\s\\S]*$`), '')
+    .replace(new RegExp(`\\s*The post\\s+${t}\\s+appeared first on\\s[\\s\\S]*$`), '')
+    .trim();
+}
+
 /** Separata dalla rete, cosi' si testa su campioni salvati. */
 export async function analizzaRss(xml: string, fonteId: string): Promise<RisultatoGrezzo[]> {
   const feed = await parser.parseString(xml);
@@ -20,10 +40,11 @@ export async function analizzaRss(xml: string, fonteId: string): Promise<Risulta
   const risultati: RisultatoGrezzo[] = [];
   for (const voce of voci) {
     if (!voce.link || !voce.title) continue;
+    const titolo = testoPulito(voce.title);
     risultati.push({
-      titolo: testoPulito(voce.title),
+      titolo,
       url: voce.link,
-      descrizione: testoPulito(voce.contentSnippet ?? voce.content ?? voce.summary),
+      descrizione: senzaFirmaWordpress(testoPulito(voce.contentSnippet ?? voce.content ?? voce.summary), titolo),
       dataPubblicazione: leggiData(voce),
       fonteId,
     });

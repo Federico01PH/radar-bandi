@@ -40,6 +40,11 @@ function mancante(cred: Credenziali): string | null {
   return null;
 }
 
+/** true se l'email via SMTP ha tutto cio' che serve per partire. */
+export function emailConfigurata(cred: Credenziali): boolean {
+  return mancante(cred) === null;
+}
+
 async function spedisci(cred: Credenziali, soggetto: string, html: string): Promise<void> {
   const trasporto = nodemailer.createTransport({
     host: cred.host,

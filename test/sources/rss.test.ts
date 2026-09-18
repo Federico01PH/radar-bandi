@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { readFile } from 'node:fs/promises';
-import { creaAdattatoreRss, analizzaRss } from '../../src/sources/rss.ts';
+import { creaAdattatoreRss, analizzaRss, senzaFirmaWordpress } from '../../src/sources/rss.ts';
 
 const xml = await readFile('test/fixtures/rss-piemonte.xml', 'utf8');
 
@@ -79,5 +79,39 @@ describe('creaAdattatoreRss', () => {
     } finally {
       globalThis.fetch = vero;
     }
+  });
+});
+
+// Forma reale della firma nel feed di Compagnia di San Paolo, 18 settembre 2026.
+describe('senzaFirmaWordpress', () => {
+  it('toglie la firma finale che cita il titolo della voce', () => {
+    const titolo = 'Festival dell\u2019Accoglienza 2026';
+    const d = 'La sesta edizione del Festival invita a riflettere. L\'articolo Festival dell\u2019Accoglienza 2026 proviene da Fondazione Compagnia di San Paolo.';
+    expect(senzaFirmaWordpress(d, titolo)).toBe('La sesta edizione del Festival invita a riflettere.');
+  });
+
+  it('accetta anche l\'apostrofo tipografico e la firma inglese', () => {
+    expect(senzaFirmaWordpress('Testo. L\u2019articolo Bando X proviene da Fondazione CRT.', 'Bando X')).toBe('Testo.');
+    expect(senzaFirmaWordpress('Text. The post Call Y appeared first on Foundation.', 'Call Y')).toBe('Text.');
+  });
+
+  it('non tocca un testo che parla di un articolo diverso dal titolo', () => {
+    const d = 'L\'articolo 5 del bando prevede contributi. Le domande proviene da tutta Italia.';
+    expect(senzaFirmaWordpress(d, 'Bando cultura 2026')).toBe(d);
+  });
+
+  it('non viene ingannata dai caratteri speciali nel titolo', () => {
+    const titolo = 'Bando (2026) per 3+ enti [ETS]?';
+    expect(senzaFirmaWordpress(`Testo. L'articolo ${titolo} proviene da Sito.`, titolo)).toBe('Testo.');
+  });
+
+  it('libera la voce dalla falsa attribuzione alla fondazione', async () => {
+    const xml = `<?xml version="1.0"?><rss version="2.0"><channel><item>
+      <title>Il Borgo Medievale per una nuova stagione</title><link>https://x.it/borgo</link>
+      <description>&lt;p&gt;Riapre il Borgo.&lt;/p&gt;&lt;p&gt;L'articolo &lt;a href="https://x.it/borgo"&gt;Il Borgo Medievale per una nuova stagione&lt;/a&gt; proviene da &lt;a href="https://x.it/"&gt;Fondazione Compagnia di San Paolo&lt;/a&gt;.&lt;/p&gt;</description>
+    </item></channel></rss>`;
+    const [voce] = await analizzaRss(xml, 'compagniasanpaolo');
+    expect(voce!.descrizione).toBe('Riapre il Borgo.');
+    expect(voce!.descrizione).not.toContain('Fondazione');
   });
 });

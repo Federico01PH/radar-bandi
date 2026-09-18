@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 # Mai due raccolte insieme: si contenderebbero il push dei dati.
 concurrency:
@@ -59,6 +60,21 @@ jobs:
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           EMAIL_DESTINATARI: ${{ secrets.EMAIL_DESTINATARI }}
         run: npm run raccolta
+
+      # Senza email configurata la raccolta lascia qui le segnalazioni: aperte
+      # come issue, GitHub le manda per email al proprietario del repository.
+      - name: Apri le segnalazioni su GitHub
+        if: always() && steps.guardia.outputs.salta == 'no'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sito="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          for tipo in allarme bandi; do
+            if [ -f "notifiche/$tipo.md" ]; then
+              printf '\nTutti i bandi, con i filtri: %s\n\ncc @%s\n' "$sito" "${{ github.repository_owner }}" >> "notifiche/$tipo.md"
+              gh issue create --title "$(cat "notifiche/$tipo.titolo")" --body-file "notifiche/$tipo.md"
+            fi
+          done
 
       # Gira anche se la raccolta segnala un errore di notifica: i dati sono
       # gia' scritti e perderli costerebbe lo storico di salute delle fonti.

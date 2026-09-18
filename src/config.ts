@@ -87,6 +87,10 @@ export const SEGNALI_AMMISSIBILITA: string[] = [
   'ammess', 'possono partecipare', 'possono presentare', 'riservat',
   'esclusivamente', 'unicamente', 'soltanto', 'obbligo', 'obbligatori',
   'devono', 'sono esclusi', 'non sono ammessi', 'requisiti',
+  // Anche un ente della produzione conta solo dentro una frase come queste:
+  // "la Fondazione sostiene il festival" nomina chi finanzia, non chi partecipa.
+  'rivolt', 'destinatari', 'beneficiari', 'soggetti proponenti', 'possono candidarsi',
+  'possono richiedere', 'aperta a', 'aperto a', 'aperte a',
 ];
 
 /**

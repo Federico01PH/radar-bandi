@@ -75,3 +75,46 @@ export function corpoHtml(bandi: Bando[]): string {
     + bandi.map(scheda).join('')
     + `</div>`;
 }
+
+/** Quante schede al massimo in una segnalazione: le altre stanno sul sito. */
+const MAX_SCHEDE_MARKDOWN = 30;
+
+/**
+ * Testo sicuro dentro una segnalazione GitHub. La chiocciola diventa quella a
+ * larghezza piena, cosi' un titolo come "Bando per @qualcuno" non manda una
+ * notifica a un utente GitHub a caso; le parentesi quadre non rompono i link
+ * e i caratteri "<" non vengono presi per tag.
+ */
+function md(testo: string): string {
+  return testo
+    .replace(/\\/g, '\\\\')
+    .replace(/\[/g, '\\[').replace(/\]/g, '\\]')
+    .replace(/</g, '&lt;')
+    .replace(/@/g, '\uff20');
+}
+
+function indirizzoMarkdown(url: string): string {
+  return hrefSicuro(url).replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/ /g, '%20');
+}
+
+function schedaMarkdown(b: Bando): string {
+  const ente = nomeEnte(b.entePropostoId);
+  const data = new Date(b.dataPubblicazione).toLocaleDateString('it-IT');
+  const righe = [
+    `### [${md(b.titolo)}](${indirizzoMarkdown(b.url)})`,
+    `${md(b.ente)} · ${md(NOMI_LIVELLO[b.livello])} · pubblicato il ${data}`
+      + `${b.dataIncerta ? ' (data non dichiarata dalla fonte)' : ''} · pertinenza ${b.pertinenza}/100`,
+  ];
+  if (b.descrizioneBreve) righe.push('', md(b.descrizioneBreve));
+  if (ente !== null) righe.push('', `**Presenta: ${md(ente)}**`);
+  if (b.motivoAmmissibilita !== null) righe.push('', `> Dal bando: «${md(b.motivoAmmissibilita)}»`);
+  return righe.join('\n');
+}
+
+/** La stessa notifica dell'email, in forma di segnalazione GitHub. */
+export function corpoMarkdown(bandi: Bando[]): string {
+  const mostrati = bandi.slice(0, MAX_SCHEDE_MARKDOWN).map(schedaMarkdown);
+  const resto = bandi.length - MAX_SCHEDE_MARKDOWN;
+  if (resto > 0) mostrati.push(`_…e altri ${resto} sul sito._`);
+  return `Controllo del ${new Date().toLocaleDateString('it-IT')}.\n\n${mostrati.join('\n\n---\n\n')}\n`;
+}

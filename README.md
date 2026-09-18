@@ -14,9 +14,9 @@ Nessun server da mantenere, nessun costo: gira su GitHub.
 - **Separa i bandi dalle notizie**: un comunicato stampa su un festival parla di cinema, ma non è un bando.
 - **Dice chi deve firmare la domanda**: Storie di Piazza APS, Fondazione Marco Falco oppure
   VideoAstolfoSullaLuna Srl, citando la frase del bando da cui lo deduce.
-- **Manda un'email solo quando c'è qualcosa**. Mai email vuote.
+- **Avvisa solo quando c'è qualcosa**, con una segnalazione su GitHub che arriva per email. Mai messaggi vuoti.
 - **Si accorge quando smette di funzionare**: se una fonte non porta risultati per tre controlli di fila
-  arriva un'email di allarme, e il sito mostra in rosso se il controllo automatico si è fermato.
+  arriva un allarme, e il sito mostra in rosso se il controllo automatico si è fermato.
 
 ## Come metterla in funzione
 
@@ -38,9 +38,21 @@ Nel repository: **Settings → Actions → General → Workflow permissions** �
 **Settings → Pages → Build and deployment → Source** → scegliere **GitHub Actions**.
 Il sito sarà all'indirizzo `https://<nome-utente>.github.io/<nome-repository>/`.
 
-### 4. Configurare l'email
+### 4. Le notifiche
 
-In **Settings → Secrets and variables → Actions → New repository secret** creare questi cinque segreti:
+**Funzionano senza configurare niente.** Quando escono bandi nuovi, la raccolta apre una segnalazione
+(una *issue*) nel repository, e GitHub la manda per email al proprietario del repository, all'indirizzo
+del suo account. La segnalazione contiene titolo, ente, descrizione, chi può presentare domanda e il link
+all'originale. Anche l'allarme sulle fonti mute arriva così.
+
+Per farla arrivare ad altri membri del gruppo: devono avere un account GitHub e premere **Watch** sul
+repository.
+
+### 4 bis. Email diretta, facoltativa
+
+Se si preferisce un'email vera e propria, anche a chi non ha GitHub, in
+**Settings → Secrets and variables → Actions → New repository secret** si creano questi cinque segreti.
+Quando ci sono, le notifiche partono via email invece che come segnalazioni:
 
 | Nome | Valore |
 |---|---|
@@ -56,12 +68,10 @@ Per la password per le app: account Google → Sicurezza → attivare la verific
 I destinatari stanno nei segreti e non nel codice apposta: il repository è pubblico, e un indirizzo
 scritto nel codice lo leggerebbe chiunque, bot di spam compresi.
 
-Senza questi segreti la piattaforma funziona lo stesso — raccoglie e pubblica il sito — ma non manda email.
-
 ### 5. Primo avvio
 
 **Actions → Raccolta bandi → Run workflow**. La prima esecuzione recupera l'ultimo mese e manda
-la prima email. Poi riparte da sola ogni mattina verso le 7.
+la prima notifica. Poi riparte da sola ogni mattina verso le 7.
 
 ## Come si legge una scheda
 
