@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radar Bandi</title>
+<meta name="description" content="Monitoraggio giornaliero dei bandi per la web serie Se finissero le parole">
+<link rel="stylesheet" href="stile.css">
+</head>
+<body>
+<header>
+  <h1>Radar Bandi</h1>
+  <p class="sottotitolo">Se finissero le parole — bandi per la web serie</p>
+  <p class="aggiornamento" id="aggiornamento">Caricamento…</p>
+</header>
+
+<section class="filtri" aria-label="Filtri">
+  <input type="search" id="cerca" placeholder="Cerca per titolo o ente" aria-label="Cerca per titolo o ente">
+  <div class="gruppo" id="filtro-tipo" role="group" aria-label="Tipo"></div>
+  <div class="gruppo" id="filtro-livello" role="group" aria-label="Livello"></div>
+  <div class="gruppo" id="filtro-ammissibilita" role="group" aria-label="Chi può partecipare"></div>
+  <div class="gruppo" id="filtro-stato" role="group" aria-label="Stato"></div>
+  <div class="gruppo" id="ordine" role="group" aria-label="Ordina per"></div>
+</section>
+
+<p class="conteggio" id="conteggio" aria-live="polite"></p>
+<main id="elenco"></main>
+
+<section class="salute" aria-labelledby="titolo-salute">
+  <h2 id="titolo-salute">Stato delle fonti</h2>
+  <p class="nota">Verde: la fonte risponde. Rosso: nessun risultato da tre controlli, va controllata.</p>
+  <div id="salute"></div>
+</section>
+
+<dialog id="popup" aria-labelledby="popup-titolo">
+  <h2 id="popup-titolo"></h2>
+  <div id="popup-elenco"></div>
+  <button type="button" id="popup-chiudi">Ho capito</button>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>

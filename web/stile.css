@@ -1,0 +1,100 @@
+:root {
+  --testo: #1f2328; --debole: #59636e; --bordo: #d1d9e0; --sfondo: #ffffff; --superficie: #f6f8fa;
+  --verde: #1a7f37; --giallo: #9a6700; --rosso: #cf222e; --ignota: #59636e;
+  --evidenza: #0969da; --su-evidenza: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --testo: #e6edf3; --debole: #9198a1; --bordo: #3d444d; --sfondo: #0d1117; --superficie: #151b23;
+    --verde: #3fb950; --giallo: #d29922; --rosso: #f85149; --ignota: #9198a1;
+    --evidenza: #4493f8; --su-evidenza: #0d1117;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0 auto; padding: 28px 16px 64px; max-width: 860px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.55; color: var(--testo); background: var(--sfondo);
+}
+h1 { margin: 0; font-size: 26px; letter-spacing: -0.01em; }
+.sottotitolo { margin: 2px 0 0; color: var(--debole); }
+.aggiornamento { margin: 6px 0 0; color: var(--debole); font-size: 13px; }
+.aggiornamento.vecchio { color: var(--rosso); font-weight: 600; }
+
+.filtri { margin: 24px 0 8px; display: flex; flex-direction: column; gap: 10px; }
+#cerca {
+  width: 100%; padding: 10px 12px; font-size: 16px;
+  border: 1px solid var(--bordo); border-radius: 8px;
+  background: var(--sfondo); color: var(--testo);
+}
+.gruppo { display: flex; flex-wrap: wrap; gap: 6px; }
+.gruppo button {
+  padding: 6px 12px; font-size: 13px; cursor: pointer; font-family: inherit;
+  border: 1px solid var(--bordo); border-radius: 999px;
+  background: transparent; color: var(--debole);
+}
+.gruppo button[aria-pressed="true"] {
+  background: var(--evidenza); border-color: var(--evidenza); color: var(--su-evidenza);
+}
+button:focus-visible, a:focus-visible, input:focus-visible {
+  outline: 2px solid var(--evidenza); outline-offset: 2px;
+}
+
+.conteggio { color: var(--debole); font-size: 13px; margin: 16px 0 12px; }
+.vuoto { color: var(--debole); padding: 24px 0; }
+
+.scheda {
+  border: 1px solid var(--bordo); border-left-width: 4px;
+  border-radius: 8px; padding: 14px 16px; margin-bottom: 14px;
+  overflow-wrap: anywhere;
+}
+.scheda.verde { border-left-color: var(--verde); }
+.scheda.giallo { border-left-color: var(--giallo); }
+.scheda.rosso { border-left-color: var(--rosso); }
+.scheda.ignota { border-left-color: var(--ignota); }
+.scheda.notizia { opacity: 0.8; }
+.scheda h3 { margin: 0 0 4px; font-size: 16px; line-height: 1.35; }
+.meta { color: var(--debole); font-size: 12.5px; margin: 0 0 8px; }
+.descrizione { margin: 0 0 10px; }
+.presenta { font-weight: 600; margin: 0 0 4px; }
+.presenta.verde { color: var(--verde); }
+.presenta.giallo { color: var(--giallo); }
+.presenta.rosso { color: var(--rosso); }
+.presenta.ignota { color: var(--ignota); }
+.citazione {
+  margin: 0 0 10px; color: var(--debole); font-size: 13px;
+  border-left: 2px solid var(--bordo); padding-left: 10px;
+}
+.azioni { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.azioni a, .azioni button {
+  font-size: 13px; padding: 7px 12px; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--bordo); background: transparent; font-family: inherit;
+  color: var(--evidenza); text-decoration: none;
+}
+.azioni button[aria-pressed="true"] { background: var(--superficie); color: var(--testo); }
+.etichetta {
+  font-size: 11px; padding: 1px 8px; border-radius: 999px; margin-left: 6px;
+  vertical-align: 2px; font-weight: 600;
+}
+.etichetta.nuovo { background: var(--evidenza); color: var(--su-evidenza); }
+.etichetta.notizia { background: var(--superficie); color: var(--debole); border: 1px solid var(--bordo); }
+
+.salute { margin-top: 48px; border-top: 1px solid var(--bordo); padding-top: 18px; }
+.salute h2 { font-size: 15px; margin: 0 0 4px; }
+.nota { color: var(--debole); font-size: 12.5px; margin: 0 0 12px; }
+.fonte { font-size: 13px; color: var(--debole); margin: 0 0 6px; display: flex; gap: 8px; align-items: baseline; }
+.pallino { flex: none; display: inline-block; width: 9px; height: 9px; border-radius: 50%; }
+
+dialog {
+  border: 1px solid var(--bordo); border-radius: 10px; width: min(560px, calc(100vw - 32px));
+  background: var(--sfondo); color: var(--testo); padding: 20px;
+}
+dialog::backdrop { background: rgba(0, 0, 0, 0.5); }
+dialog h2 { margin: 0 0 12px; font-size: 18px; }
+dialog p { margin: 0 0 12px; }
+dialog button {
+  margin-top: 6px; padding: 8px 18px; cursor: pointer; font-family: inherit; font-size: 14px;
+  border: 1px solid var(--evidenza); border-radius: 6px;
+  background: var(--evidenza); color: var(--su-evidenza);
+}

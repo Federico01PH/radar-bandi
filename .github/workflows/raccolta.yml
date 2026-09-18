@@ -1,0 +1,77 @@
+name: Raccolta bandi
+
+on:
+  schedule:
+    # GitHub lavora in UTC e ignora l'ora legale. Due orari coprono entrambi
+    # i regimi; la seconda esecuzione si ferma da sola se la prima e' riuscita.
+    - cron: '0 5 * * *'
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Mai due raccolte insieme: si contenderebbero il push dei dati.
+concurrency:
+  group: raccolta
+  cancel-in-progress: false
+
+jobs:
+  raccolta:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Salta se ha gia' girato nelle ultime 12 ore
+        id: guardia
+        run: |
+          # Solo le esecuzioni pianificate si saltano: un avvio a mano parte sempre.
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "salta=no" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          ultimo=$(git log -1 --format=%ct -- data/meta.json)
+          ultimo=${ultimo:-0}
+          adesso=$(date +%s)
+          if [ $((adesso - ultimo)) -lt 43200 ]; then
+            echo "salta=si" >> "$GITHUB_OUTPUT"
+            echo "Gia' eseguita meno di 12 ore fa, si salta."
+          else
+            echo "salta=no" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Raccolta
+        id: raccolta
+        if: steps.guardia.outputs.salta == 'no'
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          EMAIL_DESTINATARI: ${{ secrets.EMAIL_DESTINATARI }}
+        run: npm run raccolta
+
+      # Gira anche se la raccolta segnala un errore di notifica: i dati sono
+      # gia' scritti e perderli costerebbe lo storico di salute delle fonti.
+      - name: Salva i risultati
+        if: always() && steps.guardia.outputs.salta == 'no'
+        run: |
+          git config user.name "Radar Bandi"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --staged --quiet; then
+            echo "Nessuna modifica da registrare."
+          else
+            git commit -m "Raccolta del $(date +%Y-%m-%d)"
+            # Se nel frattempo qualcuno ha modificato il ramo, ci si riallinea e si riprova.
+            git push || (git pull --rebase && git push)
+          fi

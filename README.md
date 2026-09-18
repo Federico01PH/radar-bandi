@@ -1,0 +1,124 @@
+# Radar Bandi
+
+Ogni mattina controlla da solo sette fonti di bandi, tiene quelli pubblicati negli ultimi sette giorni,
+li valuta per la web serie **"Se finissero le parole"** e manda un'email quando ne esce uno che vale la
+pena leggere. Tutto è consultabile su un sito con i filtri.
+
+Nessun server da mantenere, nessun costo: gira su GitHub.
+
+## Che cosa fa, in breve
+
+- **Controlla ogni mattina** Ministero della Cultura (solo avvisi e bandi), Regione Piemonte (contributi
+  e finanziamenti), InfoBandi CSVnet, CTV Biella–Vercelli, Fondazione CRT, Compagnia di San Paolo e
+  Agenzia Nazionale Giovani.
+- **Separa i bandi dalle notizie**: un comunicato stampa su un festival parla di cinema, ma non è un bando.
+- **Dice chi deve firmare la domanda**: Storie di Piazza APS, Fondazione Marco Falco oppure
+  VideoAstolfoSullaLuna Srl, citando la frase del bando da cui lo deduce.
+- **Manda un'email solo quando c'è qualcosa**. Mai email vuote.
+- **Si accorge quando smette di funzionare**: se una fonte non porta risultati per tre controlli di fila
+  arriva un'email di allarme, e il sito mostra in rosso se il controllo automatico si è fermato.
+
+## Come metterla in funzione
+
+Serve un account GitHub gratuito. Si fa una volta sola.
+
+### 1. Caricare il progetto su GitHub
+
+Creare un repository **pubblico** (GitHub Pages gratuito richiede che lo sia; i bandi sono comunque
+informazioni pubbliche) e caricarci questo progetto. Il ramo principale deve chiamarsi `main` o `master`:
+l'esecuzione automatica gira solo sul ramo principale.
+
+### 2. Dare i permessi all'automazione
+
+Nel repository: **Settings → Actions → General → Workflow permissions** → scegliere
+**Read and write permissions** e salvare. Senza questo la raccolta non può salvare i risultati.
+
+### 3. Attivare il sito
+
+**Settings → Pages → Build and deployment → Source** → scegliere **GitHub Actions**.
+Il sito sarà all'indirizzo `https://<nome-utente>.github.io/<nome-repository>/`.
+
+### 4. Configurare l'email
+
+In **Settings → Secrets and variables → Actions → New repository secret** creare questi cinque segreti:
+
+| Nome | Valore |
+|---|---|
+| `SMTP_HOST` | `smtp.gmail.com` se si usa Gmail |
+| `SMTP_PORT` | `587` |
+| `SMTP_USER` | l'indirizzo Gmail che spedisce |
+| `SMTP_PASS` | una **password per le app** di Gmail, non la password dell'account |
+| `EMAIL_DESTINATARI` | gli indirizzi che ricevono, separati da virgola |
+
+Per la password per le app: account Google → Sicurezza → attivare la verifica in due passaggi →
+"Password per le app" → crearne una e incollarla in `SMTP_PASS`.
+
+I destinatari stanno nei segreti e non nel codice apposta: il repository è pubblico, e un indirizzo
+scritto nel codice lo leggerebbe chiunque, bot di spam compresi.
+
+Senza questi segreti la piattaforma funziona lo stesso — raccoglie e pubblica il sito — ma non manda email.
+
+### 5. Primo avvio
+
+**Actions → Raccolta bandi → Run workflow**. La prima esecuzione recupera l'ultimo mese e manda
+la prima email. Poi riparte da sola ogni mattina verso le 7.
+
+## Come si legge una scheda
+
+- **Bordo verde**: uno dei vostri enti può presentare domanda, e la scheda dice quale.
+- **Bordo giallo**: serve un requisito in più, per esempio una scuola capofila o un partenariato.
+- **Bordo rosso**: requisito fuori portata, per esempio una coproduzione internazionale. Resta visibile ma
+  non genera email.
+- **Bordo grigio**: la piattaforma non è riuscita a capire chi può partecipare. Va letto il bando.
+
+Il colore è un'ipotesi ricavata dal testo, non una lettura giuridica. Per questo sotto c'è sempre la frase
+del bando da cui è dedotto: si controlla in due secondi. **Non scartate mai un bando solo per il colore.**
+
+"Salva" ricorda il bando su quel dispositivo. "Inoltra su WhatsApp" apre WhatsApp con titolo e link già
+pronti da mandare al gruppo.
+
+## Quando arriva un allarme
+
+Un'email "N fonti non rispondono" significa che quelle fonti non portano risultati da tre controlli.
+Di solito il sito della fonte è stato rifatto e l'aggancio va aggiornato. Finché non viene riparato,
+**i bandi pubblicati su quella fonte non arrivano**: nel frattempo va controllata a mano.
+
+Se la testata del sito è rossa con "nessun controllo da N giorni", l'automazione si è fermata: aprire
+**Actions** su GitHub e guardare l'ultima esecuzione. GitHub disattiva l'esecuzione pianificata dei
+repository senza attività da 60 giorni; in quel caso basta riattivarla da **Actions**.
+
+## Modifiche comuni
+
+Tutto ciò che riguarda il progetto sta in [`src/config.ts`](src/config.ts):
+
+- **`SOGLIA_NOTIFICA`**: sotto questa pertinenza non parte l'email. Se arrivano troppe email inutili si alza,
+  se sfugge qualcosa si abbassa.
+- **`PAROLE`**: le parole chiave e il loro peso.
+- **`ENTI`**: gli enti della produzione. Se entra un nuovo partner si aggiunge qui.
+
+Le fonti stanno in [`src/sources/registro.ts`](src/sources/registro.ts).
+
+## Per chi sviluppa
+
+```bash
+npm install
+npm test
+npm run raccolta
+```
+
+`npm run raccolta` fa una raccolta vera e scrive in `data/`. Prima di caricare su GitHub riportare
+l'archivio allo stato vuoto con `git checkout -- data/`, altrimenti i bandi raccolti in locale
+risulterebbero già visti e la prima email automatica non li conterrebbe.
+
+La specifica è in [`docs/superpowers/specs/`](docs/superpowers/specs/), il piano in
+[`docs/superpowers/plans/`](docs/superpowers/plans/).
+
+## Limiti noti
+
+- Le fonti coperte sono sette. Mancano ancora quelle senza feed, fra cui **Fondazione Cassa di Risparmio di
+  Biella**, Film Commission Torino Piemonte, Comune e Provincia di Biella: vanno seguite a mano finché non
+  arrivano i relativi adattatori.
+- Scadenza e importo non vengono ancora estratti: i feed non li riportano, bisogna aprire il bando.
+- Le notifiche sul telefono non ci sono ancora: per ora email e popup del sito.
+- La classificazione di bandi e notizie e l'ammissibilità sono euristiche sul testo e sbagliano,
+  a volte. La soglia di notifica è tarata su un solo giorno di dati reali e andrà rifinita.

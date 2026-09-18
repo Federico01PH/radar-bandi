@@ -1,0 +1,46 @@
+name: Pubblica il sito
+
+on:
+  # Un push fatto dal bot della raccolta non avvia altri workflow: per questo
+  # il sito si ripubblica quando la raccolta finisce, non quando cambiano i dati.
+  workflow_run:
+    workflows: ['Raccolta bandi']
+    types: [completed]
+  push:
+    branches: [main, master]
+    paths: ['web/**', '.github/workflows/pubblica.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  pubblica:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Dopo una raccolta serve l'ultimo commit, quello con i dati nuovi.
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Componi il sito con i dati accanto
+        run: |
+          mkdir -p sito
+          cp web/* sito/
+          cp data/bandi.json data/salute.json data/meta.json sito/
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: sito
+      - id: deploy
+        uses: actions/deploy-pages@v4
