@@ -47,8 +47,19 @@ Il sito sarà all'indirizzo `https://<nome-utente>.github.io/<nome-repository>/`
 del suo account. La segnalazione contiene titolo, ente, descrizione, chi può presentare domanda e il link
 all'originale. Anche l'allarme sulle fonti mute arriva così.
 
-**Notifica push sul telefono:** basta installare l'app gratuita **GitHub Mobile** ed entrare con lo stesso
-account. Ogni nuova segnalazione arriva come notifica.
+**Notifiche push per tutta la produzione, con ntfy.** Ognuno installa l'app gratuita **ntfy** (App Store o
+Google Play), tocca **+** e scrive il nome del canale del progetto, lasciando il server `ntfy.sh`. Da quel
+momento ogni nuovo bando adatto alla serie arriva come notifica: titolo, chi presenta, scadenza; toccandola
+si apre il bando. Nessun account, nessuna password.
+
+Il nome del canale è nel segreto `NTFY_TOPIC` del repository e non va scritto qui né in altri file
+pubblici: chi lo conosce può leggere e anche mandare messaggi al gruppo. GitHub non mostra più un segreto
+dopo averlo salvato, quindi il nome va conservato altrove (per esempio nella descrizione del gruppo
+WhatsApp della produzione). Per verificare che l'iscrizione funzioni: **Actions → Raccolta bandi → Run
+workflow**, spuntando *Manda anche un avviso di prova sui telefoni iscritti*.
+
+**Notifica sul telefono per il proprietario:** l'app gratuita **GitHub Mobile**, entrando con lo stesso
+account, avvisa anche delle segnalazioni aperte nel repository.
 
 Per farla arrivare ad altri membri del gruppo: devono avere un account GitHub e premere **Watch** sul
 repository.
@@ -133,7 +144,9 @@ La specifica è in [`docs/superpowers/specs/`](docs/superpowers/specs/), il pian
 - Le fonti coperte sono sette. Mancano ancora quelle senza feed, fra cui **Fondazione Cassa di Risparmio di
   Biella**, Film Commission Torino Piemonte, Comune e Provincia di Biella: vanno seguite a mano finché non
   arrivano i relativi adattatori.
-- Scadenza e importo non vengono ancora estratti: i feed non li riportano, bisogna aprire il bando.
+- Chi presenta e scadenza si ricavano leggendo la pagina del bando. Quando la pagina e' solo un comunicato
+  e il bando vero e' in un PDF allegato (spesso al Ministero), restano "da verificare": va aperto il PDF.
+  L'importo non viene ancora estratto.
 - La scelta di cosa è "adatto alla serie" e l'ammissibilità sono euristiche sul testo e sbagliano, a volte.
   Il filtro è volutamente stretto: dalle fondazioni, che mescolano bandi e notizie, passa solo ciò che ha un
   segno esplicito di bando. I bandi scartati non si cancellano: restano in `data/bandi.json`, e se si
