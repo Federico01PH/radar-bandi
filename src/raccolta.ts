@@ -1,11 +1,9 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
-import {
-  FINESTRA_GIORNI, FINESTRA_PRIMO_AVVIO, SOGLIA_NOTIFICA, GIORNI_ALLARME_FONTE,
-} from './config.ts';
+import { FINESTRA_GIORNI, FINESTRA_PRIMO_AVVIO, GIORNI_ALLARME_FONTE } from './config.ts';
 import { ADATTATORI } from './sources/registro.ts';
 import { dentroLaFinestra } from './pipeline/finestra.ts';
-import { costruisciBando, fondi } from './pipeline/archivio.ts';
+import { costruisciBando, fondi, rivaluta } from './pipeline/archivio.ts';
 import { aggiornaStorico, fonteSospetta, type Storico } from './health/salute.ts';
 import { daNotificare } from './notify/formatta.ts';
 import {
@@ -128,7 +126,15 @@ export async function raccogli(opzioni: Opzioni = {}): Promise<EsitoRaccolta> {
     }
   }
 
-  const { tutti, nuovi } = fondi(archivio, raccolti);
+  const fusione = fondi(archivio, raccolti);
+  const nuovi = fusione.nuovi;
+
+  // Lo storico si rivaluta con le regole di oggi; i bandi raccolti in questo
+  // giro sono gia' valutati sulla descrizione completa e restano come sono.
+  const idRaccolti = new Set(raccolti.map((b) => b.id));
+  const soloBandiPerFonte = new Map(adattatori.map((a) => [a.id, a.soloBandi]));
+  const tutti = fusione.tutti.map((b) =>
+    idRaccolti.has(b.id) ? b : rivaluta(b, soloBandiPerFonte.get(b.fonteId) ?? false));
   const storicoNuovo = aggiornaStorico(storico, esiti, STORICO_MAX);
 
   // I dati si salvano prima di qualunque notifica: un server di posta giu'
@@ -140,7 +146,6 @@ export async function raccogli(opzioni: Opzioni = {}): Promise<EsitoRaccolta> {
   // in un giorno senza novita' una data vecchia farebbe credere il sistema fermo.
   const meta = {
     ultimoControllo: adesso.toISOString(),
-    soglia: SOGLIA_NOTIFICA,
     fonti: adattatori.map((a) => ({ id: a.id, nome: a.nome })),
   };
   await writeFile(fileMeta, `${JSON.stringify(meta, null, 2)}\n`, 'utf8');
@@ -148,7 +153,7 @@ export async function raccogli(opzioni: Opzioni = {}): Promise<EsitoRaccolta> {
   const fontiMute = adattatori
     .filter((a) => fonteSospetta(storicoNuovo[a.id] ?? [], GIORNI_ALLARME_FONTE))
     .map((a) => a.nome);
-  const daMandare = daNotificare(nuovi, SOGLIA_NOTIFICA);
+  const daMandare = daNotificare(nuovi);
   const errori: string[] = [];
 
   try {

@@ -6,18 +6,6 @@ export const FINESTRA_GIORNI = 7;
 /** Giorni recuperati alla primissima esecuzione, per nascere con l'archivio pieno. */
 export const FINESTRA_PRIMO_AVVIO = 30;
 
-/**
- * Sotto questa pertinenza non parte nessuna notifica. Vedi spec 5.3.
- *
- * Tarata sulla prima raccolta reale, il 18 settembre 2026. Il valore iniziale
- * era 35, scelto quando le notizie finivano in classifica insieme ai bandi.
- * Filtrate le notizie a monte, a 35 non passava piu' nulla: nemmeno un bando
- * contro la violenza di genere, tema della serie, fermo a 17. Con circa
- * quaranta bandi al mese la stanchezza da notifiche non e' un rischio reale,
- * perdere un bando si'. A 10 passano circa due bandi a settimana.
- */
-export const SOGLIA_NOTIFICA = 10;
-
 /** Giorni di silenzio di una fonte oltre i quali scatta l'allarme. */
 export const GIORNI_ALLARME_FONTE = 3;
 
@@ -171,27 +159,44 @@ export const SEGNALI_NOTIZIA: string[] = [
  * cortometraggi. 'cortometragg', 'documentari', 'sceneggiatur' e 'studen'
  * coprono singolare e plurale.
  */
-export const PAROLE: Record<Corsia, { termine: string; peso: number }[]> = {
+export type Parola = {
+  termine: string;
+  peso: number;
+  /**
+   * Un tema forte riguarda davvero la serie: l'audiovisivo o il disagio
+   * giovanile. Un bando e' adatto alla serie solo se ne contiene almeno uno.
+   * Le parole generiche — cultura, giovani, scuola, terzo settore — servono
+   * a ordinare, ma da sole non bastano: compaiono in bandi per le mense, per
+   * i cori, per l'agricoltura sociale.
+   */
+  forte?: boolean;
+};
+
+export const PAROLE: Record<Corsia, Parola[]> = {
   audiovisiva: [
-    { termine: 'web serie', peso: 12 }, { termine: 'webserie', peso: 12 },
-    { termine: 'serie tv', peso: 10 }, { termine: 'audiovisiv', peso: 10 },
-    { termine: 'cortometragg', peso: 9 }, { termine: 'documentari', peso: 8 },
-    { termine: 'cinema', peso: 8 }, { termine: 'sceneggiatur', peso: 7 },
-    { termine: 'film', peso: 6 }, { termine: 'produzione video', peso: 7 },
-    { termine: 'riprese', peso: 5 },
-    { termine: 'montaggio', peso: 5 }, { termine: 'festival', peso: 5 },
-    { termine: 'opera prima', peso: 6 }, { termine: 'fiction', peso: 6 },
-    { termine: 'distribuzione', peso: 4 }, { termine: 'cultura', peso: 3 },
+    { termine: 'web serie', peso: 12, forte: true }, { termine: 'webserie', peso: 12, forte: true },
+    { termine: 'serie tv', peso: 10, forte: true }, { termine: 'audiovisiv', peso: 10, forte: true },
+    { termine: 'cortometragg', peso: 9, forte: true }, { termine: 'documentari', peso: 8, forte: true },
+    { termine: 'cinema', peso: 8, forte: true }, { termine: 'sceneggiatur', peso: 7, forte: true },
+    { termine: 'film', peso: 6, forte: true }, { termine: 'produzione video', peso: 7, forte: true },
+    { termine: 'opera prima', peso: 6, forte: true }, { termine: 'fiction', peso: 6, forte: true },
+    { termine: 'riprese', peso: 5 }, { termine: 'montaggio', peso: 5 },
+    { termine: 'festival', peso: 5 }, { termine: 'distribuzione', peso: 4 },
+    { termine: 'cultura', peso: 3 },
   ],
   giovani: [
-    { termine: 'bullismo', peso: 14 }, { termine: 'cyberbullismo', peso: 14 },
-    { termine: 'disagio giovanile', peso: 13 }, { termine: 'adolescen', peso: 12 },
-    { termine: 'poverta educativa', peso: 12 }, { termine: 'dispersione scolastica', peso: 11 },
-    { termine: 'salute mentale', peso: 10 }, { termine: 'benessere psicologic', peso: 10 },
+    { termine: 'bullismo', peso: 14, forte: true }, { termine: 'cyberbullismo', peso: 14, forte: true },
+    { termine: 'disagio giovanile', peso: 13, forte: true }, { termine: 'adolescen', peso: 12, forte: true },
+    { termine: 'poverta educativa', peso: 12, forte: true },
+    { termine: 'dispersione scolastica', peso: 11, forte: true },
+    { termine: 'salute mentale', peso: 10, forte: true },
+    { termine: 'benessere psicologic', peso: 10, forte: true },
+    { termine: 'peer education', peso: 8, forte: true },
+    { termine: 'violenza di genere', peso: 7, forte: true },
+    { termine: 'identita di genere', peso: 7, forte: true },
+    { termine: 'stereotip', peso: 7, forte: true }, { termine: 'parita di genere', peso: 6, forte: true },
+    { termine: 'discriminazion', peso: 6, forte: true },
     { termine: 'giovani', peso: 8 }, { termine: 'under 35', peso: 8 },
-    { termine: 'peer education', peso: 8 }, { termine: 'violenza di genere', peso: 7 },
-    { termine: 'identita di genere', peso: 7 }, { termine: 'discriminazion', peso: 6 },
-    { termine: 'stereotip', peso: 7 }, { termine: 'parita di genere', peso: 6 },
     { termine: 'disabilita', peso: 6 }, { termine: 'scuola', peso: 6 },
     { termine: 'scuole', peso: 6 }, { termine: 'studen', peso: 6 },
     { termine: 'educazion', peso: 5 }, { termine: 'terzo settore', peso: 5 },
@@ -199,8 +204,29 @@ export const PAROLE: Record<Corsia, { termine: string; peso: number }[]> = {
   ],
 };
 
-/** Bonus a chi sta nell'intersezione fra le due corsie: e' il bersaglio ideale. */
+/**
+ * Bonus a chi sta nell'intersezione fra le due corsie: e' il bersaglio ideale.
+ * Scatta solo se entrambe le corsie hanno un tema forte: con le parole
+ * generiche un bando per le mense ("distribuzione" dei pasti, "terzo
+ * settore") prendeva il bonus e finiva in cima.
+ */
 export const BONUS_INTERSEZIONE = 20;
+
+/**
+ * Titoli che annunciano un atto amministrativo e non un'opportunita': esiti,
+ * graduatorie, delibere, decreti di riconoscimento. E ambiti che non
+ * riguardano mai una web serie: sale cinematografiche, videogiochi.
+ *
+ * Si cercano solo nel titolo: nella descrizione di un bando vero "esito" o
+ * "graduatoria" compaiono di continuo ("l'esito della valutazione sara'
+ * comunicato...") e scartarlo per questo sarebbe un errore grave.
+ */
+export const ESCLUSI_DAL_TITOLO: string[] = [
+  'esito', 'esiti', 'graduatori', 'delibera', 'riconoscimento crediti',
+  'decreti di riconoscimento', 'modifiche al decreto', 'nazionalita italiana',
+  'sale cinematografiche', 'sala cinematografica', 'esercizi cinematografici', 'videogioc',
+  'sala d essai', 'sale d essai',
+];
 
 // I destinatari delle email non stanno qui: sono nel segreto EMAIL_DESTINATARI
 // di GitHub, perche' questo repository e' pubblico. Vedi src/notify/email.ts.

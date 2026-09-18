@@ -109,7 +109,6 @@ describe('raccogli', () => {
     const meta = JSON.parse(await readFile(fileMeta, 'utf8'));
     expect(meta.ultimoControllo).toBe(adesso.toISOString());
     expect(meta.fonti).toEqual([{ id: 'vecchia', nome: 'Fonte vecchia' }]);
-    expect(typeof meta.soglia).toBe('number');
   });
 
   it('si ferma senza toccare un archivio corrotto, invece di sovrascriverlo', async () => {

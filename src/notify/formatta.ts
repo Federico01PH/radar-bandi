@@ -2,13 +2,13 @@ import { ENTI, NOMI_LIVELLO } from '../config.ts';
 import type { Bando } from '../tipi.ts';
 
 /**
- * Chi merita una notifica: un bando e non una notizia, sopra soglia, non escluso in partenza.
+ * Chi merita una notifica: un bando adatto alla serie e non escluso in partenza.
  * Gli 'ignota' passano di proposito — nel dubbio si avvisa. Una notifica
  * di troppo costa trenta secondi, un bando perso costa il bando.
  */
-export function daNotificare(bandi: Bando[], soglia: number): Bando[] {
+export function daNotificare(bandi: Bando[]): Bando[] {
   return bandi
-    .filter((b) => b.tipo === 'bando' && b.pertinenza >= soglia && b.ammissibilita !== 'rosso')
+    .filter((b) => b.adattoAllaSerie && b.ammissibilita !== 'rosso')
     .sort((a, b) => b.pertinenza - a.pertinenza);
 }
 

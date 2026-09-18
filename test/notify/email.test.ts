@@ -26,7 +26,7 @@ function bando(): Bando {
     scadenza: null, importo: null, descrizioneBreve: 'Descrizione.',
     requisiti: [], chiPuoPartecipare: null, ammissibilita: 'verde',
     entePropostoId: 'storiedipiazza', motivoAmmissibilita: null,
-    pertinenza: 60, url: 'https://x.it/a', fonteId: 'infobandi',
+    pertinenza: 60, adattoAllaSerie: true, url: 'https://x.it/a', fonteId: 'infobandi',
     vistoIl: '2026-09-18T08:00:00.000Z', salvato: false,
   };
 }

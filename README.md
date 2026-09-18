@@ -11,7 +11,9 @@ Nessun server da mantenere, nessun costo: gira su GitHub.
 - **Controlla ogni mattina** Ministero della Cultura (solo avvisi e bandi), Regione Piemonte (contributi
   e finanziamenti), InfoBandi CSVnet, CTV Biella–Vercelli, Fondazione CRT, Compagnia di San Paolo e
   Agenzia Nazionale Giovani.
-- **Separa i bandi dalle notizie**: un comunicato stampa su un festival parla di cinema, ma non è un bando.
+- **Mostra solo i bandi adatti alla serie**: niente notizie, niente atti amministrativi, niente bandi che
+  toccano solo parole generiche come "cultura" o "giovani". Serve almeno un tema forte: audiovisivo, oppure
+  bullismo, disagio giovanile, violenza e identità di genere, stereotipi, salute mentale.
 - **Dice chi deve firmare la domanda**: Storie di Piazza APS, Fondazione Marco Falco oppure
   VideoAstolfoSullaLuna Srl, citando la frase del bando da cui lo deduce.
 - **Avvisa solo quando c'è qualcosa**, con una segnalazione su GitHub che arriva per email. Mai messaggi vuoti.
@@ -44,6 +46,9 @@ Il sito sarà all'indirizzo `https://<nome-utente>.github.io/<nome-repository>/`
 (una *issue*) nel repository, e GitHub la manda per email al proprietario del repository, all'indirizzo
 del suo account. La segnalazione contiene titolo, ente, descrizione, chi può presentare domanda e il link
 all'originale. Anche l'allarme sulle fonti mute arriva così.
+
+**Notifica push sul telefono:** basta installare l'app gratuita **GitHub Mobile** ed entrare con lo stesso
+account. Ogni nuova segnalazione arriva come notifica.
 
 Per farla arrivare ad altri membri del gruppo: devono avere un account GitHub e premere **Watch** sul
 repository.
@@ -101,9 +106,9 @@ repository senza attività da 60 giorni; in quel caso basta riattivarla da **Act
 
 Tutto ciò che riguarda il progetto sta in [`src/config.ts`](src/config.ts):
 
-- **`SOGLIA_NOTIFICA`**: sotto questa pertinenza non parte l'email. Se arrivano troppe email inutili si alza,
-  se sfugge qualcosa si abbassa.
-- **`PAROLE`**: le parole chiave e il loro peso.
+- **`PAROLE`**: le parole chiave e il loro peso. Quelle segnate `forte: true` sono i temi che rendono un bando
+  adatto alla serie: se ne sfugge uno buono, si aggiunge qui la parola che manca.
+- **`ESCLUSI_DAL_TITOLO`**: titoli che annunciano atti amministrativi o ambiti estranei alla serie.
 - **`ENTI`**: gli enti della produzione. Se entra un nuovo partner si aggiunge qui.
 
 Le fonti stanno in [`src/sources/registro.ts`](src/sources/registro.ts).
@@ -129,6 +134,7 @@ La specifica è in [`docs/superpowers/specs/`](docs/superpowers/specs/), il pian
   Biella**, Film Commission Torino Piemonte, Comune e Provincia di Biella: vanno seguite a mano finché non
   arrivano i relativi adattatori.
 - Scadenza e importo non vengono ancora estratti: i feed non li riportano, bisogna aprire il bando.
-- Le notifiche sul telefono non ci sono ancora: per ora email e popup del sito.
-- La classificazione di bandi e notizie e l'ammissibilità sono euristiche sul testo e sbagliano,
-  a volte. La soglia di notifica è tarata su un solo giorno di dati reali e andrà rifinita.
+- La scelta di cosa è "adatto alla serie" e l'ammissibilità sono euristiche sul testo e sbagliano, a volte.
+  Il filtro è volutamente stretto: dalle fondazioni, che mescolano bandi e notizie, passa solo ciò che ha un
+  segno esplicito di bando. I bandi scartati non si cancellano: restano in `data/bandi.json`, e se si
+  allarga un criterio in `config.ts` vengono rivalutati alla raccolta successiva.

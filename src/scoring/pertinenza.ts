@@ -1,4 +1,4 @@
-import { PAROLE, BONUS_INTERSEZIONE } from '../config.ts';
+import { PAROLE, BONUS_INTERSEZIONE, ESCLUSI_DAL_TITOLO } from '../config.ts';
 import type { Corsia } from '../tipi.ts';
 
 /**
@@ -19,23 +19,28 @@ export function appiattisci(testo: string): string {
 export type EsitoPertinenza = {
   punteggio: number;
   corsie: Corsia[];
+  /** true se il testo contiene almeno un tema forte: e' cio' che rende un bando adatto alla serie. */
+  forte: boolean;
 };
 
 /**
  * Somma i pesi delle parole chiave presenti, una volta sola ciascuna.
- * Chi tocca entrambe le corsie riceve un bonus: il progetto vive
- * nell'intersezione fra audiovisivo e disagio giovanile, e i bandi
- * che stanno li' sono quelli con meno concorrenti.
+ * Chi tocca entrambe le corsie con un tema forte riceve un bonus: il
+ * progetto vive nell'intersezione fra audiovisivo e disagio giovanile, e
+ * i bandi che stanno li' sono quelli con meno concorrenti.
  */
 export function calcolaPertinenza(titolo: string, descrizione: string): EsitoPertinenza {
   const testo = appiattisci(`${titolo} ${descrizione}`);
   const corsie: Corsia[] = [];
+  const corsieForti: Corsia[] = [];
   let punteggio = 0;
 
   for (const corsia of ['audiovisiva', 'giovani'] as Corsia[]) {
     let puntiCorsia = 0;
-    for (const { termine, peso } of PAROLE[corsia]) {
-      if (testo.includes(appiattisci(termine))) puntiCorsia += peso;
+    for (const { termine, peso, forte } of PAROLE[corsia]) {
+      if (!testo.includes(appiattisci(termine))) continue;
+      puntiCorsia += peso;
+      if (forte && !corsieForti.includes(corsia)) corsieForti.push(corsia);
     }
     if (puntiCorsia > 0) {
       corsie.push(corsia);
@@ -43,7 +48,13 @@ export function calcolaPertinenza(titolo: string, descrizione: string): EsitoPer
     }
   }
 
-  if (corsie.length === 2) punteggio += BONUS_INTERSEZIONE;
+  if (corsieForti.length === 2) punteggio += BONUS_INTERSEZIONE;
 
-  return { punteggio: Math.min(100, punteggio), corsie };
+  return { punteggio: Math.min(100, punteggio), corsie, forte: corsieForti.length > 0 };
+}
+
+/** Il titolo annuncia un atto amministrativo o un ambito che non riguarda una web serie. */
+export function esclusoDalTitolo(titolo: string): boolean {
+  const piatto = appiattisci(titolo);
+  return ESCLUSI_DAL_TITOLO.some((termine) => piatto.includes(termine));
 }

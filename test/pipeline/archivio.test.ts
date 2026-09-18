@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { fondi, costruisciBando } from '../../src/pipeline/archivio.ts';
+import { fondi, costruisciBando, rivaluta } from '../../src/pipeline/archivio.ts';
 import type { Bando, RisultatoGrezzo } from '../../src/tipi.ts';
 
 const adesso = new Date('2026-09-18T08:00:00Z');
@@ -101,5 +101,64 @@ describe('fondi', () => {
       'E', 'statale', adesso, true);
     const { tutti } = fondi([vecchio], [recente]);
     expect(tutti[0]!.url).toBe('https://x.it/r');
+  });
+});
+
+describe('adatto alla serie', () => {
+  it('una web serie sul bullismo e\' adatta', () => {
+    expect(costruisciBando(grezzo(), 'CSVnet', 'terzosettore', adesso, true).adattoAllaSerie).toBe(true);
+  });
+
+  it('un bando con sole parole generiche non e\' adatto', () => {
+    const b = costruisciBando(grezzo({ titolo: 'Mense e dormitori', descrizione: 'Per il terzo settore.' }), 'E', 'terzosettore', adesso, true);
+    expect(b.adattoAllaSerie).toBe(false);
+  });
+
+  it('una notizia non e\' mai adatta, anche se parla di cinema', () => {
+    const b = costruisciBando(grezzo({ titolo: 'Inaugurata la Casa del Cinema', descrizione: 'Premiato il film.' }), 'E', 'fondazione', adesso, false);
+    expect(b.tipo).toBe('notizia');
+    expect(b.adattoAllaSerie).toBe(false);
+  });
+
+  it('un atto amministrativo non e\' adatto, anche se parla di cinema', () => {
+    const b = costruisciBando(grezzo({ titolo: 'Esito graduatoria contributi cinema', descrizione: '' }), 'MiC', 'mic', adesso, true);
+    expect(b.adattoAllaSerie).toBe(false);
+  });
+});
+
+describe('fonti miste', () => {
+  // Caso reale: il feed di Compagnia di San Paolo, 18 settembre 2026.
+  it('non mostra un festival che parla di cinema ma non e\' un bando', () => {
+    const b = costruisciBando(grezzo({
+      titolo: 'Festival dell\u2019Accoglienza 2026',
+      descrizione: 'Oltre 100 eventi, con un programma che intreccia dibattiti, arte, cinema e percorsi dedicati alle scuole.',
+    }), 'Compagnia di San Paolo', 'fondazione', adesso, false);
+    expect(b.adattoAllaSerie).toBe(false);
+  });
+
+  it('mostra un bando di fondazione con un segno esplicito di bando', () => {
+    const b = costruisciBando(grezzo({
+      titolo: 'Nuovo bando per progetti audiovisivi contro il bullismo',
+      descrizione: 'Le organizzazioni possono richiedere un contributo entro il 30 novembre.',
+    }), 'Fondazione CRT', 'fondazione', adesso, false);
+    expect(b.adattoAllaSerie).toBe(true);
+  });
+
+  it('esclude la qualifica di sala d\'essai', () => {
+    const b = costruisciBando(grezzo({ titolo: 'Bando relativo al riconoscimento della qualifica di sala d\u2019essai', descrizione: 'Cinema.' }), 'MiC', 'mic', adesso, true);
+    expect(b.adattoAllaSerie).toBe(false);
+  });
+});
+
+describe('rivaluta', () => {
+  it('applica le regole di oggi a un bando in archivio senza toccare salvato e primo avvistamento', () => {
+    const vecchio = { ...costruisciBando(grezzo(), 'CSVnet', 'terzosettore', adesso, true), salvato: true };
+    const senzaCampo = { ...vecchio } as Partial<typeof vecchio>;
+    delete senzaCampo.adattoAllaSerie;
+    const r = rivaluta(senzaCampo as typeof vecchio, true);
+    expect(r.adattoAllaSerie).toBe(true);
+    expect(r.salvato).toBe(true);
+    expect(r.vistoIl).toBe(vecchio.vistoIl);
+    expect(r.id).toBe(vecchio.id);
   });
 });

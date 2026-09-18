@@ -46,6 +46,8 @@ export type Bando = {
   entePropostoId: string | null;
   motivoAmmissibilita: string | null;
   pertinenza: number;
+  /** Tipo bando, almeno un tema forte, non un atto amministrativo: e' cio' che si mostra e si notifica. */
+  adattoAllaSerie: boolean;
   url: string;
   fonteId: string;
   /** ISO 8601 del primo avvistamento. */

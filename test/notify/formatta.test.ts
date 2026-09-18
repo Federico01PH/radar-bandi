@@ -11,36 +11,36 @@ function bando(over: Partial<Bando> = {}): Bando {
     requisiti: [], chiPuoPartecipare: 'Possono partecipare le associazioni.',
     ammissibilita: 'verde', entePropostoId: 'storiedipiazza',
     motivoAmmissibilita: 'Possono partecipare le associazioni.',
-    pertinenza: 60, url: 'https://x.it/a', fonteId: 'infobandi',
+    pertinenza: 60, adattoAllaSerie: true, url: 'https://x.it/a', fonteId: 'infobandi',
     vistoIl: '2026-09-18T08:00:00.000Z', salvato: false,
     ...over,
   };
 }
 
 describe('daNotificare', () => {
-  it('tiene i bandi sopra soglia', () => {
-    expect(daNotificare([bando({ pertinenza: 60 })], 35)).toHaveLength(1);
+  it('tiene i bandi adatti alla serie', () => {
+    expect(daNotificare([bando()])).toHaveLength(1);
   });
 
-  it('scarta i bandi sotto soglia', () => {
-    expect(daNotificare([bando({ pertinenza: 10 })], 35)).toHaveLength(0);
+  it('scarta i bandi non adatti alla serie, anche con punteggio alto', () => {
+    expect(daNotificare([bando({ pertinenza: 90, adattoAllaSerie: false })])).toHaveLength(0);
   });
 
   it('scarta i rossi anche se molto pertinenti', () => {
-    expect(daNotificare([bando({ pertinenza: 95, ammissibilita: 'rosso' })], 35)).toHaveLength(0);
+    expect(daNotificare([bando({ pertinenza: 95, ammissibilita: 'rosso' })])).toHaveLength(0);
   });
 
   it('non notifica una notizia, per quanto pertinente', () => {
-    expect(daNotificare([bando({ pertinenza: 95, tipo: 'notizia' })], 35)).toHaveLength(0);
+    expect(daNotificare([bando({ pertinenza: 95, tipo: 'notizia', adattoAllaSerie: false })])).toHaveLength(0);
   });
 
   it('tiene gli ignota sopra soglia: nel dubbio si avvisa', () => {
-    expect(daNotificare([bando({ pertinenza: 60, ammissibilita: 'ignota' })], 35)).toHaveLength(1);
+    expect(daNotificare([bando({ pertinenza: 60, ammissibilita: 'ignota' })])).toHaveLength(1);
   });
 
   it('ordina per pertinenza decrescente', () => {
     const out = daNotificare(
-      [bando({ id: 'b'.repeat(64), pertinenza: 40 }), bando({ pertinenza: 90 })], 35);
+      [bando({ id: 'b'.repeat(64), pertinenza: 40 }), bando({ pertinenza: 90 })]);
     expect(out[0]!.pertinenza).toBe(90);
   });
 });
@@ -80,12 +80,9 @@ describe('corpoHtml', () => {
 
 describe('daNotificare, casi limite', () => {
   it('non si rompe su una lista vuota', () => {
-    expect(daNotificare([], 35)).toEqual([]);
+    expect(daNotificare([])).toEqual([]);
   });
 
-  it('include chi sta esattamente sulla soglia', () => {
-    expect(daNotificare([bando({ pertinenza: 35 })], 35)).toHaveLength(1);
-  });
 
   it('non rende cliccabile un link javascript arrivato da un feed', () => {
     const html = corpoHtml([bando({ url: 'javascript:alert(document.cookie)' })]);

@@ -23,8 +23,15 @@ const ORE_CONTROLLO_VECCHIO = 36;
 
 let bandi = [];
 let salute = {};
-let meta = { ultimoControllo: null, soglia: 10, fonti: [] };
-const filtri = { tipo: 'bando', livello: null, ammissibilita: null, stato: null, cerca: '' };
+let meta = { ultimoControllo: null, fonti: [] };
+const filtri = { livello: null, ammissibilita: null, stato: null, cerca: '' };
+
+// Si mostrano solo i bandi adatti alla serie: niente notizie, niente atti
+// amministrativi, niente bandi che toccano solo parole generiche. Gli altri
+// restano nell'archivio dei dati, ma non su questa pagina.
+function adatto(b) {
+  return b.tipo === 'bando' && b.adattoAllaSerie === true;
+}
 
 // In testa cio' che conta di piu', non l'ultimo decreto pubblicato.
 let ordine = 'pertinenza';
@@ -67,8 +74,7 @@ function giorniAllaScadenza(iso) {
 }
 
 function schedaHtml(b) {
-  const etichette = (eNuovo(b) ? '<span class="etichetta nuovo">nuovo</span>' : '')
-    + (b.tipo === 'notizia' ? '<span class="etichetta notizia">notizia</span>' : '');
+  const etichette = eNuovo(b) ? '<span class="etichetta nuovo">nuovo</span>' : '';
   const ente = ENTI[b.entePropostoId] ?? null;
   const data = new Date(b.dataPubblicazione).toLocaleDateString('it-IT');
   const giorni = giorniAllaScadenza(b.scadenza);
@@ -76,7 +82,7 @@ function schedaHtml(b) {
   const salvato = salvati.has(b.id);
 
   return `
-    <article class="scheda ${esc(b.ammissibilita)} ${b.tipo === 'notizia' ? 'notizia' : ''}">
+    <article class="scheda ${esc(b.ammissibilita)}">
       <h3>${esc(b.titolo)}${etichette}</h3>
       <p class="meta">
         ${esc(b.ente)} · ${esc(LIVELLI[b.livello] ?? b.livello)}
@@ -84,9 +90,9 @@ function schedaHtml(b) {
         · pertinenza ${b.pertinenza}/100${giorni !== null ? ` · scade fra ${giorni} giorni` : ''}
       </p>
       ${b.descrizioneBreve ? `<p class="descrizione">${esc(b.descrizioneBreve)}</p>` : ''}
-      ${b.tipo === 'bando' ? `<p class="presenta ${esc(b.ammissibilita)}">
+      <p class="presenta ${esc(b.ammissibilita)}">
         ${ente ? `Presenta: ${esc(ente)}` : esc(AMMISSIBILITA[b.ammissibilita])}
-      </p>` : ''}
+      </p>
       ${b.motivoAmmissibilita
         ? `<p class="citazione">Dal bando: «${esc(b.motivoAmmissibilita)}»</p>` : ''}
       <div class="azioni">
@@ -100,7 +106,7 @@ function schedaHtml(b) {
 function filtra() {
   const q = filtri.cerca.trim().toLowerCase();
   return bandi.filter((b) => {
-    if (filtri.tipo && b.tipo !== filtri.tipo) return false;
+    if (!adatto(b)) return false;
     if (filtri.livello && b.livello !== filtri.livello) return false;
     if (filtri.ammissibilita && b.ammissibilita !== filtri.ammissibilita) return false;
     if (filtri.stato === 'nuovi' && !eNuovo(b)) return false;
@@ -131,10 +137,12 @@ function creaOrdinamento() {
 
 function disegna() {
   const visibili = filtra();
-  document.getElementById('conteggio').textContent =
-    `${visibili.length} su ${bandi.length} in archivio`;
+  const totale = bandi.filter(adatto).length;
+  document.getElementById('conteggio').textContent = visibili.length === totale
+    ? `${totale} bandi adatti alla serie`
+    : `${visibili.length} di ${totale} bandi adatti alla serie`;
   document.getElementById('elenco').innerHTML = visibili.length === 0
-    ? '<p class="vuoto">Nessun elemento corrisponde ai filtri.</p>'
+    ? '<p class="vuoto">Nessun bando corrisponde ai filtri.</p>'
     : visibili.map(schedaHtml).join('');
 }
 
@@ -199,7 +207,7 @@ function disegnaSalute() {
 function mostraPopup() {
   if (visitaPrecedente === null) return;
   const nuovi = bandi
-    .filter((b) => eNuovo(b) && b.tipo === 'bando' && b.pertinenza >= meta.soglia && b.ammissibilita !== 'rosso')
+    .filter((b) => eNuovo(b) && adatto(b) && b.ammissibilita !== 'rosso')
     .sort((a, b) => b.pertinenza - a.pertinenza);
   if (nuovi.length === 0) return;
 
@@ -231,7 +239,6 @@ async function avvia() {
 
   mostraAggiornamento();
   creaOrdinamento();
-  creaFiltri('filtro-tipo', [['bando', 'Solo bandi'], ['notizia', 'Solo notizie']], 'tipo');
   creaFiltri('filtro-livello', Object.entries(LIVELLI), 'livello');
   creaFiltri('filtro-ammissibilita', Object.entries(AMMISSIBILITA), 'ammissibilita');
   creaFiltri('filtro-stato', [['nuovi', 'Nuovi dall\'ultima visita'], ['salvati', 'Salvati']], 'stato');

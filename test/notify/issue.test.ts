@@ -14,7 +14,7 @@ function bando(over: Partial<Bando> = {}): Bando {
     scadenza: null, importo: null, descrizioneBreve: 'Sostegno a progetti di prevenzione.',
     requisiti: [], chiPuoPartecipare: null, ammissibilita: 'verde',
     entePropostoId: 'storiedipiazza', motivoAmmissibilita: 'Possono partecipare le associazioni.',
-    pertinenza: 17, url: 'https://x.it/copower', fonteId: 'infobandi',
+    pertinenza: 17, adattoAllaSerie: true, url: 'https://x.it/copower', fonteId: 'infobandi',
     vistoIl: '2026-09-18T05:00:00.000Z', salvato: false,
     ...over,
   };

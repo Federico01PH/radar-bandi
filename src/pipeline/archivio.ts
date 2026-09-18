@@ -1,7 +1,7 @@
 import { impronta } from './impronta.ts';
-import { calcolaPertinenza } from '../scoring/pertinenza.ts';
+import { calcolaPertinenza, esclusoDalTitolo } from '../scoring/pertinenza.ts';
 import { valutaAmmissibilita } from '../scoring/ammissibilita.ts';
-import { classifica } from '../scoring/tipo.ts';
+import { classifica, sembraUnBando } from '../scoring/tipo.ts';
 import type { Bando, Livello, RisultatoGrezzo } from '../tipi.ts';
 
 const MAX_DESCRIZIONE = 400;
@@ -16,15 +16,16 @@ export function costruisciBando(
   const pertinenza = calcolaPertinenza(grezzo.titolo, grezzo.descrizione);
   const ammissibilita = valutaAmmissibilita(grezzo.titolo, grezzo.descrizione);
   const dataIncerta = grezzo.dataPubblicazione === null;
+  // Se la fonte pubblica solo bandi lo sa lei; altrimenti lo si ricava dal
+  // testo, e nel dubbio e' un bando.
+  const tipo = soloBandi ? 'bando' : classifica(grezzo.titolo, grezzo.descrizione);
 
   return {
     id: impronta(grezzo.fonteId, grezzo.url),
     titolo: grezzo.titolo,
     ente,
     livello,
-    // Se la fonte pubblica solo bandi lo sa lei; altrimenti lo si ricava dal
-    // testo, e nel dubbio e' un bando.
-    tipo: soloBandi ? 'bando' : classifica(grezzo.titolo, grezzo.descrizione),
+    tipo,
     corsie: pertinenza.corsie,
     dataPubblicazione: (grezzo.dataPubblicazione ?? adesso).toISOString(),
     dataIncerta,
@@ -37,11 +38,44 @@ export function costruisciBando(
     entePropostoId: ammissibilita.entePropostoId,
     motivoAmmissibilita: ammissibilita.motivo,
     pertinenza: pertinenza.punteggio,
+    // Si mostra e si notifica solo cio' che e' certamente un bando: da una
+    // fonte di soli bandi, o con un segno esplicito di bando nel testo. Nei
+    // feed misti delle fondazioni, senza quel segno, un festival o un evento
+    // finirebbero tra i bandi.
+    adattoAllaSerie: tipo === 'bando'
+      && (soloBandi || sembraUnBando(grezzo.titolo, grezzo.descrizione))
+      && pertinenza.forte
+      && !esclusoDalTitolo(grezzo.titolo),
     url: grezzo.url,
     fonteId: grezzo.fonteId,
     vistoIl: adesso.toISOString(),
     salvato: false,
   };
+}
+
+/**
+ * Ricalcola tipo, pertinenza e ammissibilita' di un bando gia' in archivio
+ * con le regole di oggi, conservando la nostra relazione con il bando.
+ *
+ * Senza questo, ritoccare le regole in config.ts cambierebbe solo i bandi
+ * raccolti da quel giorno in poi, e lo storico resterebbe valutato con le
+ * regole vecchie. Si lavora sulla descrizione breve, l'unica conservata.
+ */
+export function rivaluta(bando: Bando, soloBandi: boolean): Bando {
+  const nuovo = costruisciBando(
+    {
+      titolo: bando.titolo,
+      url: bando.url,
+      descrizione: bando.descrizioneBreve,
+      dataPubblicazione: new Date(bando.dataPubblicazione),
+      fonteId: bando.fonteId,
+    },
+    bando.ente,
+    bando.livello,
+    new Date(bando.vistoIl),
+    soloBandi,
+  );
+  return { ...nuovo, dataIncerta: bando.dataIncerta, vistoIl: bando.vistoIl, salvato: bando.salvato };
 }
 
 export type EsitoFusione = {

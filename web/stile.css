@@ -53,7 +53,6 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .scheda.giallo { border-left-color: var(--giallo); }
 .scheda.rosso { border-left-color: var(--rosso); }
 .scheda.ignota { border-left-color: var(--ignota); }
-.scheda.notizia { opacity: 0.8; }
 .scheda h3 { margin: 0 0 4px; font-size: 16px; line-height: 1.35; }
 .meta { color: var(--debole); font-size: 12.5px; margin: 0 0 8px; }
 .descrizione { margin: 0 0 10px; }
@@ -78,7 +77,6 @@ button:focus-visible, a:focus-visible, input:focus-visible {
   vertical-align: 2px; font-weight: 600;
 }
 .etichetta.nuovo { background: var(--evidenza); color: var(--su-evidenza); }
-.etichetta.notizia { background: var(--superficie); color: var(--debole); border: 1px solid var(--bordo); }
 
 .salute { margin-top: 48px; border-top: 1px solid var(--bordo); padding-top: 18px; }
 .salute h2 { font-size: 15px; margin: 0 0 4px; }
