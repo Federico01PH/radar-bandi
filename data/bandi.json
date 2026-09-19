@@ -1,5 +1,31 @@
 [
   {
+    "id": "7e731df1d4bcbf777925904abaab79ab4aea2c71a5ff21472c47473cd4f01dfa",
+    "titolo": "Sistemazione temporanea dei salariati agricoli stagionali delle aziende agricole piemontesi - Bando 2026",
+    "ente": "Regione Piemonte",
+    "livello": "regionale",
+    "tipo": "bando",
+    "corsie": [
+      "giovani"
+    ],
+    "dataPubblicazione": "2026-09-18T22:00:01.000Z",
+    "dataIncerta": false,
+    "scadenza": null,
+    "importo": null,
+    "descrizioneBreve": "Contributi e finanziamenti Scaduto La Regione Piemonte ha intrapreso un'azione di supporto all'attività di raccolta stagionale in agricoltura per contribuire alla prevenzione dello sfruttamento lavorativo e del fenomeno del caporalato, con l'obiettivo…",
+    "requisiti": [],
+    "chiPuoPartecipare": null,
+    "ammissibilita": "ignota",
+    "entePropostoId": null,
+    "motivoAmmissibilita": null,
+    "pertinenza": 4,
+    "adattoAllaSerie": false,
+    "url": "https://bandi.regione.piemonte.it/contributi-finanziamenti/sistemazione-temporanea-dei-salariati-agricoli-stagionali-aziende-agricole-piemontesi-bando-2026",
+    "fonteId": "piemonte",
+    "vistoIl": "2026-09-19T09:11:30.839Z",
+    "salvato": false
+  },
+  {
     "id": "d906d6c3f35c279f7ebead059b13b514b9ee0f703344519c0a3c986f7e2d5362",
     "titolo": "Bando relativo al riconoscimento della qualifica di sala d’essai e alla concessione di contributi sulla programmazione di film d’essai ovvero di ricerca e sperimentazione realizzata nell’anno 2025 – art. 27 della Legge 14 novembre 2016, n. 220 – annualità 2026",
     "ente": "Ministero della Cultura",
