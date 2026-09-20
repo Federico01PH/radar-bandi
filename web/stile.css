@@ -1,118 +1,258 @@
+/*
+ * Look volutamente "portale del 2003": Verdana, barra blu, riquadri squadrati
+ * con l'ombra netta, link blu sottolineati, pulsanti in rilievo.
+ *
+ * Non e' nostalgia fine a se stessa. Chi usa questa piattaforma ha cinquant'anni
+ * e su quei siti ci ha imparato a navigare: bottoni che sembrano bottoni, link
+ * che sembrano link, testo grande e nero su bianco. Niente tema scuro, niente
+ * animazioni: nel 2003 non c'erano, e qui non servono.
+ */
 :root {
-  --testo: #1f2328; --debole: #59636e; --bordo: #d1d9e0; --sfondo: #ffffff; --superficie: #f6f8fa;
-  --verde: #1a7f37; --giallo: #9a6700; --rosso: #cf222e; --ignota: #59636e;
-  --evidenza: #0969da; --su-evidenza: #ffffff;
+  color-scheme: light;
+  --inchiostro: #16181a;
+  --debole: #4f5b66;
+  --bordo: #a9b4be;
+  --bordo-scuro: #78848f;
+  --sfondo: #e7ebef;
+  --carta: #ffffff;
+  --barra-alta: #3a7cb8;
+  --barra-bassa: #1b4a7a;
+  --link: #0b3d91;
+  --visitato: #551a8b;
+  --caldo: #c0392b;
+  --verde: #14682c;
+  --giallo: #7a5c00;
+  --rosso: #a51f16;
+  --ignota: #4f5b66;
+  --nota-sfondo: #fffbdd;
+  --nota-bordo: #d9c26a;
+  --testata: #eef2f6;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --testo: #e6edf3; --debole: #9198a1; --bordo: #3d444d; --sfondo: #0d1117; --superficie: #151b23;
-    --verde: #3fb950; --giallo: #d29922; --rosso: #f85149; --ignota: #9198a1;
-    --evidenza: #4493f8; --su-evidenza: #0d1117;
-  }
-}
-* { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
-body {
-  margin: 0 auto; padding: 28px 16px 64px; max-width: 860px;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  line-height: 1.55; color: var(--testo); background: var(--sfondo);
-}
-h1 { margin: 0; font-size: 26px; letter-spacing: -0.01em; }
-.sottotitolo { margin: 2px 0 0; color: var(--debole); }
-.aggiornamento { margin: 6px 0 0; color: var(--debole); font-size: 13px; }
-.aggiornamento.vecchio { color: var(--rosso); font-weight: 600; }
 
-.filtri { margin: 24px 0 8px; display: flex; flex-direction: column; gap: 10px; }
-#cerca {
-  width: 100%; padding: 10px 12px; font-size: 16px;
-  border: 1px solid var(--bordo); border-radius: 8px;
-  background: var(--sfondo); color: var(--testo);
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; background: var(--sfondo); }
+
+body {
+  margin: 0 auto;
+  padding: 18px 12px 40px;
+  max-width: 880px;
+  background: var(--sfondo);
+  color: var(--inchiostro);
+  font: 15px/1.6 Verdana, Tahoma, Geneva, sans-serif;
 }
-.gruppo { display: flex; flex-wrap: wrap; gap: 6px; }
-.gruppo button {
-  padding: 6px 12px; font-size: 13px; cursor: pointer; font-family: inherit;
-  border: 1px solid var(--bordo); border-radius: 999px;
-  background: transparent; color: var(--debole);
+
+/* La testata: la barra blu in gradiente e' la firma dell'epoca. */
+header {
+  background: linear-gradient(180deg, var(--barra-alta), var(--barra-bassa));
+  border: 1px solid var(--barra-bassa);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.18);
+  padding: 14px 16px 12px;
+  margin-bottom: 18px;
+}
+h1 {
+  margin: 0;
+  font: bold 27px/1.15 Georgia, "Times New Roman", serif;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.35);
+}
+.sottotitolo { margin: 3px 0 0; color: #d6e6f5; font-size: 13px; }
+.aggiornamento {
+  margin: 10px 0 0; padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  color: #e8f1fa; font-size: 12px;
+}
+.aggiornamento.vecchio {
+  color: #fff3b0; font-weight: bold;
+}
+
+/* I filtri stanno in un pannello, come le "opzioni di ricerca" di allora. */
+.filtri {
+  background: var(--carta);
+  border: 1px solid var(--bordo);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.10);
+  padding: 12px 14px;
+  margin: 0 0 16px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+#cerca {
+  width: 100%; padding: 8px 9px;
+  font: 16px Verdana, Tahoma, sans-serif;
+  color: var(--inchiostro); background: #ffffff;
+  border: 2px inset #c8d0d8;
+}
+.gruppo { display: flex; flex-wrap: wrap; gap: 5px; }
+
+/* Pulsanti in rilievo: si vede che si premono. */
+.gruppo button, .azioni a, .azioni button, dialog button {
+  font: 12px/1.2 Verdana, Tahoma, sans-serif;
+  color: var(--inchiostro);
+  background: linear-gradient(180deg, #ffffff, #dfe4e9);
+  border: 1px solid var(--bordo-scuro);
+  border-radius: 2px;
+  padding: 6px 11px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.14);
+}
+.gruppo button:hover, .azioni a:hover, .azioni button:hover, dialog button:hover {
+  background: linear-gradient(180deg, #ffffff, #cfd8e0);
+}
+.gruppo button:active, .azioni a:active, .azioni button:active {
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.25);
 }
 .gruppo button[aria-pressed="true"] {
-  background: var(--evidenza); border-color: var(--evidenza); color: var(--su-evidenza);
+  background: linear-gradient(180deg, #3a7cb8, #1b4a7a);
+  border-color: var(--barra-bassa);
+  color: #ffffff; font-weight: bold;
+}
+.azioni button[aria-pressed="true"] {
+  background: linear-gradient(180deg, #e6ecf2, #c9d4de);
+  font-weight: bold;
 }
 button:focus-visible, a:focus-visible, input:focus-visible {
-  outline: 2px solid var(--evidenza); outline-offset: 2px;
+  outline: 2px solid var(--caldo); outline-offset: 1px;
 }
 
-.conteggio { color: var(--debole); font-size: 13px; margin: 16px 0 12px; }
-.vuoto { color: var(--debole); padding: 24px 0; }
+.conteggio {
+  margin: 0 0 12px; padding: 5px 2px;
+  color: var(--debole); font-size: 12px;
+  border-bottom: 1px solid var(--bordo);
+}
+.vuoto {
+  background: var(--carta); border: 1px solid var(--bordo);
+  padding: 22px 16px; color: var(--debole);
+}
 
+/* Ogni bando e' una scheda squadrata, con la striscia del colore a sinistra. */
 .scheda {
-  border: 1px solid var(--bordo); border-left-width: 4px;
-  border-radius: 8px; padding: 14px 16px; margin-bottom: 14px;
+  background: var(--carta);
+  border: 1px solid var(--bordo);
+  border-left: 7px solid var(--ignota);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.10);
+  padding: 0 0 14px;
+  margin: 0 0 18px;
   overflow-wrap: anywhere;
 }
 .scheda.verde { border-left-color: var(--verde); }
 .scheda.giallo { border-left-color: var(--giallo); }
 .scheda.rosso { border-left-color: var(--rosso); }
 .scheda.ignota { border-left-color: var(--ignota); }
-.scheda h3 { margin: 0 0 4px; font-size: 16px; line-height: 1.35; }
-.meta { color: var(--debole); font-size: 12.5px; margin: 0 0 8px; }
-.descrizione { margin: 0 0 10px; }
-.presenta { font-weight: 600; margin: 0 0 4px; }
+
+.scheda h3 {
+  margin: 0; padding: 11px 15px 9px;
+  background: var(--testata);
+  border-bottom: 1px solid var(--bordo);
+  font: bold 16px/1.4 Georgia, "Times New Roman", serif;
+}
+.meta { margin: 0; color: var(--debole); font-size: 11.5px; }
+/* La riga dei dettagli e' una fascia solo dentro la scheda: nel popup dei
+   nuovi bandi la stessa classe deve restare una riga di testo e basta. */
+.scheda > .meta {
+  padding: 7px 15px;
+  background: #f7f9fb;
+  border-bottom: 1px solid #e3e8ed;
+}
+.descrizione { margin: 12px 15px; }
+
+/* Il "nuovo" e' il bollino rosso dei portali di allora, senza il gif animato. */
+.etichetta {
+  display: inline-block; vertical-align: 2px; margin-left: 8px;
+  font: bold 10px/1 Verdana, Tahoma, sans-serif; letter-spacing: 0.06em;
+  padding: 3px 5px; border-radius: 2px; text-transform: uppercase;
+}
+.etichetta.nuovo { background: var(--caldo); color: #ffffff; }
+
+/* La scadenza: il riquadro giallo "post-it", quello che si guardava per primo. */
+.scadenza {
+  margin: 12px 15px; padding: 7px 11px;
+  display: inline-block;
+  font: bold 13px "Courier New", Courier, monospace;
+  background: var(--nota-sfondo);
+  border: 1px solid var(--nota-bordo);
+  border-left: 4px solid var(--nota-bordo);
+  color: #4a3b00;
+}
+.scadenza.urgente {
+  background: #ffe9e4; border-color: #d08070; border-left-color: var(--caldo);
+  color: #7d1f14;
+}
+.scadenza.scaduto { background: #f1f3f5; border-color: var(--bordo); color: var(--rosso); }
+.scadenza.ignota {
+  background: #f1f3f5; border-color: var(--bordo); border-left-color: var(--bordo);
+  color: var(--debole); font-weight: normal;
+}
+
+/* Elenchi puntati col quadratino, come nei siti dell'epoca. */
+.requisiti { margin: 12px 15px; padding-left: 22px; list-style: square; }
+.requisiti li { margin-bottom: 6px; }
+.requisiti .voce { list-style: none; margin-left: 4px; color: var(--debole); }
+.requisiti .voce::before { content: "\2013\00a0"; color: var(--bordo-scuro); }
+
+.presenta { margin: 12px 15px 6px; font-weight: bold; }
 .presenta.verde { color: var(--verde); }
 .presenta.giallo { color: var(--giallo); }
 .presenta.rosso { color: var(--rosso); }
 .presenta.ignota { color: var(--ignota); }
+
 .citazione {
-  margin: 0 0 10px; color: var(--debole); font-size: 13px;
-  border-left: 2px solid var(--bordo); padding-left: 10px;
+  margin: 8px 15px 0; padding: 8px 11px;
+  background: #f7f9fb; border: 1px dotted var(--bordo);
+  color: var(--debole); font-size: 12.5px;
 }
-.azioni { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-.azioni a, .azioni button {
-  font-size: 13px; padding: 7px 12px; border-radius: 6px; cursor: pointer;
-  border: 1px solid var(--bordo); background: transparent; font-family: inherit;
-  color: var(--evidenza); text-decoration: none;
-}
-.azioni button[aria-pressed="true"] { background: var(--superficie); color: var(--testo); }
-.etichetta {
-  font-size: 11px; padding: 1px 8px; border-radius: 999px; margin-left: 6px;
-  vertical-align: 2px; font-weight: 600;
-}
-.etichetta.nuovo { background: var(--evidenza); color: var(--su-evidenza); }
+.azioni { display: flex; flex-wrap: wrap; gap: 7px; margin: 14px 15px 0; }
+.azioni a, .azioni button { color: var(--link); }
 
-.salute { margin-top: 48px; border-top: 1px solid var(--bordo); padding-top: 18px; }
-.salute h2 { font-size: 15px; margin: 0 0 4px; }
-.nota { color: var(--debole); font-size: 12.5px; margin: 0 0 12px; }
-.fonte { font-size: 13px; color: var(--debole); margin: 0 0 6px; display: flex; gap: 8px; align-items: baseline; }
-.pallino { flex: none; display: inline-block; width: 9px; height: 9px; border-radius: 50%; }
+/* Lo stato delle fonti: un pannello a parte, in fondo, come i "servizi". */
+.salute {
+  margin-top: 30px;
+  background: var(--carta);
+  border: 1px solid var(--bordo);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.10);
+  padding: 0 0 12px;
+}
+.salute h2 {
+  margin: 0; padding: 9px 15px;
+  background: var(--testata); border-bottom: 1px solid var(--bordo);
+  font: bold 14px Georgia, "Times New Roman", serif;
+}
+.nota { margin: 11px 15px; color: var(--debole); font-size: 12px; }
+.fonte {
+  margin: 0 15px 5px; font-size: 12.5px; color: var(--debole);
+  display: flex; gap: 8px; align-items: baseline;
+}
+.pallino {
+  flex: none; display: inline-block; width: 10px; height: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+}
 
+/* Il popup: una finestrella con la barra del titolo. */
 dialog {
-  border: 1px solid var(--bordo); border-radius: 10px; width: min(560px, calc(100vw - 32px));
-  background: var(--sfondo); color: var(--testo); padding: 20px;
+  padding: 0; width: min(560px, calc(100vw - 24px));
+  background: var(--carta);
+  color: var(--inchiostro);
+  border: 1px solid var(--barra-bassa);
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
 }
-dialog::backdrop { background: rgba(0, 0, 0, 0.5); }
-dialog h2 { margin: 0 0 12px; font-size: 18px; }
-dialog p { margin: 0 0 12px; }
-dialog button {
-  margin-top: 6px; padding: 8px 18px; cursor: pointer; font-family: inherit; font-size: 14px;
-  border: 1px solid var(--evidenza); border-radius: 6px;
-  background: var(--evidenza); color: var(--su-evidenza);
+dialog::backdrop { background: rgba(20, 35, 50, 0.55); }
+dialog h2 {
+  margin: 0 0 14px; padding: 9px 14px;
+  background: linear-gradient(180deg, var(--barra-alta), var(--barra-bassa));
+  color: #ffffff; font: bold 15px Georgia, "Times New Roman", serif;
 }
-.meta .urgente { color: var(--giallo); }
-.meta .scaduto { color: var(--rosso); }
+dialog p { margin: 0 14px 12px; }
+dialog div { margin: 0 14px; }
+dialog button { margin: 4px 14px 16px; padding: 7px 16px; font-size: 13px; }
 
-/* La scadenza e' cio' che fa perdere i bandi: si legge prima della descrizione. */
-.scadenza {
-  margin: 0 0 10px; font-weight: 600; font-size: 14px;
-  padding: 6px 10px; border-radius: 6px;
-  background: var(--superficie); display: inline-block;
+a { color: var(--link); }
+a:visited { color: var(--visitato); }
+a:hover { color: var(--caldo); }
+
+.meta .urgente { color: var(--caldo); font-weight: bold; }
+.meta .scaduto { color: var(--rosso); font-weight: bold; }
+
+@media (max-width: 520px) {
+  body { padding: 10px 8px 32px; font-size: 14.5px; }
+  h1 { font-size: 23px; }
+  .scheda h3 { font-size: 15px; }
+  .descrizione, .requisiti, .presenta, .citazione, .azioni, .scadenza { margin-left: 11px; margin-right: 11px; }
 }
-.scadenza.urgente { background: var(--giallo); color: var(--sfondo); }
-.scadenza.scaduto { color: var(--rosso); }
-.scadenza.ignota { font-weight: 500; color: var(--debole); }
-
-.requisiti { margin: 0 0 10px; padding-left: 20px; }
-.requisiti li { margin-bottom: 4px; }
-
-/* Le caratteristiche che il bando elenca dopo i due punti: rientrate sotto
-   il punto che le introduce, cosi' si vede che ne fanno parte. */
-.requisiti .voce { list-style: none; margin-left: 10px; }
-.requisiti .voce::before { content: '– '; color: var(--debole); }

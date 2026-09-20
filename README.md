@@ -140,6 +140,17 @@ del bando da cui è dedotto: si controlla in due secondi. **Non scartate mai un 
 "Salva" ricorda il bando su quel dispositivo. "Inoltra su WhatsApp" apre WhatsApp con titolo e link già
 pronti da mandare al gruppo.
 
+## L'aspetto del sito
+
+Il sito ha l'aria di un portale dei primi anni Duemila: Verdana e Georgia, barra blu in testa, riquadri
+squadrati con l'ombra netta, pulsanti in rilievo, link blu sottolineati, elenchi col quadratino, la
+scadenza su un post-it giallo in Courier.
+
+È una scelta, non un residuo. Chi usa questa piattaforma ha cinquant'anni e su quei siti ha imparato a
+navigare: i bottoni sembrano bottoni, i link sembrano link, il testo è grande e nero su bianco. Non c'è
+il tema scuro — nel 2003 non esisteva — e non ci sono animazioni. Prima di "modernizzarlo", tenete conto
+che la leggibilità qui conta più dell'attualità.
+
 ## Quando arriva un allarme
 
 Un'email "N fonti non rispondono" significa che quelle fonti non portano risultati da tre controlli.
