@@ -74,11 +74,20 @@ account, avvisa anche delle segnalazioni aperte nel repository.
 Per farla arrivare ad altri membri del gruppo: devono avere un account GitHub e premere **Watch** sul
 repository.
 
-### 4 bis. Email diretta, facoltativa
+**Notifiche per email, senza configurare un server di posta.** Gli indirizzi che devono ricevere vanno
+nel segreto `EMAIL_DESTINATARI` (**Settings → Secrets and variables → Actions → New repository secret**),
+separati da virgola. Ci pensa ntfy a spedire: arriva un'unica email di riepilogo per controllo, con tutti
+i bandi nuovi, chi presenta, scadenza e link. Serve comunque `NTFY_TOPIC`. Gli indirizzi stanno in un
+segreto e non nel codice perché il repository è pubblico.
 
-Se si preferisce un'email vera e propria, anche a chi non ha GitHub, in
+La prima volta conviene controllare la cartella spam: il mittente è ntfy, non un indirizzo della
+produzione. Per una posta con mittente vostro c'è il paragrafo qui sotto.
+
+### 4 bis. Email da un indirizzo vostro, facoltativa
+
+Se si preferisce che l'email parta da un indirizzo della produzione, in
 **Settings → Secrets and variables → Actions → New repository secret** si creano questi cinque segreti.
-Quando ci sono, le notifiche partono via email invece che come segnalazioni:
+Quando ci sono, le notifiche partono da lì e ntfy non le spedisce più (altrimenti arriverebbero doppie):
 
 | Nome | Valore |
 |---|---|

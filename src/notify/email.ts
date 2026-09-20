@@ -40,6 +40,15 @@ function mancante(cred: Credenziali): string | null {
   return null;
 }
 
+/**
+ * Gli indirizzi a cui far arrivare l'email per l'altra strada (ntfy), cioe'
+ * quando SMTP non e' configurato. Con SMTP acceso nessuno: la riceverebbero
+ * due volte.
+ */
+export function destinatariSenzaSmtp(cred: Credenziali): string[] {
+  return emailConfigurata(cred) ? [] : cred.destinatari;
+}
+
 /** true se l'email via SMTP ha tutto cio' che serve per partire. */
 export function emailConfigurata(cred: Credenziali): boolean {
   return mancante(cred) === null;

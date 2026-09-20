@@ -93,3 +93,15 @@ describe('inviaAllarmeFonti', () => {
     expect(mail.html).toContain('InfoBandi CSVnet');
   });
 });
+
+describe('destinatariSenzaSmtp', () => {
+  it('con SMTP configurato non passa nessun indirizzo all\'altra strada: riceverebbero due volte', async () => {
+    const { destinatariSenzaSmtp } = await import('../../src/notify/email.ts');
+    expect(destinatariSenzaSmtp(credenziali)).toEqual([]);
+  });
+
+  it('senza SMTP passa gli indirizzi, cosi\' l\'email parte lo stesso', async () => {
+    const { destinatariSenzaSmtp } = await import('../../src/notify/email.ts');
+    expect(destinatariSenzaSmtp(senzaCredenziali)).toEqual(['uno@esempio.it']);
+  });
+});

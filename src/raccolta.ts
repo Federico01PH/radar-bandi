@@ -8,10 +8,13 @@ import { leggiPagina } from './sources/pagina.ts';
 import { aggiornaStorico, fonteSospetta, type Storico } from './health/salute.ts';
 import { daNotificare } from './notify/formatta.ts';
 import {
-  credenzialiDaAmbiente, emailConfigurata, inviaAllarmeFonti, inviaEmail, type EsitoInvio,
+  credenzialiDaAmbiente, destinatariSenzaSmtp, emailConfigurata, inviaAllarmeFonti, inviaEmail,
+  type EsitoInvio,
 } from './notify/email.ts';
 import { scriviSegnalazioneAllarme, scriviSegnalazioneBandi } from './notify/issue.ts';
-import { messaggiBandi, messaggioAllarme, messaggioProva, pubblicaNtfy } from './notify/ntfy.ts';
+import {
+  messaggiBandi, messaggioAllarme, messaggioProva, perEmail, pubblicaNtfy, riepilogoEmail,
+} from './notify/ntfy.ts';
 import type { Adattatore } from './sources/tipi.ts';
 import type { Bando, EsitoFonte } from './tipi.ts';
 
@@ -117,16 +120,23 @@ function notificheReali(): Notifiche {
     };
 
   const topic = process.env['NTFY_TOPIC'] ?? '';
+  // Senza SMTP l'email parte lo stesso: la spedisce ntfy agli stessi indirizzi.
+  const destinatari = destinatariSenzaSmtp(cred);
   if (!topic) return principale;
   const push: Notifiche = {
     async inviaEmail(bandi) {
       if (bandi.length === 0) return { inviata: false, motivo: 'nessun bando da segnalare' };
-      await pubblicaNtfy(messaggiBandi(bandi, topic, indirizzoSito()));
+      const sito = indirizzoSito();
+      await pubblicaNtfy([
+        ...messaggiBandi(bandi, topic, sito),
+        ...perEmail(riepilogoEmail(bandi, topic, sito), destinatari),
+      ]);
       return { inviata: true, motivo: null };
     },
     async inviaAllarmeFonti(fonti) {
       if (fonti.length === 0) return { inviata: false, motivo: 'nessuna fonte sospetta' };
-      await pubblicaNtfy([messaggioAllarme(fonti, topic, indirizzoSito())]);
+      const allarme = messaggioAllarme(fonti, topic, indirizzoSito());
+      await pubblicaNtfy([allarme, ...perEmail(allarme, destinatari)]);
       return { inviata: true, motivo: null };
     },
   };
@@ -262,7 +272,9 @@ if (eseguitoDirettamente) {
   const topic = process.env['NTFY_TOPIC'] ?? '';
   if (process.env['PROVA_NOTIFICHE'] === 'true' && topic) {
     try {
-      await pubblicaNtfy([messaggioProva(esito.adatti, topic, indirizzoSito())]);
+      const prova = messaggioProva(esito.adatti, topic, indirizzoSito());
+      const destinatari = destinatariSenzaSmtp(credenzialiDaAmbiente());
+      await pubblicaNtfy([prova, ...perEmail(prova, destinatari)]);
       console.log('Avviso di prova inviato.');
     } catch (errore) {
       esito.errori.push(`avviso di prova fallito: ${errore instanceof Error ? errore.message : String(errore)}`);
