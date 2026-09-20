@@ -1,258 +1,370 @@
 /*
- * Look volutamente "portale del 2003": Verdana, barra blu, riquadri squadrati
- * con l'ombra netta, link blu sottolineati, pulsanti in rilievo.
+ * Look istituzionale contemporaneo, sulla linea dei servizi pubblici digitali:
+ * Titillium Web (il carattere della pubblica amministrazione italiana), blu
+ * istituzionale, schede nette su fondo chiaro, stati dichiarati a parole oltre
+ * che a colori, messa a fuoco sempre visibile.
  *
- * Non e' nostalgia fine a se stessa. Chi usa questa piattaforma ha cinquant'anni
- * e su quei siti ci ha imparato a navigare: bottoni che sembrano bottoni, link
- * che sembrano link, testo grande e nero su bianco. Niente tema scuro, niente
- * animazioni: nel 2003 non c'erano, e qui non servono.
+ * Le regole che non si toccano: contrasto alto, testo da 16px in su, niente
+ * informazione affidata al solo colore, bersagli grandi abbastanza da premere
+ * col pollice. Chi legge ha cinquant'anni e spesso e' sul telefono.
  */
 :root {
-  color-scheme: light;
-  --inchiostro: #16181a;
-  --debole: #4f5b66;
-  --bordo: #a9b4be;
-  --bordo-scuro: #78848f;
-  --sfondo: #e7ebef;
+  color-scheme: light dark;
+
+  --blu: #0057b7;
+  --blu-scuro: #17324d;
+  --blu-chiaro: #e7f0fa;
+  --inchiostro: #17324d;
+  --testo: #1b2733;
+  --debole: #5a6772;
+  --bordo: #d5dce3;
+  --bordo-forte: #b3bec9;
+  --fondo: #f3f5f7;
   --carta: #ffffff;
-  --barra-alta: #3a7cb8;
-  --barra-bassa: #1b4a7a;
-  --link: #0b3d91;
-  --visitato: #551a8b;
-  --caldo: #c0392b;
-  --verde: #14682c;
-  --giallo: #7a5c00;
-  --rosso: #a51f16;
-  --ignota: #4f5b66;
-  --nota-sfondo: #fffbdd;
-  --nota-bordo: #d9c26a;
-  --testata: #eef2f6;
+
+  --verde: #00694a;
+  --verde-tinta: #e3f3ec;
+  --giallo: #8a5700;
+  --giallo-tinta: #fdf1dd;
+  --rosso: #b3261e;
+  --rosso-tinta: #fce9e7;
+  --ignota: #5a6772;
+  --ignota-tinta: #eef1f4;
+
+  --fuoco: #ffbf47;
+  --raggio: 10px;
+  --ombra: 0 1px 2px rgba(23, 50, 77, 0.06), 0 6px 16px rgba(23, 50, 77, 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --blu: #7cb2f0;
+    --blu-scuro: #d7e4f2;
+    --blu-chiaro: #17293d;
+    --inchiostro: #e8eef5;
+    --testo: #e8eef5;
+    --debole: #a3b1bf;
+    --bordo: #2a3a4c;
+    --bordo-forte: #3d5166;
+    --fondo: #0f1721;
+    --carta: #16202c;
+
+    --verde: #5fd0a4;
+    --verde-tinta: #10291f;
+    --giallo: #e8b25c;
+    --giallo-tinta: #2a2113;
+    --rosso: #f08077;
+    --rosso-tinta: #2c1512;
+    --ignota: #a3b1bf;
+    --ignota-tinta: #1d2733;
+
+    --ombra: 0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 18px rgba(0, 0, 0, 0.35);
+  }
 }
 
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; background: var(--sfondo); }
+html { -webkit-text-size-adjust: 100%; background: var(--fondo); }
 
 body {
   margin: 0 auto;
-  padding: 18px 12px 40px;
-  max-width: 880px;
-  background: var(--sfondo);
-  color: var(--inchiostro);
-  font: 15px/1.6 Verdana, Tahoma, Geneva, sans-serif;
+  padding: 0 16px 56px;
+  max-width: 920px;
+  background: var(--fondo);
+  color: var(--testo);
+  font: 16px/1.6 "Titillium Web", "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* La testata: la barra blu in gradiente e' la firma dell'epoca. */
+/* Testata: la banda blu sottile in cima e' il segno dei servizi pubblici. */
 header {
-  background: linear-gradient(180deg, var(--barra-alta), var(--barra-bassa));
-  border: 1px solid var(--barra-bassa);
-  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.18);
-  padding: 14px 16px 12px;
-  margin-bottom: 18px;
+  margin: 0 -16px 24px;
+  padding: 26px 16px 20px;
+  background: var(--carta);
+  border-bottom: 1px solid var(--bordo);
+  border-top: 4px solid var(--blu);
 }
+header > * { max-width: 888px; margin-inline: auto; }
 h1 {
   margin: 0;
-  font: bold 27px/1.15 Georgia, "Times New Roman", serif;
-  color: #ffffff;
-  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.35);
+  font-size: clamp(24px, 5vw, 32px);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--inchiostro);
 }
-.sottotitolo { margin: 3px 0 0; color: #d6e6f5; font-size: 13px; }
+.sottotitolo { margin: 4px 0 0; color: var(--debole); font-size: 15px; }
 .aggiornamento {
-  margin: 10px 0 0; padding-top: 8px;
-  border-top: 1px solid rgba(255, 255, 255, 0.35);
-  color: #e8f1fa; font-size: 12px;
+  margin: 14px auto 0;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 12px 5px 10px;
+  background: var(--blu-chiaro);
+  border-radius: 999px;
+  color: var(--inchiostro); font-size: 13px; font-weight: 600;
+}
+.aggiornamento::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--verde); flex: none;
 }
 .aggiornamento.vecchio {
-  color: #fff3b0; font-weight: bold;
+  background: var(--rosso-tinta); color: var(--rosso);
 }
+.aggiornamento.vecchio::before { background: var(--rosso); }
 
-/* I filtri stanno in un pannello, come le "opzioni di ricerca" di allora. */
+/* Filtri: pannello discreto, bersagli grandi, stato premuto inequivocabile. */
 .filtri {
   background: var(--carta);
   border: 1px solid var(--bordo);
-  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.10);
-  padding: 12px 14px;
-  margin: 0 0 16px;
-  display: flex; flex-direction: column; gap: 10px;
+  border-radius: var(--raggio);
+  box-shadow: var(--ombra);
+  padding: 16px;
+  margin: 0 0 20px;
+  display: flex; flex-direction: column; gap: 12px;
 }
 #cerca {
-  width: 100%; padding: 8px 9px;
-  font: 16px Verdana, Tahoma, sans-serif;
-  color: var(--inchiostro); background: #ffffff;
-  border: 2px inset #c8d0d8;
+  width: 100%; padding: 12px 14px;
+  font: 16px "Titillium Web", "Segoe UI", system-ui, sans-serif;
+  color: var(--testo); background: var(--carta);
+  border: 1px solid var(--bordo-forte);
+  border-radius: 8px;
 }
-.gruppo { display: flex; flex-wrap: wrap; gap: 5px; }
-
-/* Pulsanti in rilievo: si vede che si premono. */
-.gruppo button, .azioni a, .azioni button, dialog button {
-  font: 12px/1.2 Verdana, Tahoma, sans-serif;
+#cerca::placeholder { color: var(--debole); }
+.gruppo { display: flex; flex-wrap: wrap; gap: 8px; }
+.gruppo button {
+  font: 600 14px/1.2 "Titillium Web", "Segoe UI", system-ui, sans-serif;
   color: var(--inchiostro);
-  background: linear-gradient(180deg, #ffffff, #dfe4e9);
-  border: 1px solid var(--bordo-scuro);
-  border-radius: 2px;
-  padding: 6px 11px;
+  background: var(--carta);
+  border: 1px solid var(--bordo-forte);
+  border-radius: 999px;
+  padding: 8px 15px;
   cursor: pointer;
-  text-decoration: none;
-  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.14);
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
 }
-.gruppo button:hover, .azioni a:hover, .azioni button:hover, dialog button:hover {
-  background: linear-gradient(180deg, #ffffff, #cfd8e0);
-}
-.gruppo button:active, .azioni a:active, .azioni button:active {
-  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.25);
-}
+.gruppo button:hover { background: var(--blu-chiaro); border-color: var(--blu); }
 .gruppo button[aria-pressed="true"] {
-  background: linear-gradient(180deg, #3a7cb8, #1b4a7a);
-  border-color: var(--barra-bassa);
-  color: #ffffff; font-weight: bold;
+  background: var(--blu); border-color: var(--blu); color: #ffffff;
 }
-.azioni button[aria-pressed="true"] {
-  background: linear-gradient(180deg, #e6ecf2, #c9d4de);
-  font-weight: bold;
+@media (prefers-color-scheme: dark) {
+  .gruppo button[aria-pressed="true"] { color: #0f1721; }
 }
+
+/* La messa a fuoco si vede sempre: qui si naviga anche da tastiera. */
 button:focus-visible, a:focus-visible, input:focus-visible {
-  outline: 2px solid var(--caldo); outline-offset: 1px;
+  outline: 3px solid var(--fuoco);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 .conteggio {
-  margin: 0 0 12px; padding: 5px 2px;
-  color: var(--debole); font-size: 12px;
-  border-bottom: 1px solid var(--bordo);
+  margin: 0 0 14px; color: var(--debole); font-size: 14px; font-weight: 600;
 }
 .vuoto {
   background: var(--carta); border: 1px solid var(--bordo);
-  padding: 22px 16px; color: var(--debole);
+  border-radius: var(--raggio); padding: 32px 20px; color: var(--debole);
 }
 
-/* Ogni bando e' una scheda squadrata, con la striscia del colore a sinistra. */
+/* Scheda: bordo netto, niente decorazione, gerarchia affidata allo spazio. */
 .scheda {
+  position: relative;
   background: var(--carta);
   border: 1px solid var(--bordo);
-  border-left: 7px solid var(--ignota);
-  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.10);
-  padding: 0 0 14px;
-  margin: 0 0 18px;
+  border-radius: var(--raggio);
+  box-shadow: var(--ombra);
+  padding: 22px 22px 18px;
+  margin: 0 0 16px;
   overflow-wrap: anywhere;
+  transition: border-color 140ms ease, transform 140ms ease;
 }
-.scheda.verde { border-left-color: var(--verde); }
-.scheda.giallo { border-left-color: var(--giallo); }
-.scheda.rosso { border-left-color: var(--rosso); }
-.scheda.ignota { border-left-color: var(--ignota); }
+.scheda:hover { border-color: var(--bordo-forte); }
+/* Il colore non basta mai da solo: e' un rinforzo di cio' che c'e' scritto. */
+.scheda::before {
+  content: ""; position: absolute; inset: -1px auto -1px -1px; width: 4px;
+  border-radius: var(--raggio) 0 0 var(--raggio);
+  background: var(--ignota);
+}
+.scheda.verde::before { background: var(--verde); }
+.scheda.giallo::before { background: var(--giallo); }
+.scheda.rosso::before { background: var(--rosso); }
 
 .scheda h3 {
-  margin: 0; padding: 11px 15px 9px;
-  background: var(--testata);
-  border-bottom: 1px solid var(--bordo);
-  font: bold 16px/1.4 Georgia, "Times New Roman", serif;
+  margin: 0 0 6px;
+  font-size: 19px; font-weight: 700; line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--inchiostro);
 }
-.meta { margin: 0; color: var(--debole); font-size: 11.5px; }
-/* La riga dei dettagli e' una fascia solo dentro la scheda: nel popup dei
-   nuovi bandi la stessa classe deve restare una riga di testo e basta. */
-.scheda > .meta {
-  padding: 7px 15px;
-  background: #f7f9fb;
-  border-bottom: 1px solid #e3e8ed;
+.meta {
+  margin: 0 0 14px; color: var(--debole); font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
 }
-.descrizione { margin: 12px 15px; }
+.descrizione { margin: 0 0 16px; }
 
-/* Il "nuovo" e' il bollino rosso dei portali di allora, senza il gif animato. */
 .etichetta {
-  display: inline-block; vertical-align: 2px; margin-left: 8px;
-  font: bold 10px/1 Verdana, Tahoma, sans-serif; letter-spacing: 0.06em;
-  padding: 3px 5px; border-radius: 2px; text-transform: uppercase;
+  display: inline-block; vertical-align: 3px; margin-left: 8px;
+  font: 700 11px/1 "Titillium Web", "Segoe UI", system-ui, sans-serif;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 5px 8px; border-radius: 6px;
 }
-.etichetta.nuovo { background: var(--caldo); color: #ffffff; }
+.etichetta.nuovo { background: var(--blu); color: #ffffff; }
+@media (prefers-color-scheme: dark) { .etichetta.nuovo { color: #0f1721; } }
 
-/* La scadenza: il riquadro giallo "post-it", quello che si guardava per primo. */
+/* La scadenza e' il dato per cui si apre la pagina: riquadro a tutta larghezza. */
 .scadenza {
-  margin: 12px 15px; padding: 7px 11px;
-  display: inline-block;
-  font: bold 13px "Courier New", Courier, monospace;
-  background: var(--nota-sfondo);
-  border: 1px solid var(--nota-bordo);
-  border-left: 4px solid var(--nota-bordo);
-  color: #4a3b00;
+  margin: 0 0 16px; padding: 12px 14px;
+  display: flex; align-items: center; gap: 10px;
+  /* Termine noto e lontano: informativo, non allarmante. Il grigio resta a
+     chi un termine non ce l'ha, altrimenti i due casi si confonderebbero. */
+  background: var(--blu-chiaro);
+  border-left: 4px solid var(--blu);
+  border-radius: 6px;
+  font-size: 15px; font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--blu-scuro);
+}
+.scadenza::before {
+  content: ""; flex: none; width: 10px; height: 10px; border-radius: 50%;
+  background: currentColor; opacity: 0.85;
 }
 .scadenza.urgente {
-  background: #ffe9e4; border-color: #d08070; border-left-color: var(--caldo);
-  color: #7d1f14;
+  background: var(--giallo-tinta); border-left-color: var(--giallo); color: var(--giallo);
 }
-.scadenza.scaduto { background: #f1f3f5; border-color: var(--bordo); color: var(--rosso); }
+.scadenza.scaduto {
+  background: var(--rosso-tinta); border-left-color: var(--rosso); color: var(--rosso);
+}
 .scadenza.ignota {
-  background: #f1f3f5; border-color: var(--bordo); border-left-color: var(--bordo);
-  color: var(--debole); font-weight: normal;
+  background: var(--ignota-tinta);
+  border-left: 4px dashed var(--bordo-forte);
+  color: var(--debole); font-weight: 600;
+}
+.scadenza.ignota::before { background: var(--bordo-forte); }
+
+/* Requisiti: elenco leggibile, voci dell'elenco del bando rientrate. */
+.requisiti { margin: 0 0 16px; padding-left: 20px; }
+.requisiti li { margin-bottom: 8px; }
+.requisiti li::marker { color: var(--blu); }
+.requisiti .voce {
+  list-style: none; margin-left: 2px; color: var(--debole); font-size: 15px;
+}
+.requisiti .voce::before {
+  content: ""; display: inline-block; vertical-align: middle;
+  width: 12px; height: 1px; margin-right: 8px;
+  background: var(--bordo-forte);
 }
 
-/* Elenchi puntati col quadratino, come nei siti dell'epoca. */
-.requisiti { margin: 12px 15px; padding-left: 22px; list-style: square; }
-.requisiti li { margin-bottom: 6px; }
-.requisiti .voce { list-style: none; margin-left: 4px; color: var(--debole); }
-.requisiti .voce::before { content: "\2013\00a0"; color: var(--bordo-scuro); }
-
-.presenta { margin: 12px 15px 6px; font-weight: bold; }
-.presenta.verde { color: var(--verde); }
-.presenta.giallo { color: var(--giallo); }
-.presenta.rosso { color: var(--rosso); }
-.presenta.ignota { color: var(--ignota); }
+/* Chi presenta: una pastiglia con lo stato scritto, non solo colorato. */
+.presenta {
+  margin: 0 0 10px;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px; border-radius: 999px;
+  font-size: 14.5px; font-weight: 700;
+  background: var(--ignota-tinta); color: var(--ignota);
+}
+.presenta::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%;
+  background: currentColor; flex: none;
+}
+.presenta.verde { background: var(--verde-tinta); color: var(--verde); }
+.presenta.giallo { background: var(--giallo-tinta); color: var(--giallo); }
+.presenta.rosso { background: var(--rosso-tinta); color: var(--rosso); }
+.presenta.ignota { background: var(--ignota-tinta); color: var(--ignota); }
 
 .citazione {
-  margin: 8px 15px 0; padding: 8px 11px;
-  background: #f7f9fb; border: 1px dotted var(--bordo);
-  color: var(--debole); font-size: 12.5px;
+  margin: 10px 0 0; padding: 12px 14px;
+  background: var(--fondo);
+  border-left: 3px solid var(--bordo-forte);
+  border-radius: 0 6px 6px 0;
+  color: var(--debole); font-size: 14px;
 }
-.azioni { display: flex; flex-wrap: wrap; gap: 7px; margin: 14px 15px 0; }
-.azioni a, .azioni button { color: var(--link); }
 
-/* Lo stato delle fonti: un pannello a parte, in fondo, come i "servizi". */
+.azioni { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 0; }
+.azioni a, .azioni button {
+  font: 600 14.5px/1.2 "Titillium Web", "Segoe UI", system-ui, sans-serif;
+  padding: 10px 16px; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--bordo-forte);
+  background: var(--carta); color: var(--blu);
+  text-decoration: none;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+.azioni a:hover, .azioni button:hover { background: var(--blu-chiaro); border-color: var(--blu); }
+/* L'azione principale e' aprire il bando: e' l'unica piena. */
+.azioni a:first-child {
+  background: var(--blu); border-color: var(--blu); color: #ffffff;
+}
+.azioni a:first-child:hover { background: var(--blu-scuro); border-color: var(--blu-scuro); }
+@media (prefers-color-scheme: dark) {
+  .azioni a:first-child { color: #0f1721; }
+  .azioni a:first-child:hover { color: #0f1721; }
+}
+.azioni button[aria-pressed="true"] {
+  background: var(--blu-chiaro); border-color: var(--blu); color: var(--inchiostro);
+}
+
+/* Stato delle fonti: la manutenzione si vede, non si nasconde. */
 .salute {
-  margin-top: 30px;
+  margin-top: 36px;
   background: var(--carta);
   border: 1px solid var(--bordo);
-  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.10);
-  padding: 0 0 12px;
+  border-radius: var(--raggio);
+  box-shadow: var(--ombra);
+  padding: 20px 22px 18px;
 }
 .salute h2 {
-  margin: 0; padding: 9px 15px;
-  background: var(--testata); border-bottom: 1px solid var(--bordo);
-  font: bold 14px Georgia, "Times New Roman", serif;
+  margin: 0 0 4px; font-size: 17px; font-weight: 700; color: var(--inchiostro);
 }
-.nota { margin: 11px 15px; color: var(--debole); font-size: 12px; }
+.nota { margin: 0 0 14px; color: var(--debole); font-size: 14px; }
 .fonte {
-  margin: 0 15px 5px; font-size: 12.5px; color: var(--debole);
-  display: flex; gap: 8px; align-items: baseline;
+  margin: 0 0 8px; font-size: 14.5px; color: var(--debole);
+  display: flex; gap: 10px; align-items: baseline;
 }
 .pallino {
-  flex: none; display: inline-block; width: 10px; height: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.35);
+  flex: none; display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+  transform: translateY(1px);
 }
 
-/* Il popup: una finestrella con la barra del titolo. */
+/* Il riepilogo dei nuovi bandi all'apertura. */
 dialog {
-  padding: 0; width: min(560px, calc(100vw - 24px));
-  background: var(--carta);
-  color: var(--inchiostro);
-  border: 1px solid var(--barra-bassa);
-  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+  padding: 0; border: 1px solid var(--bordo);
+  border-radius: 14px;
+  width: min(580px, calc(100vw - 32px));
+  background: var(--carta); color: var(--testo);
+  box-shadow: 0 24px 60px rgba(23, 50, 77, 0.28);
 }
-dialog::backdrop { background: rgba(20, 35, 50, 0.55); }
+dialog::backdrop { background: rgba(15, 23, 33, 0.55); }
 dialog h2 {
-  margin: 0 0 14px; padding: 9px 14px;
-  background: linear-gradient(180deg, var(--barra-alta), var(--barra-bassa));
-  color: #ffffff; font: bold 15px Georgia, "Times New Roman", serif;
+  margin: 0; padding: 20px 24px 14px;
+  font-size: 19px; font-weight: 700; color: var(--inchiostro);
+  border-bottom: 1px solid var(--bordo);
 }
-dialog p { margin: 0 14px 12px; }
-dialog div { margin: 0 14px; }
-dialog button { margin: 4px 14px 16px; padding: 7px 16px; font-size: 13px; }
+dialog div { padding: 16px 24px 4px; }
+dialog p { margin: 0 0 14px; }
+dialog p:last-child { margin-bottom: 0; }
+dialog .meta { margin: 2px 0 0; }
+dialog button {
+  margin: 8px 24px 22px;
+  padding: 11px 22px; border-radius: 8px; cursor: pointer;
+  font: 600 15px "Titillium Web", "Segoe UI", system-ui, sans-serif;
+  background: var(--blu); border: 1px solid var(--blu); color: #ffffff;
+}
+@media (prefers-color-scheme: dark) { dialog button { color: #0f1721; } }
 
-a { color: var(--link); }
-a:visited { color: var(--visitato); }
-a:hover { color: var(--caldo); }
+a { color: var(--blu); }
+.meta .urgente { color: var(--giallo); font-weight: 700; }
+.meta .scaduto { color: var(--rosso); font-weight: 700; }
 
-.meta .urgente { color: var(--caldo); font-weight: bold; }
-.meta .scaduto { color: var(--rosso); font-weight: bold; }
+/* Una sola animazione, all'apertura: le schede entrano in sequenza. */
+@media (prefers-reduced-motion: no-preference) {
+  .scheda { animation: entra 320ms ease-out both; }
+  .scheda:nth-child(2) { animation-delay: 40ms; }
+  .scheda:nth-child(3) { animation-delay: 80ms; }
+  .scheda:nth-child(4) { animation-delay: 120ms; }
+  .scheda:nth-child(n + 5) { animation-delay: 160ms; }
+}
+@keyframes entra {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
 
-@media (max-width: 520px) {
-  body { padding: 10px 8px 32px; font-size: 14.5px; }
-  h1 { font-size: 23px; }
-  .scheda h3 { font-size: 15px; }
-  .descrizione, .requisiti, .presenta, .citazione, .azioni, .scadenza { margin-left: 11px; margin-right: 11px; }
+@media (max-width: 560px) {
+  body { padding: 0 12px 40px; }
+  header { margin: 0 -12px 20px; padding: 20px 12px 16px; }
+  .scheda { padding: 18px 16px 16px; }
+  .scheda h3 { font-size: 17.5px; }
+  .azioni a, .azioni button { flex: 1 1 auto; text-align: center; }
 }

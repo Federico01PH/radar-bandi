@@ -142,14 +142,20 @@ pronti da mandare al gruppo.
 
 ## L'aspetto del sito
 
-Il sito ha l'aria di un portale dei primi anni Duemila: Verdana e Georgia, barra blu in testa, riquadri
-squadrati con l'ombra netta, pulsanti in rilievo, link blu sottolineati, elenchi col quadratino, la
-scadenza su un post-it giallo in Courier.
+Impostazione istituzionale contemporanea, sulla linea dei servizi pubblici digitali: **Titillium Web**,
+il carattere della pubblica amministrazione italiana, blu istituzionale, schede nette su fondo chiaro,
+molto spazio bianco. Si adatta al tema chiaro o scuro del telefono.
 
-È una scelta, non un residuo. Chi usa questa piattaforma ha cinquant'anni e su quei siti ha imparato a
-navigare: i bottoni sembrano bottoni, i link sembrano link, il testo è grande e nero su bianco. Non c'è
-il tema scuro — nel 2003 non esisteva — e non ci sono animazioni. Prima di "modernizzarlo", tenete conto
-che la leggibilità qui conta più dell'attualità.
+Le regole a cui il foglio di stile obbedisce, e che conviene non rompere:
+
+- **Nessuna informazione affidata al solo colore.** Il bordo verde della scheda ripete quello che c'è
+  scritto nella pastiglia ("Presenta: Storie di Piazza APS"), non lo sostituisce. Chi non distingue i
+  colori legge comunque tutto.
+- **Stati distinti anche fra loro.** "Domanda entro il…" è blu, la scadenza vicina è ambra, quella
+  chiusa è rossa, il termine sconosciuto è grigio col bordo tratteggiato: quattro significati, quattro
+  aspetti.
+- **La messa a fuoco si vede sempre**, perché la pagina si usa anche da tastiera.
+- **Testo da 16px in su e bersagli grandi**: chi legge ha cinquant'anni ed è spesso sul telefono.
 
 ## Quando arriva un allarme
 
