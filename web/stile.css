@@ -111,3 +111,8 @@ dialog button {
 
 .requisiti { margin: 0 0 10px; padding-left: 20px; }
 .requisiti li { margin-bottom: 4px; }
+
+/* Le caratteristiche che il bando elenca dopo i due punti: rientrate sotto
+   il punto che le introduce, cosi' si vede che ne fanno parte. */
+.requisiti .voce { list-style: none; margin-left: 10px; }
+.requisiti .voce::before { content: '– '; color: var(--debole); }

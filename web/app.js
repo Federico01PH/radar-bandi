@@ -26,11 +26,18 @@ let salute = {};
 let meta = { ultimoControllo: null, fonti: [] };
 const filtri = { livello: null, ammissibilita: null, stato: null, cerca: '' };
 
-// Si mostrano solo i bandi adatti alla serie: niente notizie, niente atti
-// amministrativi, niente bandi che toccano solo parole generiche. Gli altri
-// restano nell'archivio dei dati, ma non su questa pagina.
+// Si mostrano solo i bandi adatti alla serie e ancora aperti: niente notizie,
+// niente atti amministrativi, niente bandi che toccano solo parole generiche,
+// niente scadenze passate, perche' una domanda non si puo' piu' presentare.
+// Gli altri restano nell'archivio dei dati, ma non su questa pagina.
 function adatto(b) {
-  return b.tipo === 'bando' && b.adattoAllaSerie === true;
+  return b.tipo === 'bando' && b.adattoAllaSerie === true && !scaduto(b);
+}
+
+// Un bando senza scadenza dichiarata resta: non sappiamo che sia chiuso.
+function scaduto(b) {
+  const giorni = giorniAllaScadenza(b.scadenza);
+  return giorni !== null && giorni < 0;
 }
 
 // In testa cio' che conta di piu', non l'ultimo decreto pubblicato.
@@ -103,7 +110,10 @@ function requisitiHtml(punti) {
   if (!Array.isArray(punti) || punti.length === 0) {
     return '<p class="citazione">Cosa serve per candidarsi: non si ricava dal testo pubblicato, va letto nel bando.</p>';
   }
-  return `<ul class="requisiti">${punti.map((p) => `<li>${esc(p)}</li>`).join('')}</ul>`;
+  const voci = punti.map((p) => (p.startsWith('– ')
+    ? `<li class="voce">${esc(p.slice(2))}</li>`
+    : `<li>${esc(p)}</li>`));
+  return `<ul class="requisiti">${voci.join('')}</ul>`;
 }
 
 function schedaHtml(b) {
@@ -178,8 +188,8 @@ function disegna() {
   const visibili = filtra();
   const totale = bandi.filter(adatto).length;
   document.getElementById('conteggio').textContent = visibili.length === totale
-    ? `${totale} bandi adatti alla serie`
-    : `${visibili.length} di ${totale} bandi adatti alla serie`;
+    ? `${totale} bandi aperti e adatti alla serie`
+    : `${visibili.length} di ${totale} bandi aperti e adatti alla serie`;
   document.getElementById('elenco').innerHTML = visibili.length === 0
     ? '<p class="vuoto">Nessun bando corrisponde ai filtri.</p>'
     : visibili.map(schedaHtml).join('');

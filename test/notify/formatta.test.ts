@@ -26,6 +26,20 @@ describe('daNotificare', () => {
     expect(daNotificare([bando({ pertinenza: 90, adattoAllaSerie: false })])).toHaveLength(0);
   });
 
+  it('scarta un bando gia\' scaduto: avvisare di una porta chiusa e\' rumore', () => {
+    const adesso = new Date('2026-09-20T08:00:00Z');
+    expect(daNotificare([bando({ scadenza: '2026-09-14' })], adesso)).toHaveLength(0);
+  });
+
+  it('tiene un bando che scade oggi', () => {
+    const adesso = new Date('2026-09-20T08:00:00Z');
+    expect(daNotificare([bando({ scadenza: '2026-09-20' })], adesso)).toHaveLength(1);
+  });
+
+  it('tiene un bando senza scadenza dichiarata', () => {
+    expect(daNotificare([bando({ scadenza: null })], new Date('2026-09-20T08:00:00Z'))).toHaveLength(1);
+  });
+
   it('scarta i rossi anche se molto pertinenti', () => {
     expect(daNotificare([bando({ pertinenza: 95, ammissibilita: 'rosso' })])).toHaveLength(0);
   });

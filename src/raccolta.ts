@@ -221,7 +221,7 @@ export async function raccogli(opzioni: Opzioni = {}): Promise<EsitoRaccolta> {
   const fontiMute = adattatori
     .filter((a) => fonteSospetta(storicoNuovo[a.id] ?? [], GIORNI_ALLARME_FONTE))
     .map((a) => a.nome);
-  const daMandare = daNotificare(nuovi);
+  const daMandare = daNotificare(nuovi, adesso);
   const errori: string[] = [];
 
   try {

@@ -18,6 +18,46 @@ function accorcia(frase: string): string {
 /** Oltre questa parte della descrizione mostrata, un punto non isola piu' nulla. */
 const QUASI_TUTTA = 0.6;
 
+/** Sotto questa lunghezza una voce d'elenco e' un frammento, non un requisito. */
+const MIN_VOCE = 15;
+/** Con una voce sola non c'e' nessun elenco: i due punti introducevano altro. */
+const MIN_ELENCO = 2;
+/** Piu' di cosi' non e' un elenco di requisiti: e' meta' bando. */
+const MAX_VOCI = 4;
+
+/**
+ * Le caratteristiche richieste, quando il bando le elenca dopo i due punti:
+ * "possono presentare domanda le associazioni che: realizzino serie tv con le
+ * scuole; abbiano sede in Piemonte".
+ *
+ * E' li' che stanno i requisiti veri. La frase introduttiva da sola dice solo
+ * la categoria di ente, e chi legge la scheda deve poter capire in un colpo
+ * d'occhio se la produzione ha le caratteristiche giuste.
+ */
+function elenco(frase: string): { intro: string; voci: string[] } {
+  const duePunti = frase.indexOf(':');
+  if (duePunti < 0) return { intro: frase, voci: [] };
+  const voci = frase.slice(duePunti + 1)
+    .split(/[.;\n]+/)
+    .map((v) => v.trim())
+    .filter((v) => v.length >= MIN_VOCE && v.length <= MAX_FRASE)
+    .slice(0, MAX_VOCI);
+  if (voci.length < MIN_ELENCO) return { intro: frase, voci: [] };
+  return { intro: frase.slice(0, duePunti + 1), voci };
+}
+
+/** Le voci che il bando mette a capo, quindi fuori dalla frase introduttiva. */
+function vociSeguenti(tutte: string[], dopo: string): string[] {
+  const i = tutte.indexOf(dopo);
+  if (i < 0 || !/:[.\s]*$/.test(dopo)) return [];
+  const voci: string[] = [];
+  for (const f of tutte.slice(i + 1)) {
+    if (f.length < MIN_VOCE || f.length > MAX_FRASE || voci.length >= MAX_VOCI) break;
+    voci.push(f.replace(/[.\s]+$/, ''));
+  }
+  return voci.length < MIN_ELENCO ? [] : voci;
+}
+
 function ricalcaLaDescrizione(frase: string, mostratoPiatto: string): boolean {
   if (mostratoPiatto.length < 20) return false;
   const piatta = appiattisci(frase);
@@ -45,8 +85,8 @@ export function estraiRequisiti(
   // testo lungo aiuta — dice quale riga conta — ma ripetere per intero una
   // descrizione di una frase sola riempie la scheda senza aggiungere nulla.
   const mostratoPiatto = appiattisci(giaMostrato);
-  const candidate = frasi(testo)
-    .map((f) => f.trim())
+  const tutte = frasi(testo).map((f) => f.trim()).filter((f) => f.length > 0);
+  const candidate = tutte
     .filter((f) => f.length >= MIN_FRASE)
     .filter((f) => titoloPiatto.length < 20 || !appiattisci(f).includes(titoloPiatto))
     .filter((f) => !ricalcaLaDescrizione(f, mostratoPiatto));
@@ -67,7 +107,11 @@ export function estraiRequisiti(
     }
     if (frase === undefined) continue;
     usate.add(frase);
-    punti.push(`${etichetta}: ${accorcia(frase)}`);
+    const { intro, voci } = elenco(frase);
+    const daCapo = voci.length > 0 ? voci : vociSeguenti(tutte, frase);
+    for (const v of daCapo) usate.add(v);
+    punti.push(`${etichetta}: ${accorcia(voci.length > 0 ? intro : frase)}`);
+    for (const v of daCapo) punti.push(`– ${accorcia(v)}`);
   }
 
   return punti;

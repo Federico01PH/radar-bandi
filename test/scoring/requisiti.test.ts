@@ -94,3 +94,41 @@ describe('estraiRequisiti, quando la descrizione e\' lunga', () => {
     expect(estraiRequisiti(descrizione, { giaMostrato: descrizione }).join()).toContain('DGCOL');
   });
 });
+
+describe('estraiRequisiti, le caratteristiche elencate dopo i due punti', () => {
+  const testo = `Possono presentare domanda le associazioni e gli enti del terzo settore che:.
+realizzino serie tv o web serie insieme alle scuole.
+abbiano sede legale in Piemonte.
+non abbiano gia' ricevuto il contributo nel 2025.
+Il contributo massimo per ogni progetto e' di 20.000 euro.`;
+
+  it('riporta una per una le caratteristiche richieste', () => {
+    const punti = estraiRequisiti(testo).join('\n');
+    expect(punti).toContain('realizzino serie tv o web serie insieme alle scuole');
+    expect(punti).toContain('abbiano sede legale in Piemonte');
+  });
+
+  it('le marca come voci dell\'elenco, non come punti a se\'', () => {
+    const voci = estraiRequisiti(testo).filter((p) => p.startsWith('– '));
+    expect(voci.length).toBeGreaterThanOrEqual(2);
+    expect(voci.length).toBeLessThanOrEqual(4);
+  });
+
+  it('smette quando l\'elenco finisce, senza inghiottire il resto del bando', () => {
+    expect(estraiRequisiti(testo).filter((p) => p.startsWith('– ')).join())
+      .not.toContain('contributo massimo');
+  });
+
+  it('senza due punti non attacca l\'elenco a una frase qualsiasi', () => {
+    const piano = `Possono presentare domanda le associazioni del terzo settore.
+Il bando finanzia attivita' di formazione.`;
+    expect(estraiRequisiti(piano).some((p) => p.startsWith('– '))).toBe(false);
+  });
+});
+
+describe('estraiRequisiti, due punti che non aprono un elenco', () => {
+  it('una voce sola non e\' un elenco: resta dentro la frase', () => {
+    const testo = 'Le candidature devono essere inviate a bandi@esempio.it indicando nell\'oggetto della mail: "Bando Poster".';
+    expect(estraiRequisiti(testo).some((p) => p.startsWith('– '))).toBe(false);
+  });
+});

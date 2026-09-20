@@ -114,6 +114,10 @@ Ogni scheda ha, nell'ordine: il titolo, chi rilascia il bando, il termine per pr
 evidenza, la descrizione e un elenco di punti con cosa serve per candidarsi — chi puo' partecipare, cosa
 finanzia, quanto, come si presenta.
 
+Quando il bando elenca le caratteristiche richieste dopo i due punti — "possono presentare domanda le
+associazioni che: realizzino serie tv con le scuole; abbiano sede in Piemonte" — la scheda le riporta una
+per una, rientrate sotto il punto che le introduce. E' li' che stanno i requisiti veri.
+
 I punti non sono un riassunto: sono le frasi del bando, riportate come sono, cosi' si riconoscono aprendo
 l'originale. Dove il bando vero sta in un PDF allegato — succede spesso al Ministero — la scheda lo dice
 invece di inventarli. Il termine viene letto nel testo: se non c'e', la scheda scrive che va cercato nel
@@ -124,6 +128,11 @@ bando, e non mostra una data che non esiste.
 - **Bordo rosso**: requisito fuori portata, per esempio una coproduzione internazionale. Resta visibile ma
   non genera notifiche.
 - **Bordo grigio**: la piattaforma non è riuscita a capire chi può partecipare. Va letto il bando.
+
+**I bandi scaduti spariscono** dal sito il giorno dopo il termine, e non generano notifiche: una domanda
+che non si può più presentare è solo rumore. Restano in `data/bandi.json`, per non farli ricomparire come
+nuovi quando la fonte li ripubblica. Un bando senza termine dichiarato resta visibile: non sappiamo che
+sia chiuso.
 
 Il colore è un'ipotesi ricavata dal testo, non una lettura giuridica. Per questo sotto c'è sempre la frase
 del bando da cui è dedotto: si controlla in due secondi. **Non scartate mai un bando solo per il colore.**

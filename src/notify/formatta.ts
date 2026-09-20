@@ -1,14 +1,21 @@
 import { ENTI, NOMI_LIVELLO } from '../config.ts';
 import type { Bando } from '../tipi.ts';
 
+/** true se il termine per presentare domanda e' gia' passato. */
+export function scaduto(bando: Bando, adesso: Date): boolean {
+  if (bando.scadenza === null) return false;
+  return bando.scadenza.slice(0, 10) < adesso.toISOString().slice(0, 10);
+}
+
 /**
- * Chi merita una notifica: un bando adatto alla serie e non escluso in partenza.
- * Gli 'ignota' passano di proposito — nel dubbio si avvisa. Una notifica
- * di troppo costa trenta secondi, un bando perso costa il bando.
+ * Chi merita una notifica: un bando adatto alla serie, non escluso in partenza
+ * e ancora aperto. Gli 'ignota' passano di proposito — nel dubbio si avvisa.
+ * Una notifica di troppo costa trenta secondi, un bando perso costa il bando;
+ * ma un bando gia' scaduto non si puo' piu' presentare, e avvisarne e' rumore.
  */
-export function daNotificare(bandi: Bando[]): Bando[] {
+export function daNotificare(bandi: Bando[], adesso: Date = new Date()): Bando[] {
   return bandi
-    .filter((b) => b.adattoAllaSerie && b.ammissibilita !== 'rosso')
+    .filter((b) => b.adattoAllaSerie && b.ammissibilita !== 'rosso' && !scaduto(b, adesso))
     .sort((a, b) => b.pertinenza - a.pertinenza);
 }
 
