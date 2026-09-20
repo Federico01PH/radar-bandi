@@ -63,7 +63,9 @@
     "scadenza": null,
     "importo": null,
     "descrizioneBreve": "Si pubblica il “Bando relativo al riconoscimento della qualifica di sala d’essai e alla concessione di contributi sulla programmazione di film d’essai ovvero di ricerca e sperimentazione realizzata nell’anno 2025 – art. 27 della Legge 14 novembre 2016, n. 220 – annualità 2026”. Le istanze devono essere presentate attraverso la piattaforma “DGCOL, raggiungibile dal sito […]",
-    "requisiti": [],
+    "requisiti": [
+      "Come si presenta: Le istanze devono essere presentate attraverso la piattaforma “DGCOL, raggiungibile dal sito […]"
+    ],
     "chiPuoPartecipare": null,
     "ammissibilita": "ignota",
     "entePropostoId": null,
@@ -89,7 +91,9 @@
     "scadenza": null,
     "importo": null,
     "descrizioneBreve": "Si pubblica il “Bando relativo alla concessione di contributi ad attività di diffusione della cultura cinematografica” – articolo 27 della legge n. 220 del 2016 – Anno 2026. Le domande potranno essere presentate tramite la piattaforma informatica DGCOL dal 1° al 31 ottobre 2026 ore 23.59. Il Bando è visibile anche alla voce Bandi Legge Cinema del sito […]",
-    "requisiti": [],
+    "requisiti": [
+      "Come si presenta: Le domande potranno essere presentate tramite la piattaforma informatica DGCOL dal 1° al 31 ottobre 2026 ore 23.59."
+    ],
     "chiPuoPartecipare": null,
     "ammissibilita": "ignota",
     "entePropostoId": null,
@@ -99,7 +103,8 @@
     "url": "https://cinema.cultura.gov.it/avvisi/bando-per-la-concessione-di-contributi-ad-attivita-di-diffusione-della-cultura-cinematografica-svolte-dai-circoli-di-cultura-cinematografica-dalle-associazioni-nazionali-di-cultura-cinematografica-e-5/",
     "fonteId": "mic",
     "vistoIl": "2026-09-18T20:14:17.393Z",
-    "salvato": false
+    "salvato": false,
+    "approfonditoIl": "2026-09-20T20:41:40.292Z"
   },
   {
     "id": "249eab35a728c7c370e44599de500d7c53fa882edb29c667e25255ffea6bc5cd",
@@ -126,7 +131,8 @@
     "url": "https://cinema.cultura.gov.it/avvisi/proroga-termine-per-linvio-delle-candidature-avvisi-del-piano-nazionale-cinema-e-immagini-per-la-scuola-2026/",
     "fonteId": "mic",
     "vistoIl": "2026-09-18T20:14:17.393Z",
-    "salvato": false
+    "salvato": false,
+    "approfonditoIl": "2026-09-20T20:41:40.292Z"
   },
   {
     "id": "2be5fbfd3d17da7d61e7222369763d5ec01f603417dcc672edeec62794dfe352",
@@ -694,7 +700,12 @@
     "scadenza": "2026-10-25",
     "importo": null,
     "descrizioneBreve": "Contributi per associazioni piccole e medie attive nella promozione della giustizia di genere in Italia, a sostegno di progetti per il superamento degli stereotipi di genere e la promozione della salute e dei diritti sessuali e riproduttivi, anche attraverso attività di sensibilizzazione, formazione, advocacy, comunicazione e rafforzamento organizzativo.",
-    "requisiti": [],
+    "requisiti": [
+      "Chi puo' partecipare: Possono presentare domanda associazioni o enti del Terzo settore senza scopo di lucro che:. adottino una prospettiva transfemminista e operino per la promozione dei diritti di donne, ragazze e persone LGBTQIA+ e della…",
+      "Cosa finanzia: Sono ammissibili, a titolo esemplificativo, attività di sensibilizzazione, formazione, advocacy, ricerca, comunicazione, networking, rafforzamento organizzativo e sviluppo di reti territoriali.",
+      "Quanto: Il finanziamento copre il 100% dei costi e non è richiesto cofinanziamento.",
+      "Come si presenta: Le candidature devono essere inviate entro il 25 ottobre 2026 all’indirizzo ilaria.bertocchini@aidos.it, indicando nell’oggetto della mail: “Bando Poster_ [Nome Associazione]”."
+    ],
     "chiPuoPartecipare": "Il bando è rivolto ad associazioni piccole e medie attive nella promozione della giustizia di genere in Italia e intende rafforzarne il ruolo, sostenendone le attività, favorendone il consolidamento organizzativo e promuovendo percorsi di connessione con altre realtà italiane ed europee.",
     "ammissibilita": "verde",
     "entePropostoId": "storiedipiazza",
@@ -704,7 +715,8 @@
     "url": "https://infobandi.csvnet.it/progetti-oltre-gli-stereotipi-bando-per-iniziative-per-la-giustizia-di-genere/?utm_source=rss&utm_medium=rss&utm_campaign=progetti-oltre-gli-stereotipi-bando-per-iniziative-per-la-giustizia-di-genere",
     "fonteId": "infobandi",
     "vistoIl": "2026-09-18T20:14:17.393Z",
-    "salvato": false
+    "salvato": false,
+    "approfonditoIl": "2026-09-20T20:41:40.292Z"
   },
   {
     "id": "deb32a35bcab8e1843961d9b806bfef2c606b554e77451020e57b39f85c113b5",
@@ -720,7 +732,9 @@
     "scadenza": null,
     "importo": null,
     "descrizioneBreve": "Stanziati oltre 10,5 milioni di euro per il finanziamento di iniziative e progetti di interesse generale di rilevanza nazionale, da realizzare in almeno 10 Regioni, che concorrano al perseguimento degli obiettivi dell’Agenda 2030 per lo sviluppo sostenibile. Possono partecipare organizzazioni di volontariato, associazioni di promozione sociale e fondazioni del Terzo settore, singolarmente o in par",
-    "requisiti": [],
+    "requisiti": [
+      "Chi puo' partecipare: Possono partecipare organizzazioni di volontariato, associazioni di promozione sociale e fondazioni del Terzo settore, singolarmente o in partenariato, anche attraverso le reti associative."
+    ],
     "chiPuoPartecipare": "Possono partecipare organizzazioni di volontariato, associazioni di promozione sociale e fondazioni del Terzo settore, singolarmente o in partenariato, anche attraverso le reti associative.",
     "ammissibilita": "verde",
     "entePropostoId": "marcofalco",
@@ -1336,7 +1350,8 @@
     "url": "https://cinema.cultura.gov.it/avvisi/proroga-per-la-presentazione-delle-domande-afferenti-al-bando-per-la-concessione-di-contributi-a-progetti-speciali-per-il-cinema-e-laudiovisivo-anno-2026/",
     "fonteId": "mic",
     "vistoIl": "2026-09-18T20:14:17.393Z",
-    "salvato": false
+    "salvato": false,
+    "approfonditoIl": "2026-09-20T20:41:40.292Z"
   },
   {
     "id": "b4c45b1240196f2cf6976ee351dcf3a834aaff423e601351ef9234158c8cd8df",
@@ -1426,7 +1441,9 @@
     "scadenza": null,
     "importo": null,
     "descrizioneBreve": "Si pubblica qui di seguito il D.D. 2595 del 31 agosto 2026 “Nazionalità italiana definitiva videogiochi”. Tale pubblicazione costituisce comunicazione di riconoscimento della nazionalità italiana, pertanto non si procederà all’invio a mezzo Pec di notifiche individuali. Si specifica che i suddetti decreti non contengono il riconoscimento della nazionalità per quelle opere per le quali l’istruttori",
-    "requisiti": [],
+    "requisiti": [
+      "Come si presenta: Tale pubblicazione costituisce comunicazione di riconoscimento della nazionalità italiana, pertanto non si procederà all’invio a mezzo Pec di notifiche individuali."
+    ],
     "chiPuoPartecipare": null,
     "ammissibilita": "ignota",
     "entePropostoId": null,
@@ -1450,7 +1467,9 @@
     "scadenza": null,
     "importo": null,
     "descrizioneBreve": "Con il Decreto Direttoriale del 31 agosto 2026 rep. 2594 si pubblica l’esito dell’istruttoria effettuata sull’ammissibilità delle richieste definitive (a consuntivo) di credito d’imposta pervenute per la produzione di videogiochi di nazionalità italiana. Tale pubblicazione costituisce comunicazione di riconoscimento del credito d’imposta, pertanto non si procederà all’invio a mezzo Pec di notifich",
-    "requisiti": [],
+    "requisiti": [
+      "Come si presenta: Tale pubblicazione costituisce comunicazione di riconoscimento del credito d’imposta, pertanto non si procederà all’invio a mezzo Pec di notifich"
+    ],
     "chiPuoPartecipare": null,
     "ammissibilita": "ignota",
     "entePropostoId": null,
@@ -1476,7 +1495,9 @@
     "scadenza": null,
     "importo": null,
     "descrizioneBreve": "Con i decreti direttoriali del 31 agosto 2026 sono pubblicati gli esiti delle istruttorie effettuate sull’ammissibilità delle richieste di credito d’imposta relative ai costi di funzionamento e agli investimenti nelle sale cinematografiche. Tale pubblicazione costituisce comunicazione di riconoscimento del credito d’imposta, pertanto non si procederà all’invio a mezzo PEC delle singole comunicazio",
-    "requisiti": [],
+    "requisiti": [
+      "Come si presenta: Tale pubblicazione costituisce comunicazione di riconoscimento del credito d’imposta, pertanto non si procederà all’invio a mezzo PEC delle singole comunicazio"
+    ],
     "chiPuoPartecipare": null,
     "ammissibilita": "ignota",
     "entePropostoId": null,
@@ -1608,7 +1629,10 @@
     "scadenza": "2026-11-23",
     "importo": null,
     "descrizioneBreve": "Sostegno a progetti realizzati in Italia da organizzazioni non profit per prevenire e contrastare la violenza di genere attraverso servizi di tutela e presa in carico inclusivi e interventi di prevenzione e riduzione delle pratiche dannose, con particolare attenzione a donne, ragazze e minori esposti a discriminazioni multiple.",
-    "requisiti": [],
+    "requisiti": [
+      "Chi puo' partecipare: Sono ammessi ETS non societari, fondazioni, associazioni riconosciute e non riconosciute, comitati ed enti non ETS.",
+      "Cosa finanzia: Sono finanziabili progetti da realizzare in Italia, rivolti a donne, ragazze e minori vittime/sopravvissute o a rischio di violenza di genere."
+    ],
     "chiPuoPartecipare": "Sono ammessi ETS non societari, fondazioni, associazioni riconosciute e non riconosciute, comitati ed enti non ETS.",
     "ammissibilita": "verde",
     "entePropostoId": "marcofalco",
@@ -1618,7 +1642,8 @@
     "url": "https://infobandi.csvnet.it/bando-copower-per-contrastare-la-violenza-di-genere-prima-fase/?utm_source=rss&utm_medium=rss&utm_campaign=bando-copower-per-contrastare-la-violenza-di-genere-prima-fase",
     "fonteId": "infobandi",
     "vistoIl": "2026-09-18T20:14:17.393Z",
-    "salvato": false
+    "salvato": false,
+    "approfonditoIl": "2026-09-20T20:41:40.292Z"
   },
   {
     "id": "b2931dfb0a8c70e3ac3589dec1b1e4202c8c981492f3d8985dfd86a520cde93d",
