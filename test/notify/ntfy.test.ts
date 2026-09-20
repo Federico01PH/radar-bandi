@@ -125,3 +125,14 @@ describe('pubblicaNtfy', () => {
     await expect(pubblicaNtfy(messaggiBandi([bando()], TOPIC, SITO), finto)).rejects.toThrow(/429/);
   });
 });
+
+describe('pubblicaNtfy, quando il server rifiuta', () => {
+  it('riporta la spiegazione del server, non solo il codice', async () => {
+    const finto = (async () => new Response(
+      '{"code":40020,"http":400,"error":"invalid request: e-mail notifications are not enabled"}',
+      { status: 400 },
+    )) as unknown as typeof fetch;
+    await expect(pubblicaNtfy(messaggiBandi([bando()], TOPIC, SITO), finto))
+      .rejects.toThrow(/e-mail notifications are not enabled/);
+  });
+});

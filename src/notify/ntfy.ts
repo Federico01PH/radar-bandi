@@ -136,6 +136,10 @@ export async function pubblicaNtfy(messaggi: MessaggioNtfy[], fetchImpl: typeof 
       body: JSON.stringify(m),
       signal: AbortSignal.timeout(20_000),
     });
-    if (!risposta.ok) throw new Error(`ntfy ha risposto HTTP ${risposta.status}`);
+    if (!risposta.ok) {
+      // Il corpo dice perche': senza, un 400 non si capisce da dove venga.
+      const spiegazione = (await risposta.text().catch(() => '')).trim().slice(0, 300);
+      throw new Error(`ntfy ha risposto HTTP ${risposta.status}${spiegazione ? `: ${spiegazione}` : ''}`);
+    }
   }
 }
