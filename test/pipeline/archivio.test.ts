@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { fondi, costruisciBando, rivaluta } from '../../src/pipeline/archivio.ts';
+import { approfondisci, fondi, costruisciBando, rivaluta } from '../../src/pipeline/archivio.ts';
 import type { Bando, RisultatoGrezzo } from '../../src/tipi.ts';
 
 const adesso = new Date('2026-09-18T08:00:00Z');
@@ -160,5 +160,40 @@ describe('rivaluta', () => {
     expect(r.salvato).toBe(true);
     expect(r.vistoIl).toBe(vecchio.vistoIl);
     expect(r.id).toBe(vecchio.id);
+  });
+});
+
+describe('requisiti nella scheda', () => {
+  const pagina = `Bando per progetti contro il bullismo.
+Sono ammessi a presentare domanda gli enti del terzo settore con sede in Piemonte.
+Il contributo massimo per progetto e' di 20.000 euro.
+Le domande si chiudono il 30 novembre 2026.`;
+
+  it('approfondisci ricava i punti dal testo della pagina', () => {
+    const b = approfondisci(costruisciBando(grezzo(), 'CSVnet', 'terzosettore', adesso, true), pagina, adesso);
+    expect(b.requisiti.join('\n')).toContain('enti del terzo settore');
+    expect(b.requisiti.join('\n')).toContain('20.000 euro');
+  });
+
+  it('rivaluta non butta via i punti letti nella pagina', () => {
+    const b = approfondisci(costruisciBando(grezzo(), 'CSVnet', 'terzosettore', adesso, true), pagina, adesso);
+    expect(rivaluta(b, true).requisiti).toEqual(b.requisiti);
+  });
+
+  it('senza pagina letta non ripete la descrizione che la scheda mostra gia\'', () => {
+    const corta = costruisciBando(
+      grezzo({ descrizione: 'Possono partecipare le associazioni di promozione sociale con sede in Italia.' }),
+      'CSVnet', 'terzosettore', adesso, true,
+    );
+    expect(corta.requisiti).toEqual([]);
+  });
+
+  it('dal feed prende solo cio\' che la descrizione, tagliata a 400 caratteri, non mostra', () => {
+    const coda = 'Possono partecipare le associazioni di promozione sociale con sede in Italia.';
+    const lungo = costruisciBando(
+      grezzo({ descrizione: `${'Premessa lunghissima del bando. '.repeat(15)}${coda}` }),
+      'CSVnet', 'terzosettore', adesso, true,
+    );
+    expect(lungo.requisiti[0]).toContain('associazioni di promozione sociale');
   });
 });

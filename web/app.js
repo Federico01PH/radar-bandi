@@ -76,22 +76,34 @@ function giorniAllaScadenza(iso) {
   return Math.round((Date.parse(iso.slice(0, 10)) - mezzanotte) / 86400000);
 }
 
-function descriviScadenza(iso) {
-  const giorni = giorniAllaScadenza(iso);
-  if (giorni === null) return '';
-  const data = new Date(`${iso.slice(0, 10)}T12:00:00Z`).toLocaleDateString('it-IT');
-  if (giorni < 0) return ` · <strong class="scaduto">scaduto il ${data}</strong>`;
-  if (giorni === 0) return ' · <strong class="urgente">scade oggi</strong>';
-  if (giorni === 1) return ' · <strong class="urgente">scade domani</strong>';
-  const testo = `scade il ${data}, fra ${giorni} giorni`;
-  return giorni <= 7 ? ` · <strong class="urgente">${testo}</strong>` : ` · ${testo}`;
-}
-
 // Prima le scadenze vicine, poi quelle lontane, poi i bandi senza scadenza, per ultimi gli scaduti.
 function chiaveScadenza(b) {
   const giorni = giorniAllaScadenza(b.scadenza);
   if (giorni === null) return 1e6;
   return giorni < 0 ? 2e6 - giorni : giorni;
+}
+
+// La scadenza e' l'informazione che fa perdere i bandi: sta in evidenza, da
+// sola, non in coda alla riga dei dettagli.
+function riquadroScadenza(iso) {
+  const giorni = giorniAllaScadenza(iso);
+  if (giorni === null) {
+    return '<p class="scadenza ignota">Termine non dichiarato nel testo: va letto nel bando</p>';
+  }
+  const data = new Date(`${iso.slice(0, 10)}T12:00:00Z`).toLocaleDateString('it-IT');
+  if (giorni < 0) return `<p class="scadenza scaduto">Chiuso il ${data}</p>`;
+  if (giorni === 0) return '<p class="scadenza urgente">Domanda entro oggi</p>';
+  const quanto = giorni === 1 ? 'domani, ultimo giorno' : `fra ${giorni} giorni`;
+  return `<p class="scadenza ${giorni <= 7 ? 'urgente' : ''}">Domanda entro il ${data} — ${quanto}</p>`;
+}
+
+// Una scheda senza punti non e' una scheda incompleta per sbaglio: spesso il
+// bando vero sta in un PDF allegato. Dirlo evita di crederlo senza requisiti.
+function requisitiHtml(punti) {
+  if (!Array.isArray(punti) || punti.length === 0) {
+    return '<p class="citazione">Cosa serve per candidarsi: non si ricava dal testo pubblicato, va letto nel bando.</p>';
+  }
+  return `<ul class="requisiti">${punti.map((p) => `<li>${esc(p)}</li>`).join('')}</ul>`;
 }
 
 function schedaHtml(b) {
@@ -101,21 +113,27 @@ function schedaHtml(b) {
   const scadenza = b.scadenza ? `\nScadenza: ${new Date(`${b.scadenza.slice(0, 10)}T12:00:00Z`).toLocaleDateString('it-IT')}` : '';
   const messaggio = encodeURIComponent(`${b.titolo}\n${b.ente}${scadenza}\n${b.url}`);
   const salvato = salvati.has(b.id);
+  // La citazione serve a far verificare da dove nasce il colore. Se e' gia'
+  // uno dei punti qui sopra, ripeterla fa solo allungare la scheda.
+  const citazione = b.motivoAmmissibilita && !(b.requisiti ?? [])
+    .some((p) => p.includes(b.motivoAmmissibilita.slice(0, 40)))
+    ? `<p class="citazione">Dal bando: «${esc(b.motivoAmmissibilita)}»</p>` : '';
 
   return `
     <article class="scheda ${esc(b.ammissibilita)}">
       <h3>${esc(b.titolo)}${etichette}</h3>
       <p class="meta">
-        ${esc(b.ente)} · ${esc(LIVELLI[b.livello] ?? b.livello)}
+        Bando di ${esc(b.ente)} · ${esc(LIVELLI[b.livello] ?? b.livello)}
         · pubblicato il ${data}${b.dataIncerta ? ' (data non dichiarata dalla fonte)' : ''}
-        · pertinenza ${b.pertinenza}/100${descriviScadenza(b.scadenza)}
+        · pertinenza ${b.pertinenza}/100
       </p>
+      ${riquadroScadenza(b.scadenza)}
       ${b.descrizioneBreve ? `<p class="descrizione">${esc(b.descrizioneBreve)}</p>` : ''}
+      ${requisitiHtml(b.requisiti)}
       <p class="presenta ${esc(b.ammissibilita)}">
         ${ente ? `Presenta: ${esc(ente)}` : esc(AMMISSIBILITA[b.ammissibilita])}
       </p>
-      ${b.motivoAmmissibilita
-        ? `<p class="citazione">Dal bando: «${esc(b.motivoAmmissibilita)}»</p>` : ''}
+      ${citazione}
       <div class="azioni">
         <a href="${esc(hrefSicuro(b.url))}" target="_blank" rel="noopener">Apri l'originale</a>
         <button type="button" data-salva="${esc(b.id)}" aria-pressed="${salvato}">${salvato ? 'Salvato' : 'Salva'}</button>

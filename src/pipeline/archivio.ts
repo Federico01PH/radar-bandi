@@ -3,6 +3,7 @@ import { calcolaPertinenza, esclusoDalTitolo } from '../scoring/pertinenza.ts';
 import { valutaAmmissibilita } from '../scoring/ammissibilita.ts';
 import { classifica, sembraUnBando } from '../scoring/tipo.ts';
 import { trovaScadenza } from '../scoring/scadenza.ts';
+import { estraiRequisiti } from '../scoring/requisiti.ts';
 import type { Bando, Livello, RisultatoGrezzo } from '../tipi.ts';
 
 const MAX_DESCRIZIONE = 400;
@@ -20,6 +21,7 @@ export function costruisciBando(
   // Se la fonte pubblica solo bandi lo sa lei; altrimenti lo si ricava dal
   // testo, e nel dubbio e' un bando.
   const tipo = soloBandi ? 'bando' : classifica(grezzo.titolo, grezzo.descrizione);
+  const descrizioneBreve = grezzo.descrizione.slice(0, MAX_DESCRIZIONE);
 
   return {
     id: impronta(grezzo.fonteId, grezzo.url),
@@ -32,8 +34,11 @@ export function costruisciBando(
     dataIncerta,
     scadenza: null,
     importo: null,
-    descrizioneBreve: grezzo.descrizione.slice(0, MAX_DESCRIZIONE),
-    requisiti: [],
+    descrizioneBreve,
+    // Dalle due righe del feed esce poco, e cio' che la scheda mostra gia'
+    // non diventa un punto: i punti buoni arrivano da approfondisci, che
+    // legge la pagina del bando.
+    requisiti: estraiRequisiti(grezzo.descrizione, { titolo: grezzo.titolo, giaMostrato: descrizioneBreve }),
     chiPuoPartecipare: ammissibilita.motivo,
     ammissibilita: ammissibilita.esito,
     entePropostoId: ammissibilita.entePropostoId,
@@ -84,17 +89,20 @@ export function rivaluta(bando: Bando, soloBandi: boolean): Bando {
 
 /**
  * Completa un bando con cio' che si legge nella sua pagina: chi puo'
- * partecipare e la scadenza. Il testo del feed resta nell'analisi, perche'
- * a volte e' li' e non nella pagina che si dice a chi e' rivolto.
+ * partecipare, i punti su cosa serve per candidarsi e la scadenza.
+ * Il testo del feed resta nell'analisi, perche' a volte e' li' e non nella
+ * pagina che si dice a chi e' rivolto.
  */
 export function approfondisci(bando: Bando, testoPagina: string, adesso: Date): Bando {
   const a = valutaAmmissibilita(bando.titolo, `${bando.descrizioneBreve} ${testoPagina}`);
+  const requisiti = estraiRequisiti(testoPagina, { titolo: bando.titolo, giaMostrato: bando.descrizioneBreve });
   return {
     ...bando,
     ammissibilita: a.esito,
     entePropostoId: a.entePropostoId,
     motivoAmmissibilita: a.motivo,
     chiPuoPartecipare: a.motivo,
+    requisiti: requisiti.length > 0 ? requisiti : bando.requisiti,
     scadenza: trovaScadenza(testoPagina, adesso),
     approfonditoIl: adesso.toISOString(),
   };
@@ -112,6 +120,7 @@ function conservaApprofondimento(nuovo: Bando, vecchio: Bando): Bando {
     entePropostoId: vecchio.entePropostoId,
     motivoAmmissibilita: vecchio.motivoAmmissibilita,
     chiPuoPartecipare: vecchio.chiPuoPartecipare,
+    requisiti: vecchio.requisiti,
     scadenza: vecchio.scadenza,
     approfonditoIl: vecchio.approfonditoIl,
   };

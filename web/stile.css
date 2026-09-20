@@ -98,3 +98,16 @@ dialog button {
 }
 .meta .urgente { color: var(--giallo); }
 .meta .scaduto { color: var(--rosso); }
+
+/* La scadenza e' cio' che fa perdere i bandi: si legge prima della descrizione. */
+.scadenza {
+  margin: 0 0 10px; font-weight: 600; font-size: 14px;
+  padding: 6px 10px; border-radius: 6px;
+  background: var(--superficie); display: inline-block;
+}
+.scadenza.urgente { background: var(--giallo); color: var(--sfondo); }
+.scadenza.scaduto { color: var(--rosso); }
+.scadenza.ignota { font-weight: 500; color: var(--debole); }
+
+.requisiti { margin: 0 0 10px; padding-left: 20px; }
+.requisiti li { margin-bottom: 4px; }

@@ -110,10 +110,19 @@ la prima notifica. Poi riparte da sola ogni mattina verso le 7.
 
 ## Come si legge una scheda
 
+Ogni scheda ha, nell'ordine: il titolo, chi rilascia il bando, il termine per presentare la domanda in
+evidenza, la descrizione e un elenco di punti con cosa serve per candidarsi — chi puo' partecipare, cosa
+finanzia, quanto, come si presenta.
+
+I punti non sono un riassunto: sono le frasi del bando, riportate come sono, cosi' si riconoscono aprendo
+l'originale. Dove il bando vero sta in un PDF allegato — succede spesso al Ministero — la scheda lo dice
+invece di inventarli. Il termine viene letto nel testo: se non c'e', la scheda scrive che va cercato nel
+bando, e non mostra una data che non esiste.
+
 - **Bordo verde**: uno dei vostri enti può presentare domanda, e la scheda dice quale.
 - **Bordo giallo**: serve un requisito in più, per esempio una scuola capofila o un partenariato.
 - **Bordo rosso**: requisito fuori portata, per esempio una coproduzione internazionale. Resta visibile ma
-  non genera email.
+  non genera notifiche.
 - **Bordo grigio**: la piattaforma non è riuscita a capire chi può partecipare. Va letto il bando.
 
 Il colore è un'ipotesi ricavata dal testo, non una lettura giuridica. Per questo sotto c'è sempre la frase

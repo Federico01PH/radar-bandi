@@ -252,3 +252,57 @@ export const NOMI_LIVELLO: Record<Livello, string> = {
   fondazione: 'Fondazioni',
   terzosettore: 'Terzo settore',
 };
+
+/**
+ * Le voci dell'elenco "cosa serve per candidarsi" che compare in ogni scheda.
+ *
+ * Una voce per argomento, nell'ordine in cui si leggono. La scadenza non c'e':
+ * sulla scheda ha un riquadro tutto suo, e due date diverse confonderebbero. Dal testo del bando si prende la prima
+ * frase che contiene uno di questi termini, cosi' ogni punto parla di una cosa
+ * diversa invece di ripetere cinque volte la stessa clausola.
+ */
+export const CATEGORIE_REQUISITI: {
+  etichetta: string;
+  /** In ordine di forza: vince la frase che contiene il termine piu' in alto. */
+  termini: string[];
+  /** Una frase senza cifre, qui, e' un titolo di paragrafo e non un requisito. */
+  conNumero?: boolean;
+}[] = [
+  {
+    etichetta: "Chi puo' partecipare",
+    // Non tutti i SEGNALI_AMMISSIBILITA vanno bene: "devono" e "esclusivamente"
+    // compaiono in qualunque clausola, anche sulla durata del progetto, e
+    // pescherebbero una frase che non parla di chi presenta la domanda.
+    termini: [
+      'sono ammessi', 'sono ammesse', 'ammessi a presentare', 'possono presentare',
+      'possono partecipare', 'possono candidarsi', 'possono richiedere', 'soggetti proponenti',
+      'soggetti ammissibili', 'beneficiari', 'destinatari', 'aperto a', 'aperta a', 'aperte a',
+      'rivolto a', 'rivolta a', 'rivolti a', 'rivolte a',
+    ],
+  },
+  {
+    etichetta: 'Cosa finanzia',
+    termini: [
+      'sono finanziabili', 'sono finanziati', 'sono ammissibili', 'attivita ammissibili',
+      'oggetto del bando', 'oggetto dell avviso', 'sostiene progetti', 'sostegno a progetti',
+      'sono sostenuti progetti', 'interventi ammissibili',
+    ],
+  },
+  {
+    etichetta: 'Quanto',
+    termini: [
+      'contributo massimo', 'importo massimo', 'fino a un massimo', 'contributo di',
+      'cofinanziamento', 'dotazione finanziaria', 'risorse complessive', 'stanziamento',
+    ],
+    conNumero: true,
+  },
+  {
+    etichetta: 'Come si presenta',
+    termini: [
+      'domanda deve essere presentata', 'domande devono essere presentate',
+      'domande potranno essere presentate', 'presentazione della domanda',
+      'presentazione delle domande', 'candidature devono essere inviate',
+      'piattaforma', 'modulo online', 'posta elettronica certificata', 'pec', 'sportello',
+    ],
+  },
+];

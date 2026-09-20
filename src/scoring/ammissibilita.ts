@@ -32,7 +32,7 @@ function contiene(piatto: string, termine: string): boolean {
  * "ai sensi dell'art. 5 del D.Lgs. n. 28", e spezzare li' produrrebbe una
  * citazione tronca e incomprensibile per chi la controlla sul bando.
  */
-function frasi(testo: string): string[] {
+export function frasi(testo: string): string[] {
   return testo
     .split(/(?<![A-Za-z])(?<!\bart)(?<!\bn)(?<!\brep)(?<!\bcfr)(?<!\bpag)(?<!\blett)(?<!\bcomma)(?<!\bLgs)(?<!\bDott)(?<=[.;:!?])\s+(?=[A-Z\u00c0-\u00dd«"])/)
     .map((f) => f.trim())
