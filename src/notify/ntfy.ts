@@ -1,5 +1,5 @@
 import { ENTI } from '../config.ts';
-import { hrefSicuro, oggetto } from './formatta.ts';
+import { hrefSicuro } from './formatta.ts';
 import type { Bando } from '../tipi.ts';
 
 /**
@@ -24,8 +24,6 @@ export type MessaggioNtfy = {
   tags: string[];
   priority: number;
   actions?: { action: 'view'; label: string; url: string }[];
-  /** Se c'e', ntfy spedisce lo stesso avviso anche a questo indirizzo email. */
-  email?: string;
 };
 
 function dataItaliana(iso: string): string {
@@ -88,57 +86,9 @@ export function messaggioProva(adatti: number, topic: string, sito: string): Mes
   };
 }
 
-/** Quanti bandi elencare in un'email: oltre, si rimanda al sito. */
-const MAX_EMAIL = 10;
-
-/**
- * L'email e' un riepilogo solo: un messaggio con dentro tutti i bandi nuovi,
- * non uno per bando, per non riempire la casella di chi la riceve.
- */
-export function riepilogoEmail(bandi: Bando[], topic: string, sito: string): MessaggioNtfy {
-  const mostrati = bandi.slice(0, MAX_EMAIL).map((b) => {
-    const ente = ENTI.find((e) => e.id === b.entePropostoId)?.nome ?? null;
-    const righe = [
-      b.titolo,
-      `${b.ente}${b.scadenza ? ` · scadenza ${dataItaliana(b.scadenza)}` : ''}`,
-      ente ? `Presenta: ${ente}` : 'Chi presenta: da verificare',
-    ];
-    const link = hrefSicuro(b.url);
-    if (link !== '#') righe.push(link);
-    return righe.join('\n');
-  });
-  const resto = bandi.length - mostrati.length;
-  if (resto > 0) mostrati.push(`…e altri ${resto} bandi.`);
-  return {
-    topic,
-    title: oggetto(bandi),
-    message: `${mostrati.join('\n\n')}\n\nTutti i bandi, con i filtri: ${sito}`,
-    click: sito,
-    tags: ['clapper'],
-    priority: 3,
-  };
-}
-
-/**
- * Lo stesso messaggio spedito per email a ciascun destinatario. Parte da un
- * argomento riservato all'email: se partisse da quello dei telefoni, ognuno
- * riceverebbe due volte lo stesso avviso.
- */
-export function perEmail(messaggio: MessaggioNtfy, destinatari: string[]): MessaggioNtfy[] {
-  return destinatari.map((email) => ({ ...messaggio, topic: `${messaggio.topic}-email`, email }));
-}
-
-/**
- * Il gettone e' quello di un account gratuito su ntfy.sh: serve solo per far
- * spedire le email, perche' ntfy non le manda a chi non ha un account. Le
- * notifiche sul telefono partono anche senza.
- */
-export type OpzioniNtfy = { fetch?: typeof fetch; gettone?: string };
-
-export async function pubblicaNtfy(messaggi: MessaggioNtfy[], opzioni: OpzioniNtfy = {}): Promise<void> {
+export async function pubblicaNtfy(messaggi: MessaggioNtfy[], opzioni: { fetch?: typeof fetch } = {}): Promise<void> {
   const fetchImpl = opzioni.fetch ?? fetch;
-  const intestazioni: Record<string, string> = { 'content-type': 'application/json' };
-  if (opzioni.gettone) intestazioni['authorization'] = `Bearer ${opzioni.gettone}`;
+  const intestazioni = { 'content-type': 'application/json' };
   for (const m of messaggi) {
     const risposta = await fetchImpl(SERVER, {
       method: 'POST',

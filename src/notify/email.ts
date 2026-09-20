@@ -40,16 +40,6 @@ function mancante(cred: Credenziali): string | null {
   return null;
 }
 
-/**
- * Gli indirizzi a cui far spedire l'email da ntfy: solo quando SMTP non e'
- * configurato (altrimenti arriverebbe doppia) e solo se c'e' il gettone di un
- * account ntfy, perche' ntfy rifiuta le email anonime.
- */
-export function destinatariViaNtfy(cred: Credenziali, gettone: string): string[] {
-  if (!gettone || emailConfigurata(cred)) return [];
-  return cred.destinatari;
-}
-
 /** true se l'email via SMTP ha tutto cio' che serve per partire. */
 export function emailConfigurata(cred: Credenziali): boolean {
   return mancante(cred) === null;

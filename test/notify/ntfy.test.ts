@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { messaggiBandi, messaggioAllarme, messaggioProva, pubblicaNtfy, riepilogoEmail, perEmail } from '../../src/notify/ntfy.ts';
+import { messaggiBandi, messaggioAllarme, messaggioProva, pubblicaNtfy } from '../../src/notify/ntfy.ts';
 import type { Bando } from '../../src/tipi.ts';
 
 const SITO = 'https://bandi-sefinisseroleparole.vercel.app/';
@@ -64,50 +64,6 @@ describe('messaggioAllarme e messaggioProva', () => {
   });
 });
 
-describe('riepilogoEmail', () => {
-  it('un solo messaggio con tutti i bandi: titolo, chi presenta, scadenza e link', () => {
-    const m = riepilogoEmail([bando()], TOPIC, SITO);
-    expect(m.title).toBe('Radar Bandi: 1 nuovo bando');
-    expect(m.message).toContain('Bando CoPower contro la violenza di genere');
-    expect(m.message).toContain('Presenta: Storie di Piazza APS');
-    expect(m.message).toContain('23/11/2026');
-    expect(m.message).toContain('https://x.it/copower');
-    expect(m.message).toContain(SITO);
-  });
-
-  it('con tanti bandi ne elenca dieci e rimanda al sito per gli altri', () => {
-    const tanti = Array.from({ length: 14 }, (_, i) => bando({ id: String(i).padStart(64, '0'), titolo: `Bando numero ${i}` }));
-    const m = riepilogoEmail(tanti, TOPIC, SITO);
-    expect(m.title).toBe('Radar Bandi: 14 nuovi bandi');
-    expect(m.message).toContain('Bando numero 9');
-    expect(m.message).not.toContain('Bando numero 10');
-    expect(m.message).toContain('altri 4');
-  });
-
-  it('non mette un link non http', () => {
-    const m = riepilogoEmail([bando({ url: 'javascript:alert(1)' })], TOPIC, SITO);
-    expect(m.message).not.toContain('javascript:');
-  });
-});
-
-describe('perEmail', () => {
-  it('un messaggio per ogni destinatario, con l\'indirizzo a cui ntfy lo spedisce', () => {
-    const messaggi = perEmail(riepilogoEmail([bando()], TOPIC, SITO), ['uno@esempio.it', 'due@esempio.it']);
-    expect(messaggi.map((m) => m.email)).toEqual(['uno@esempio.it', 'due@esempio.it']);
-    expect(messaggi[0]!.title).toBe('Radar Bandi: 1 nuovo bando');
-  });
-
-  it('parte da un argomento diverso, cosi\' l\'email non raddoppia la notifica sul telefono', () => {
-    const [m] = perEmail(riepilogoEmail([bando()], TOPIC, SITO), ['uno@esempio.it']);
-    expect(m!.topic).not.toBe(TOPIC);
-    expect(m!.topic).toContain(TOPIC);
-  });
-
-  it('nessun messaggio senza destinatari', () => {
-    expect(perEmail(riepilogoEmail([bando()], TOPIC, SITO), [])).toEqual([]);
-  });
-});
-
 describe('pubblicaNtfy', () => {
   it('manda ogni messaggio come JSON al server', async () => {
     const chiamate: { url: string; corpo: unknown }[] = [];
@@ -134,27 +90,5 @@ describe('pubblicaNtfy, quando il server rifiuta', () => {
     )) as unknown as typeof fetch;
     await expect(pubblicaNtfy(messaggiBandi([bando()], TOPIC, SITO), { fetch: finto }))
       .rejects.toThrow(/e-mail notifications are not enabled/);
-  });
-});
-
-describe('pubblicaNtfy con un accesso ntfy', () => {
-  it('presenta il gettone al server: senza, ntfy rifiuta di spedire le email', async () => {
-    const intestazioni: (HeadersInit | undefined)[] = [];
-    const finto = (async (_url: string, init?: RequestInit) => {
-      intestazioni.push(init?.headers);
-      return new Response('{}', { status: 200 });
-    }) as unknown as typeof fetch;
-    await pubblicaNtfy(messaggiBandi([bando()], TOPIC, SITO), { fetch: finto, gettone: 'tk_abc' });
-    expect(intestazioni[0]).toMatchObject({ authorization: 'Bearer tk_abc' });
-  });
-
-  it('senza gettone non manda nessuna autorizzazione', async () => {
-    const intestazioni: (HeadersInit | undefined)[] = [];
-    const finto = (async (_url: string, init?: RequestInit) => {
-      intestazioni.push(init?.headers);
-      return new Response('{}', { status: 200 });
-    }) as unknown as typeof fetch;
-    await pubblicaNtfy(messaggiBandi([bando()], TOPIC, SITO), { fetch: finto });
-    expect(intestazioni[0]).not.toHaveProperty('authorization');
   });
 });

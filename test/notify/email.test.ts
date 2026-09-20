@@ -93,20 +93,3 @@ describe('inviaAllarmeFonti', () => {
     expect(mail.html).toContain('InfoBandi CSVnet');
   });
 });
-
-describe('destinatariViaNtfy', () => {
-  it('con SMTP configurato non passa nessun indirizzo a ntfy: riceverebbero due volte', async () => {
-    const { destinatariViaNtfy } = await import('../../src/notify/email.ts');
-    expect(destinatariViaNtfy(credenziali, 'tk_abc')).toEqual([]);
-  });
-
-  it('senza SMTP ma con l\'accesso a ntfy, l\'email parte da li\'', async () => {
-    const { destinatariViaNtfy } = await import('../../src/notify/email.ts');
-    expect(destinatariViaNtfy(senzaCredenziali, 'tk_abc')).toEqual(['uno@esempio.it']);
-  });
-
-  it('senza accesso a ntfy nessun indirizzo: ntfy rifiuta le email anonime', async () => {
-    const { destinatariViaNtfy } = await import('../../src/notify/email.ts');
-    expect(destinatariViaNtfy(senzaCredenziali, '')).toEqual([]);
-  });
-});

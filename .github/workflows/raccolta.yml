@@ -70,7 +70,6 @@ jobs:
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           EMAIL_DESTINATARI: ${{ secrets.EMAIL_DESTINATARI }}
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
-          NTFY_TOKEN: ${{ secrets.NTFY_TOKEN }}
           PROVA_NOTIFICHE: ${{ inputs.prova_notifiche }}
         run: npm run raccolta
 
