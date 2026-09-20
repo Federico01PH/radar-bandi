@@ -8,7 +8,7 @@ import { leggiPagina } from './sources/pagina.ts';
 import { aggiornaStorico, fonteSospetta, type Storico } from './health/salute.ts';
 import { daNotificare } from './notify/formatta.ts';
 import {
-  credenzialiDaAmbiente, destinatariSenzaSmtp, emailConfigurata, inviaAllarmeFonti, inviaEmail,
+  credenzialiDaAmbiente, destinatariViaNtfy, emailConfigurata, inviaAllarmeFonti, inviaEmail,
   type EsitoInvio,
 } from './notify/email.ts';
 import { scriviSegnalazioneAllarme, scriviSegnalazioneBandi } from './notify/issue.ts';
@@ -120,8 +120,9 @@ function notificheReali(): Notifiche {
     };
 
   const topic = process.env['NTFY_TOPIC'] ?? '';
+  const gettone = process.env['NTFY_TOKEN'] ?? '';
   // Senza SMTP l'email parte lo stesso: la spedisce ntfy agli stessi indirizzi.
-  const destinatari = destinatariSenzaSmtp(cred);
+  const destinatari = destinatariViaNtfy(cred, gettone);
   if (!topic) return principale;
   const push: Notifiche = {
     async inviaEmail(bandi) {
@@ -130,13 +131,13 @@ function notificheReali(): Notifiche {
       await pubblicaNtfy([
         ...messaggiBandi(bandi, topic, sito),
         ...perEmail(riepilogoEmail(bandi, topic, sito), destinatari),
-      ]);
+      ], { gettone });
       return { inviata: true, motivo: null };
     },
     async inviaAllarmeFonti(fonti) {
       if (fonti.length === 0) return { inviata: false, motivo: 'nessuna fonte sospetta' };
       const allarme = messaggioAllarme(fonti, topic, indirizzoSito());
-      await pubblicaNtfy([allarme, ...perEmail(allarme, destinatari)]);
+      await pubblicaNtfy([allarme, ...perEmail(allarme, destinatari)], { gettone });
       return { inviata: true, motivo: null };
     },
   };
@@ -272,9 +273,10 @@ if (eseguitoDirettamente) {
   const topic = process.env['NTFY_TOPIC'] ?? '';
   if (process.env['PROVA_NOTIFICHE'] === 'true' && topic) {
     try {
+      const gettone = process.env['NTFY_TOKEN'] ?? '';
       const prova = messaggioProva(esito.adatti, topic, indirizzoSito());
-      const destinatari = destinatariSenzaSmtp(credenzialiDaAmbiente());
-      await pubblicaNtfy([prova, ...perEmail(prova, destinatari)]);
+      const destinatari = destinatariViaNtfy(credenzialiDaAmbiente(), gettone);
+      await pubblicaNtfy([prova, ...perEmail(prova, destinatari)], { gettone });
       console.log('Avviso di prova inviato.');
     } catch (errore) {
       const motivo = `avviso di prova fallito: ${errore instanceof Error ? errore.message : String(errore)}`;

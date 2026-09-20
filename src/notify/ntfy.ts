@@ -128,11 +128,21 @@ export function perEmail(messaggio: MessaggioNtfy, destinatari: string[]): Messa
   return destinatari.map((email) => ({ ...messaggio, topic: `${messaggio.topic}-email`, email }));
 }
 
-export async function pubblicaNtfy(messaggi: MessaggioNtfy[], fetchImpl: typeof fetch = fetch): Promise<void> {
+/**
+ * Il gettone e' quello di un account gratuito su ntfy.sh: serve solo per far
+ * spedire le email, perche' ntfy non le manda a chi non ha un account. Le
+ * notifiche sul telefono partono anche senza.
+ */
+export type OpzioniNtfy = { fetch?: typeof fetch; gettone?: string };
+
+export async function pubblicaNtfy(messaggi: MessaggioNtfy[], opzioni: OpzioniNtfy = {}): Promise<void> {
+  const fetchImpl = opzioni.fetch ?? fetch;
+  const intestazioni: Record<string, string> = { 'content-type': 'application/json' };
+  if (opzioni.gettone) intestazioni['authorization'] = `Bearer ${opzioni.gettone}`;
   for (const m of messaggi) {
     const risposta = await fetchImpl(SERVER, {
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
+      headers: intestazioni,
       body: JSON.stringify(m),
       signal: AbortSignal.timeout(20_000),
     });

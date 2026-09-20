@@ -74,14 +74,19 @@ account, avvisa anche delle segnalazioni aperte nel repository.
 Per farla arrivare ad altri membri del gruppo: devono avere un account GitHub e premere **Watch** sul
 repository.
 
-**Notifiche per email, senza configurare un server di posta.** Gli indirizzi che devono ricevere vanno
-nel segreto `EMAIL_DESTINATARI` (**Settings → Secrets and variables → Actions → New repository secret**),
-separati da virgola. Ci pensa ntfy a spedire: arriva un'unica email di riepilogo per controllo, con tutti
-i bandi nuovi, chi presenta, scadenza e link. Serve comunque `NTFY_TOPIC`. Gli indirizzi stanno in un
-segreto e non nel codice perché il repository è pubblico.
+**Notifiche per email passando da ntfy.** Gli indirizzi che devono ricevere vanno nel segreto
+`EMAIL_DESTINATARI` (**Settings → Secrets and variables → Actions → New repository secret**), separati
+da virgola. Arriva un'unica email di riepilogo per controllo, con tutti i bandi nuovi, chi presenta,
+scadenza e link. Gli indirizzi stanno in un segreto e non nel codice perché il repository è pubblico.
 
-La prima volta conviene controllare la cartella spam: il mittente è ntfy, non un indirizzo della
-produzione. Per una posta con mittente vostro c'è il paragrafo qui sotto.
+Non basta il canale: **ntfy rifiuta di spedire email a chi non ha un account** (risponde
+`anonymous email sending is not allowed`). Serve un account gratuito su [ntfy.sh](https://ntfy.sh),
+un token creato da **Account → Access tokens**, e quel token nel segreto `NTFY_TOKEN`. Finché il segreto
+non c'è, l'email non viene nemmeno tentata: restano le notifiche sul telefono, che funzionano senza
+account. Il piano gratuito di ntfy ha un tetto giornaliero di email: per un riepilogo al giorno basta.
+
+Il mittente però è ntfy, non un indirizzo della produzione, quindi la prima volta conviene guardare
+nella posta indesiderata. Per una posta col mittente vostro c'è il paragrafo qui sotto.
 
 ### 4 bis. Email da un indirizzo vostro, facoltativa
 

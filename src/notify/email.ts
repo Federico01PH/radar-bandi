@@ -41,12 +41,13 @@ function mancante(cred: Credenziali): string | null {
 }
 
 /**
- * Gli indirizzi a cui far arrivare l'email per l'altra strada (ntfy), cioe'
- * quando SMTP non e' configurato. Con SMTP acceso nessuno: la riceverebbero
- * due volte.
+ * Gli indirizzi a cui far spedire l'email da ntfy: solo quando SMTP non e'
+ * configurato (altrimenti arriverebbe doppia) e solo se c'e' il gettone di un
+ * account ntfy, perche' ntfy rifiuta le email anonime.
  */
-export function destinatariSenzaSmtp(cred: Credenziali): string[] {
-  return emailConfigurata(cred) ? [] : cred.destinatari;
+export function destinatariViaNtfy(cred: Credenziali, gettone: string): string[] {
+  if (!gettone || emailConfigurata(cred)) return [];
+  return cred.destinatari;
 }
 
 /** true se l'email via SMTP ha tutto cio' che serve per partire. */

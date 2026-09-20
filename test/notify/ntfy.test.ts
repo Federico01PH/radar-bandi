@@ -115,14 +115,14 @@ describe('pubblicaNtfy', () => {
       chiamate.push({ url, corpo: JSON.parse(String(init?.body)) });
       return new Response('{}', { status: 200 });
     }) as unknown as typeof fetch;
-    await pubblicaNtfy(messaggiBandi([bando(), bando({ id: 'b'.repeat(64) })], TOPIC, SITO), finto);
+    await pubblicaNtfy(messaggiBandi([bando(), bando({ id: 'b'.repeat(64) })], TOPIC, SITO), { fetch: finto });
     expect(chiamate).toHaveLength(2);
     expect(chiamate[0]!.url).toBe('https://ntfy.sh/');
   });
 
   it('lancia un errore se il server rifiuta, cosi\' la raccolta lo registra', async () => {
     const finto = (async () => new Response('limite', { status: 429 })) as unknown as typeof fetch;
-    await expect(pubblicaNtfy(messaggiBandi([bando()], TOPIC, SITO), finto)).rejects.toThrow(/429/);
+    await expect(pubblicaNtfy(messaggiBandi([bando()], TOPIC, SITO), { fetch: finto })).rejects.toThrow(/429/);
   });
 });
 
@@ -132,7 +132,29 @@ describe('pubblicaNtfy, quando il server rifiuta', () => {
       '{"code":40020,"http":400,"error":"invalid request: e-mail notifications are not enabled"}',
       { status: 400 },
     )) as unknown as typeof fetch;
-    await expect(pubblicaNtfy(messaggiBandi([bando()], TOPIC, SITO), finto))
+    await expect(pubblicaNtfy(messaggiBandi([bando()], TOPIC, SITO), { fetch: finto }))
       .rejects.toThrow(/e-mail notifications are not enabled/);
+  });
+});
+
+describe('pubblicaNtfy con un accesso ntfy', () => {
+  it('presenta il gettone al server: senza, ntfy rifiuta di spedire le email', async () => {
+    const intestazioni: (HeadersInit | undefined)[] = [];
+    const finto = (async (_url: string, init?: RequestInit) => {
+      intestazioni.push(init?.headers);
+      return new Response('{}', { status: 200 });
+    }) as unknown as typeof fetch;
+    await pubblicaNtfy(messaggiBandi([bando()], TOPIC, SITO), { fetch: finto, gettone: 'tk_abc' });
+    expect(intestazioni[0]).toMatchObject({ authorization: 'Bearer tk_abc' });
+  });
+
+  it('senza gettone non manda nessuna autorizzazione', async () => {
+    const intestazioni: (HeadersInit | undefined)[] = [];
+    const finto = (async (_url: string, init?: RequestInit) => {
+      intestazioni.push(init?.headers);
+      return new Response('{}', { status: 200 });
+    }) as unknown as typeof fetch;
+    await pubblicaNtfy(messaggiBandi([bando()], TOPIC, SITO), { fetch: finto });
+    expect(intestazioni[0]).not.toHaveProperty('authorization');
   });
 });
