@@ -80,10 +80,15 @@ da virgola. Arriva un'unica email di riepilogo per controllo, con tutti i bandi 
 scadenza e link. Gli indirizzi stanno in un segreto e non nel codice perché il repository è pubblico.
 
 Non basta il canale: **ntfy rifiuta di spedire email a chi non ha un account** (risponde
-`anonymous email sending is not allowed`). Serve un account gratuito su [ntfy.sh](https://ntfy.sh),
-un token creato da **Account → Access tokens**, e quel token nel segreto `NTFY_TOKEN`. Finché il segreto
-non c'è, l'email non viene nemmeno tentata: restano le notifiche sul telefono, che funzionano senza
-account. Il piano gratuito di ntfy ha un tetto giornaliero di email: per un riepilogo al giorno basta.
+`anonymous email sending is not allowed`). Serve un account gratuito su [ntfy.sh](https://ntfy.sh)
+con **l'indirizzo email verificato** nella sezione Account, un token creato da **Account → Access
+tokens**, e quel token nel segreto `NTFY_TOKEN`. Finché il segreto non c'è, l'email non viene nemmeno
+tentata: restano le notifiche sul telefono, che funzionano senza account.
+
+**Il piano gratuito dà cinque email al giorno in tutto**, una per destinatario: con quattro indirizzi
+ci sta un riepilogo al giorno e basta. Per questo l'allarme sulle fonti mute non viaggia per email, ma
+solo come notifica sul telefono e segnalazione GitHub. Se un giorno servissero più email, il piano
+Supporter di ntfy ne dà 50 al giorno, oppure si passa a SMTP col paragrafo qui sotto, che non ha tetti.
 
 Il mittente però è ntfy, non un indirizzo della produzione, quindi la prima volta conviene guardare
 nella posta indesiderata. Per una posta col mittente vostro c'è il paragrafo qui sotto.

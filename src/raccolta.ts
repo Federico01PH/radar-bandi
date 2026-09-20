@@ -136,8 +136,9 @@ function notificheReali(): Notifiche {
     },
     async inviaAllarmeFonti(fonti) {
       if (fonti.length === 0) return { inviata: false, motivo: 'nessuna fonte sospetta' };
-      const allarme = messaggioAllarme(fonti, topic, indirizzoSito());
-      await pubblicaNtfy([allarme, ...perEmail(allarme, destinatari)], { gettone });
+      // L'allarme resta sul telefono e nella segnalazione GitHub: il piano
+      // gratuito di ntfy da' cinque email al giorno, e vanno tenute per i bandi.
+      await pubblicaNtfy([messaggioAllarme(fonti, topic, indirizzoSito())], { gettone });
       return { inviata: true, motivo: null };
     },
   };
