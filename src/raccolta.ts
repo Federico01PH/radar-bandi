@@ -277,7 +277,9 @@ if (eseguitoDirettamente) {
       await pubblicaNtfy([prova, ...perEmail(prova, destinatari)]);
       console.log('Avviso di prova inviato.');
     } catch (errore) {
-      esito.errori.push(`avviso di prova fallito: ${errore instanceof Error ? errore.message : String(errore)}`);
+      const motivo = `avviso di prova fallito: ${errore instanceof Error ? errore.message : String(errore)}`;
+      esito.errori.push(motivo);
+      console.error(`ERRORE: ${motivo}`);
     }
   }
 
