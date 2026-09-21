@@ -103,6 +103,14 @@
       "durataMs": 2233,
       "errore": null,
       "quando": "2026-09-20T20:54:00.552Z"
+    },
+    {
+      "fonteId": "mic",
+      "ok": true,
+      "risultati": 7,
+      "durataMs": 2364,
+      "errore": null,
+      "quando": "2026-09-21T10:24:08.207Z"
     }
   ],
   "infobandi": [
@@ -209,6 +217,14 @@
       "durataMs": 1425,
       "errore": null,
       "quando": "2026-09-20T20:54:00.552Z"
+    },
+    {
+      "fonteId": "infobandi",
+      "ok": true,
+      "risultati": 6,
+      "durataMs": 1328,
+      "errore": null,
+      "quando": "2026-09-21T10:24:08.207Z"
     }
   ],
   "ctvbiella": [
@@ -315,6 +331,14 @@
       "durataMs": 1518,
       "errore": null,
       "quando": "2026-09-20T20:54:00.552Z"
+    },
+    {
+      "fonteId": "ctvbiella",
+      "ok": true,
+      "risultati": 3,
+      "durataMs": 1402,
+      "errore": null,
+      "quando": "2026-09-21T10:24:08.207Z"
     }
   ],
   "piemonte": [
@@ -421,6 +445,14 @@
       "durataMs": 1850,
       "errore": null,
       "quando": "2026-09-20T20:54:00.552Z"
+    },
+    {
+      "fonteId": "piemonte",
+      "ok": true,
+      "risultati": 10,
+      "durataMs": 1931,
+      "errore": null,
+      "quando": "2026-09-21T10:24:08.207Z"
     }
   ],
   "crt": [
@@ -527,6 +559,14 @@
       "durataMs": 2489,
       "errore": null,
       "quando": "2026-09-20T20:54:00.552Z"
+    },
+    {
+      "fonteId": "crt",
+      "ok": true,
+      "risultati": 4,
+      "durataMs": 2205,
+      "errore": null,
+      "quando": "2026-09-21T10:24:08.207Z"
     }
   ],
   "compagniasanpaolo": [
@@ -633,6 +673,14 @@
       "durataMs": 2448,
       "errore": null,
       "quando": "2026-09-20T20:54:00.552Z"
+    },
+    {
+      "fonteId": "compagniasanpaolo",
+      "ok": true,
+      "risultati": 3,
+      "durataMs": 2310,
+      "errore": null,
+      "quando": "2026-09-21T10:24:08.207Z"
     }
   ],
   "ang": [
@@ -739,6 +787,14 @@
       "durataMs": 1405,
       "errore": null,
       "quando": "2026-09-20T20:54:00.552Z"
+    },
+    {
+      "fonteId": "ang",
+      "ok": true,
+      "risultati": 2,
+      "durataMs": 3704,
+      "errore": null,
+      "quando": "2026-09-21T10:24:08.207Z"
     }
   ]
 }
