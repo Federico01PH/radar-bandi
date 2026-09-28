@@ -1,5 +1,31 @@
 [
   {
+    "id": "28a09699282608b3a82566c544b33878832bcffc40b9fa5189649aafc0180097",
+    "titolo": "All’Assemblea ANCI Piemonte la presentazione della Scuola di amministrazione condivisa",
+    "ente": "Centro Territoriale per il Volontariato",
+    "livello": "terzosettore",
+    "tipo": "bando",
+    "corsie": [
+      "giovani"
+    ],
+    "dataPubblicazione": "2026-09-28T12:00:07.000Z",
+    "dataIncerta": false,
+    "scadenza": null,
+    "importo": null,
+    "descrizioneBreve": "CSVnet Piemonte protagonista del panel dedicato alla collaborazione tra Pubblica Amministrazione e Terzo settore L’amministrazione condivisa come strumento concreto per costruire nuove modalità di collaborazione tra Pubblica Amministrazione e Terzo settore sarà al centro della partecipazione di CSVnet Piemonte alla 44ª Assemblea annuale di ANCI Piemonte, in programma sabato 3 ottobre al Teatro Soc",
+    "requisiti": [],
+    "chiPuoPartecipare": null,
+    "ammissibilita": "ignota",
+    "entePropostoId": null,
+    "motivoAmmissibilita": null,
+    "pertinenza": 11,
+    "adattoAllaSerie": false,
+    "url": "https://www.centroterritorialevolontariato.org/allassemblea-anci-piemonte-la-presentazione-della-scuola-di-amministrazione-condivisa/",
+    "fonteId": "ctvbiella",
+    "vistoIl": "2026-09-28T13:06:17.594Z",
+    "salvato": false
+  },
+  {
     "id": "576258c09f3a65f1fb8b6a3b9afe1c52faaf22656e6b6b5b3475cc20487659dd",
     "titolo": "CSR 2023-2027. Partecipazione a regimi di qualità (SRG03)",
     "ente": "Regione Piemonte",
