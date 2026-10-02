@@ -215,6 +215,14 @@
       "durataMs": 2584,
       "errore": null,
       "quando": "2026-10-01T11:22:39.048Z"
+    },
+    {
+      "fonteId": "mic",
+      "ok": true,
+      "risultati": 10,
+      "durataMs": 2064,
+      "errore": null,
+      "quando": "2026-10-02T10:52:51.247Z"
     }
   ],
   "infobandi": [
@@ -433,6 +441,14 @@
       "durataMs": 1322,
       "errore": null,
       "quando": "2026-10-01T11:22:39.048Z"
+    },
+    {
+      "fonteId": "infobandi",
+      "ok": true,
+      "risultati": 6,
+      "durataMs": 1112,
+      "errore": null,
+      "quando": "2026-10-02T10:52:51.247Z"
     }
   ],
   "ctvbiella": [
@@ -651,6 +667,14 @@
       "durataMs": 1462,
       "errore": null,
       "quando": "2026-10-01T11:22:39.048Z"
+    },
+    {
+      "fonteId": "ctvbiella",
+      "ok": false,
+      "risultati": 0,
+      "durataMs": 1192,
+      "errore": "Unexpected close tag\nLine: 92\nColumn: 7\nChar: >",
+      "quando": "2026-10-02T10:52:51.247Z"
     }
   ],
   "piemonte": [
@@ -869,6 +893,14 @@
       "durataMs": 1367,
       "errore": null,
       "quando": "2026-10-01T11:22:39.048Z"
+    },
+    {
+      "fonteId": "piemonte",
+      "ok": false,
+      "risultati": 0,
+      "durataMs": 1028,
+      "errore": "fetch failed",
+      "quando": "2026-10-02T10:52:51.247Z"
     }
   ],
   "crt": [
@@ -1087,6 +1119,14 @@
       "durataMs": 1920,
       "errore": null,
       "quando": "2026-10-01T11:22:39.048Z"
+    },
+    {
+      "fonteId": "crt",
+      "ok": true,
+      "risultati": 1,
+      "durataMs": 1498,
+      "errore": null,
+      "quando": "2026-10-02T10:52:51.247Z"
     }
   ],
   "compagniasanpaolo": [
@@ -1305,6 +1345,14 @@
       "durataMs": 2365,
       "errore": null,
       "quando": "2026-10-01T11:22:39.048Z"
+    },
+    {
+      "fonteId": "compagniasanpaolo",
+      "ok": true,
+      "risultati": 9,
+      "durataMs": 2190,
+      "errore": null,
+      "quando": "2026-10-02T10:52:51.247Z"
     }
   ],
   "ang": [
@@ -1523,6 +1571,14 @@
       "durataMs": 1352,
       "errore": null,
       "quando": "2026-10-01T11:22:39.048Z"
+    },
+    {
+      "fonteId": "ang",
+      "ok": false,
+      "risultati": 0,
+      "durataMs": 534,
+      "errore": "fetch failed",
+      "quando": "2026-10-02T10:52:51.247Z"
     }
   ]
 }
