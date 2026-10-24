@@ -264,19 +264,19 @@
     "livello": "fondazione",
     "tipo": "bando",
     "corsie": [
-      "audiovisiva"
+      "giovani"
     ],
     "dataPubblicazione": "2026-10-21T15:45:33.000Z",
     "dataIncerta": false,
     "scadenza": null,
     "importo": null,
-    "descrizioneBreve": "La Fondazione apre un nuovo spazio digitale per condividere evidenze e riflessioni metodologiche a supporto della filantropia orientata al bene comune. La prima pubblicazione della collana Learning Experience - Spazi di partecipazione - presenta i risultati del bando SPACE e offre strumenti utili a comprendere e valorizzare l’impatto degli spazi civici e culturali.",
+    "descrizioneBreve": "La ricerca-azione condotta nelle scuole primarie di Piemonte e Valle d’Aosta analizza gli effetti della pratica orchestrale sulle competenze musicali, le relazioni tra bambini e bambine e la motivazione allo studio, mettendo in luce il ruolo delle modalità di attuazione del progetto.",
     "requisiti": [],
     "chiPuoPartecipare": null,
     "ammissibilita": "ignota",
     "entePropostoId": null,
     "motivoAmmissibilita": null,
-    "pertinenza": 3,
+    "pertinenza": 6,
     "adattoAllaSerie": false,
     "url": "https://www.compagniadisanpaolo.it/it/news/pubblicato-il-documento-di-valutazione-del-progetto-consonanze/",
     "fonteId": "compagniasanpaolo",
