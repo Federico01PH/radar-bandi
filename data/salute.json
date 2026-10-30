@@ -4,14 +4,6 @@
       "fonteId": "mic",
       "ok": true,
       "risultati": 8,
-      "durataMs": 3095,
-      "errore": null,
-      "quando": "2026-10-05T12:02:34.283Z"
-    },
-    {
-      "fonteId": "mic",
-      "ok": true,
-      "risultati": 8,
       "durataMs": 2864,
       "errore": null,
       "quando": "2026-10-05T13:48:57.625Z"
@@ -239,17 +231,17 @@
       "durataMs": 893,
       "errore": null,
       "quando": "2026-10-29T11:18:04.897Z"
+    },
+    {
+      "fonteId": "mic",
+      "ok": true,
+      "risultati": 1,
+      "durataMs": 1197,
+      "errore": null,
+      "quando": "2026-10-30T11:10:54.815Z"
     }
   ],
   "infobandi": [
-    {
-      "fonteId": "infobandi",
-      "ok": true,
-      "risultati": 6,
-      "durataMs": 1212,
-      "errore": null,
-      "quando": "2026-10-05T12:02:34.283Z"
-    },
     {
       "fonteId": "infobandi",
       "ok": true,
@@ -481,17 +473,17 @@
       "durataMs": 864,
       "errore": null,
       "quando": "2026-10-29T11:18:04.897Z"
+    },
+    {
+      "fonteId": "infobandi",
+      "ok": true,
+      "risultati": 0,
+      "durataMs": 1023,
+      "errore": null,
+      "quando": "2026-10-30T11:10:54.815Z"
     }
   ],
   "ctvbiella": [
-    {
-      "fonteId": "ctvbiella",
-      "ok": true,
-      "risultati": 3,
-      "durataMs": 1375,
-      "errore": null,
-      "quando": "2026-10-05T12:02:34.283Z"
-    },
     {
       "fonteId": "ctvbiella",
       "ok": true,
@@ -723,17 +715,17 @@
       "durataMs": 1204,
       "errore": null,
       "quando": "2026-10-29T11:18:04.897Z"
+    },
+    {
+      "fonteId": "ctvbiella",
+      "ok": true,
+      "risultati": 6,
+      "durataMs": 1300,
+      "errore": null,
+      "quando": "2026-10-30T11:10:54.815Z"
     }
   ],
   "piemonte": [
-    {
-      "fonteId": "piemonte",
-      "ok": true,
-      "risultati": 10,
-      "durataMs": 2114,
-      "errore": null,
-      "quando": "2026-10-05T12:02:34.283Z"
-    },
     {
       "fonteId": "piemonte",
       "ok": true,
@@ -965,17 +957,17 @@
       "durataMs": 10459,
       "errore": "fetch failed",
       "quando": "2026-10-29T11:18:04.897Z"
+    },
+    {
+      "fonteId": "piemonte",
+      "ok": false,
+      "risultati": 0,
+      "durataMs": 10462,
+      "errore": "fetch failed",
+      "quando": "2026-10-30T11:10:54.815Z"
     }
   ],
   "crt": [
-    {
-      "fonteId": "crt",
-      "ok": true,
-      "risultati": 2,
-      "durataMs": 2042,
-      "errore": null,
-      "quando": "2026-10-05T12:02:34.283Z"
-    },
     {
       "fonteId": "crt",
       "ok": true,
@@ -1207,17 +1199,17 @@
       "durataMs": 2204,
       "errore": null,
       "quando": "2026-10-29T11:18:04.897Z"
+    },
+    {
+      "fonteId": "crt",
+      "ok": true,
+      "risultati": 3,
+      "durataMs": 2154,
+      "errore": null,
+      "quando": "2026-10-30T11:10:54.815Z"
     }
   ],
   "compagniasanpaolo": [
-    {
-      "fonteId": "compagniasanpaolo",
-      "ok": true,
-      "risultati": 9,
-      "durataMs": 3591,
-      "errore": null,
-      "quando": "2026-10-05T12:02:34.283Z"
-    },
     {
       "fonteId": "compagniasanpaolo",
       "ok": true,
@@ -1449,17 +1441,17 @@
       "durataMs": 2602,
       "errore": null,
       "quando": "2026-10-29T11:18:04.897Z"
+    },
+    {
+      "fonteId": "compagniasanpaolo",
+      "ok": true,
+      "risultati": 0,
+      "durataMs": 3462,
+      "errore": null,
+      "quando": "2026-10-30T11:10:54.815Z"
     }
   ],
   "ang": [
-    {
-      "fonteId": "ang",
-      "ok": true,
-      "risultati": 1,
-      "durataMs": 1333,
-      "errore": null,
-      "quando": "2026-10-05T12:02:34.283Z"
-    },
     {
       "fonteId": "ang",
       "ok": true,
@@ -1691,6 +1683,14 @@
       "durataMs": 820,
       "errore": null,
       "quando": "2026-10-29T11:18:04.897Z"
+    },
+    {
+      "fonteId": "ang",
+      "ok": true,
+      "risultati": 0,
+      "durataMs": 791,
+      "errore": null,
+      "quando": "2026-10-30T11:10:54.815Z"
     }
   ]
 }
