@@ -1,5 +1,31 @@
 [
   {
+    "id": "531c337d342a910e3e14a2176eef3bfb99af7e0d6976f68ed63fec4d78e3f17e",
+    "titolo": "20 borse di studio per giovani imprenditori: il 25 novembre Info Day alle OGR Tech di Torino",
+    "ente": "Fondazione CRT",
+    "livello": "fondazione",
+    "tipo": "bando",
+    "corsie": [
+      "giovani"
+    ],
+    "dataPubblicazione": "2026-11-09T12:04:30.000Z",
+    "dataIncerta": false,
+    "scadenza": null,
+    "importo": null,
+    "descrizioneBreve": "Un’opportunità di formazione internazionale con borse di studio fino al 95% dei costi, sostenute da Fondazione Sviluppo e Crescita CRT. Il 25 novembre alle OGR Tech un appuntamento dedicato per scoprire il Bachelor GIOYA-UniTo, approfondire il programma e conoscere le modalità di candidatura.",
+    "requisiti": [],
+    "chiPuoPartecipare": null,
+    "ammissibilita": "ignota",
+    "entePropostoId": null,
+    "motivoAmmissibilita": null,
+    "pertinenza": 8,
+    "adattoAllaSerie": false,
+    "url": "https://www.fondazionecrt.it/20-borse-di-studio-per-giovani-imprenditori-a-torino-il-bachelor-internazionale-presentato-alle-nazioni-unite/",
+    "fonteId": "crt",
+    "vistoIl": "2026-11-09T13:37:18.157Z",
+    "salvato": false
+  },
+  {
     "id": "e419c70c04a4e62fca6f5a48bef43b8feee37f271b85463a4fb66de74c31e5be",
     "titolo": "Culture Moves Europe: bando per la mobilità individuale di artisti e professionisti della cultura",
     "ente": "CSVnet",
@@ -584,7 +610,7 @@
     "ammissibilita": "ignota",
     "entePropostoId": null,
     "motivoAmmissibilita": null,
-    "pertinenza": 11,
+    "pertinenza": 6,
     "adattoAllaSerie": false,
     "url": "https://infobandi.csvnet.it/bando-leggimi-0-6-2026/?utm_source=rss&utm_medium=rss&utm_campaign=bando-leggimi-0-6-2026",
     "fonteId": "infobandi",
