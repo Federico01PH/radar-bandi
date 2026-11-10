@@ -1,5 +1,88 @@
 [
   {
+    "id": "98d3a749eb387e84a2f3e52d53f5561e12ea2f3efb9ceda3546db4cf7368f766",
+    "titolo": "RAY Triangular Summit | Dublino, 21-23 ottobre 2026",
+    "ente": "Agenzia Nazionale Giovani",
+    "livello": "statale",
+    "tipo": "bando",
+    "corsie": [
+      "giovani"
+    ],
+    "dataPubblicazione": "2026-11-10T13:11:17.000Z",
+    "dataIncerta": false,
+    "scadenza": null,
+    "importo": null,
+    "descrizioneBreve": "Dal 21 al 23 ottobre 2026, il RAY Triangular Summit ha riunito 175 partecipanti provenienti dai settori delle politiche giovanili, della pratica e della ricerca. Il Summit è stato co-organizzato dalle Agenzie nazionali dei Programmi europei per i giovani di Irlanda (Paese ospitante) e Finlandia (RAY), insieme a quelle di Austria, Belgio (Comunità fiamminga), Repubblica […]",
+    "requisiti": [],
+    "chiPuoPartecipare": null,
+    "ammissibilita": "ignota",
+    "entePropostoId": null,
+    "motivoAmmissibilita": null,
+    "pertinenza": 8,
+    "adattoAllaSerie": false,
+    "url": "https://agenziagioventu.gov.it/ray-triangular-summit-dublino-21-23-ottobre-2026/",
+    "fonteId": "ang",
+    "vistoIl": "2026-11-10T13:15:21.938Z",
+    "salvato": false
+  },
+  {
+    "id": "2077816e936cf4752a96e813b1d63f0ef842babe078cfc9e954bb3b8c8e84481",
+    "titolo": "Erase Indifference Challenge 2026",
+    "ente": "CSVnet",
+    "livello": "terzosettore",
+    "tipo": "bando",
+    "corsie": [
+      "giovani"
+    ],
+    "dataPubblicazione": "2026-11-10T12:24:27.000Z",
+    "dataIncerta": false,
+    "scadenza": "2026-12-04",
+    "importo": null,
+    "descrizioneBreve": "Le candidature sono aperte a iniziative già realizzate che abbiano dimostrato risultati concreti nel contrastare l’indifferenza di fronte a diverse forme di discriminazione, tra cui razzismo, antisemitismo, discriminazione nei confronti di migranti e rifugiati, misoginia e discriminazione delle persone LGBTQ+, incoraggiando le persone a non rimanere spettatori passivi, ma a reagire attivamente di ",
+    "requisiti": [
+      "Chi puo' partecipare: Possono partecipare al premio organizzazioni senza scopo di lucro ed enti pubblici, nonché imprese con iniziative nell’ambito della responsabilità sociale d’impresa, legalmente registrati in qualsiasi Paese del mondo.",
+      "Come si presenta: Le candidature devono essere presentate in lingua inglese tramite l’apposito modulo online entro le 23:59 del 4 dicembre 2026."
+    ],
+    "chiPuoPartecipare": "Possono partecipare al premio organizzazioni senza scopo di lucro ed enti pubblici, nonché imprese con iniziative nell’ambito della responsabilità sociale d’impresa, legalmente registrati in qualsiasi Paese del mondo.",
+    "ammissibilita": "verde",
+    "entePropostoId": "storiedipiazza",
+    "motivoAmmissibilita": "Possono partecipare al premio organizzazioni senza scopo di lucro ed enti pubblici, nonché imprese con iniziative nell’ambito della responsabilità sociale d’impresa, legalmente registrati in qualsiasi Paese del mondo.",
+    "pertinenza": 6,
+    "adattoAllaSerie": true,
+    "url": "https://infobandi.csvnet.it/erase-indifference-challenge-2026/?utm_source=rss&utm_medium=rss&utm_campaign=erase-indifference-challenge-2026",
+    "fonteId": "infobandi",
+    "vistoIl": "2026-11-10T13:15:21.938Z",
+    "salvato": false,
+    "approfonditoIl": "2026-11-10T13:15:21.938Z"
+  },
+  {
+    "id": "ab65d37eb319eea30eed4e468c0c56e6c456d1c9f5b8c427e586ed692e823a3d",
+    "titolo": "Women & the City 2026: a Torino il festival dedicato all’empowerment femminile e alla parità di genere",
+    "ente": "Fondazione CRT",
+    "livello": "fondazione",
+    "tipo": "bando",
+    "corsie": [
+      "audiovisiva",
+      "giovani"
+    ],
+    "dataPubblicazione": "2026-11-10T10:22:12.000Z",
+    "dataIncerta": false,
+    "scadenza": null,
+    "importo": null,
+    "descrizioneBreve": "Fino al 18 novembre incontri, dibattiti e appuntamenti gratuiti per promuovere una società più equa e inclusiva. Anche Fondazione CRT tra i sostenitori dell'iniziativa.",
+    "requisiti": [],
+    "chiPuoPartecipare": null,
+    "ammissibilita": "ignota",
+    "entePropostoId": null,
+    "motivoAmmissibilita": null,
+    "pertinenza": 11,
+    "adattoAllaSerie": false,
+    "url": "https://www.fondazionecrt.it/women-the-city-2026-a-torino-il-festival-dedicato-allempowerment-femminile-e-alla-parita-di-genere/",
+    "fonteId": "crt",
+    "vistoIl": "2026-11-10T13:15:21.938Z",
+    "salvato": false
+  },
+  {
     "id": "34f26bf574d9c2fa843786505b4b2cfb2845faf2bf8fbc7d8c77e4663c93a796",
     "titolo": "Evento: “Il lavoro alla prova dei fatti”",
     "ente": "Compagnia di San Paolo",
@@ -21,6 +104,33 @@
     "url": "https://www.compagniadisanpaolo.it/it/news/evento-il-lavoro-alla-prova-dei-fatti/",
     "fonteId": "compagniasanpaolo",
     "vistoIl": "2026-11-09T15:24:47.697Z",
+    "salvato": false
+  },
+  {
+    "id": "d2d16f29ea649281b52a6279e642a6bc4bba1d36d8912c1b33b3095c50763e41",
+    "titolo": "Bando “Fabbrica – Spazi Civici per la Gioventù”",
+    "ente": "CSVnet",
+    "livello": "terzosettore",
+    "tipo": "bando",
+    "corsie": [
+      "audiovisiva",
+      "giovani"
+    ],
+    "dataPubblicazione": "2026-11-09T14:49:33.000Z",
+    "dataIncerta": false,
+    "scadenza": null,
+    "importo": null,
+    "descrizioneBreve": "Il bando sostiene la creazione e il rafforzamento di Spazi Civici aperti, accessibili e multifunzionali, attraverso progetti presentati da ASD/SSD ed ETS in partenariato, dedicati ai giovani tra i 14 e i 35 anni, che integrano attività sportive, culturali, educative e formative per promuovere il benessere psicofisico, l’inclusione sociale, il protagonismo giovanile, la cittadinanza attiva e lo svi",
+    "requisiti": [],
+    "chiPuoPartecipare": null,
+    "ammissibilita": "ignota",
+    "entePropostoId": null,
+    "motivoAmmissibilita": null,
+    "pertinenza": 16,
+    "adattoAllaSerie": false,
+    "url": "https://infobandi.csvnet.it/bando-fabbrica-spazi-civici-per-la-gioventu/?utm_source=rss&utm_medium=rss&utm_campaign=bando-fabbrica-spazi-civici-per-la-gioventu",
+    "fonteId": "infobandi",
+    "vistoIl": "2026-11-10T13:15:21.938Z",
     "salvato": false
   },
   {
