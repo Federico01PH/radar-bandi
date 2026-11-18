@@ -1,5 +1,58 @@
 [
   {
+    "id": "1c341b26ca276df7c96acb49c46b791582f528101bc5b47f7370b84d578d0870",
+    "titolo": "Bando 2027 del “Fondo Nazionale per la rievocazione storica”",
+    "ente": "CSVnet",
+    "livello": "terzosettore",
+    "tipo": "bando",
+    "corsie": [],
+    "dataPubblicazione": "2026-11-18T14:40:38.000Z",
+    "dataIncerta": false,
+    "scadenza": null,
+    "importo": null,
+    "descrizioneBreve": "Il Fondo, con una dotazione di 2 milioni di euro, finanzia manifestazioni che ricostruiscono eventi storici significativi presentati da enti locali, soggetti pubblici e enti non profit di rievocazione storica.",
+    "requisiti": [],
+    "chiPuoPartecipare": null,
+    "ammissibilita": "ignota",
+    "entePropostoId": null,
+    "motivoAmmissibilita": null,
+    "pertinenza": 0,
+    "adattoAllaSerie": false,
+    "url": "https://infobandi.csvnet.it/bando-2027-del-fondo-nazionale-per-la-rievocazione-storica/?utm_source=rss&utm_medium=rss&utm_campaign=bando-2027-del-fondo-nazionale-per-la-rievocazione-storica",
+    "fonteId": "infobandi",
+    "vistoIl": "2026-11-18T15:13:53.212Z",
+    "salvato": false
+  },
+  {
+    "id": "316338eb3aef4d3adaef12b39c7ebfe68001839e121d76b25487bc3fc8d7c56c",
+    "titolo": "Call for ideas 2026 di Fondazione Allianz Umana Mente",
+    "ente": "CSVnet",
+    "livello": "terzosettore",
+    "tipo": "bando",
+    "corsie": [
+      "audiovisiva",
+      "giovani"
+    ],
+    "dataPubblicazione": "2026-11-18T14:32:00.000Z",
+    "dataIncerta": false,
+    "scadenza": null,
+    "importo": null,
+    "descrizioneBreve": "Sostegno a progetti promossi da enti non profit e del Terzo settore, da realizzare in Italia, per favorire l'inclusione di persone con disabilità e di bambini e giovani in condizioni di fragilità o svantaggio. Le iniziative possono riguardare attività ricreative e di volontariato, inserimento lavorativo, sport inclusivo, arte, cultura e sensibilizzazione.",
+    "requisiti": [
+      "Cosa finanzia: Sostegno a progetti promossi da enti non profit e del Terzo settore, da realizzare in Italia, per favorire l'inclusione di persone con disabilità e di bambini e giovani in condizioni di fragilità o svantaggio."
+    ],
+    "chiPuoPartecipare": null,
+    "ammissibilita": "ignota",
+    "entePropostoId": null,
+    "motivoAmmissibilita": null,
+    "pertinenza": 27,
+    "adattoAllaSerie": false,
+    "url": "https://infobandi.csvnet.it/call-for-ideas-2026-di-fondazione-allianz-umanamente/?utm_source=rss&utm_medium=rss&utm_campaign=call-for-ideas-2026-di-fondazione-allianz-umanamente",
+    "fonteId": "infobandi",
+    "vistoIl": "2026-11-18T15:13:53.212Z",
+    "salvato": false
+  },
+  {
     "id": "f25f517f7e121396d935aeb1958f67c56b4670d1eee7f1c139b1a67d9e13aa59",
     "titolo": "La magia del dono 2026",
     "ente": "Centro Territoriale per il Volontariato",
@@ -21,6 +74,32 @@
     "url": "https://www.centroterritorialevolontariato.org/la-magia-del-dono-2026/",
     "fonteId": "ctvbiella",
     "vistoIl": "2026-11-18T13:39:35.104Z",
+    "salvato": false
+  },
+  {
+    "id": "2db448d890d9f08306654ba772e394ba4c156f5dcd9c0a864c65fad5ee7af257",
+    "titolo": "Le persone al centro: Fondazione CRT avvia il doppio percorso di certificazione di Parità di Genere e Responsabilità Sociale",
+    "ente": "Fondazione CRT",
+    "livello": "fondazione",
+    "tipo": "bando",
+    "corsie": [
+      "giovani"
+    ],
+    "dataPubblicazione": "2026-11-18T11:52:36.000Z",
+    "dataIncerta": false,
+    "scadenza": null,
+    "importo": null,
+    "descrizioneBreve": "Intrapresi i percorsi di certificazione UNI/PdR 125:2022 e SA8000:2026 per promuovere equità, benessere e valore condiviso.",
+    "requisiti": [],
+    "chiPuoPartecipare": null,
+    "ammissibilita": "ignota",
+    "entePropostoId": null,
+    "motivoAmmissibilita": null,
+    "pertinenza": 6,
+    "adattoAllaSerie": false,
+    "url": "https://www.fondazionecrt.it/la-fondazione-crt-avvia-il-percorso-per-le-certificazioni-uni-pdr-1252022-e-pas240002022/",
+    "fonteId": "crt",
+    "vistoIl": "2026-11-18T15:13:53.212Z",
     "salvato": false
   },
   {
