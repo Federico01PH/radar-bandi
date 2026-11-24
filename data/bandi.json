@@ -1,5 +1,32 @@
 [
   {
+    "id": "2bbf9bf7dd030d875cfd22d43289c70e32de585604cb3e49fff7d6ea80c749c5",
+    "titolo": "Transizione ecologica del Terzo Settore: al via la Fase III di TERE",
+    "ente": "Compagnia di San Paolo",
+    "livello": "fondazione",
+    "tipo": "bando",
+    "corsie": [
+      "audiovisiva",
+      "giovani"
+    ],
+    "dataPubblicazione": "2026-11-24T16:29:44.000Z",
+    "dataIncerta": false,
+    "scadenza": null,
+    "importo": null,
+    "descrizioneBreve": "Dieci organizzazioni culturali e sociali di Piemonte e Liguria avviano la realizzazione degli interventi individuati nel percorso di accompagnamento promosso dalla Fondazione Compagnia di San Paolo con Fondazione Santagata. Proseguono le attività di sviluppo delle competenze e collaborazione della rete.",
+    "requisiti": [],
+    "chiPuoPartecipare": null,
+    "ammissibilita": "ignota",
+    "entePropostoId": null,
+    "motivoAmmissibilita": null,
+    "pertinenza": 8,
+    "adattoAllaSerie": false,
+    "url": "https://www.compagniadisanpaolo.it/it/news/transizione-ecologica-del-terzo-settore-al-via-la-fase-iii-di-tere/",
+    "fonteId": "compagniasanpaolo",
+    "vistoIl": "2026-11-24T17:03:47.040Z",
+    "salvato": false
+  },
+  {
     "id": "77d59af354b4835909cfdeeb30bd0add67bc39524ae5df26704485b9963c1617",
     "titolo": "Premio Edufin Index 2026/2027 | Donne che contano",
     "ente": "CSVnet",
