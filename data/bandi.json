@@ -1,5 +1,31 @@
 [
   {
+    "id": "7f699a8cfc5c0197b6ed72981f46fce745aae28264a277a8a666a65a4b1f5f45",
+    "titolo": "Palazzo Madama: concluso il restauro integrale della facciata juvarriana",
+    "ente": "Fondazione CRT",
+    "livello": "fondazione",
+    "tipo": "bando",
+    "corsie": [
+      "audiovisiva"
+    ],
+    "dataPubblicazione": "2026-11-25T15:36:51.000Z",
+    "dataIncerta": false,
+    "scadenza": null,
+    "importo": null,
+    "descrizioneBreve": "Con lo smontaggio dei ponteggi Torino ritrova, in tutto il suo splendore, uno dei suoi monumenti più rappresentativi. La Fondazione CRT ha stanziato per l'intera operazione di recupero 6 milioni di euro, pari a circa la metà dell'ammontare complessivo (12,5 milioni).",
+    "requisiti": [],
+    "chiPuoPartecipare": null,
+    "ammissibilita": "ignota",
+    "entePropostoId": null,
+    "motivoAmmissibilita": null,
+    "pertinenza": 5,
+    "adattoAllaSerie": false,
+    "url": "https://www.fondazionecrt.it/palazzo-madama-concluso-il-restauro-integrale-della-facciata-juvarriana/",
+    "fonteId": "crt",
+    "vistoIl": "2026-11-25T16:53:14.172Z",
+    "salvato": false
+  },
+  {
     "id": "ec37b521a6c86931679b2184c9bd800a36a7e9060de017c8dabac2fa670ce2aa",
     "titolo": "Prevenzione e contrasto a bullismo e cyberbullismo - a.s. 2026-2027",
     "ente": "Regione Piemonte",
@@ -9,7 +35,7 @@
       "audiovisiva",
       "giovani"
     ],
-    "dataPubblicazione": "2026-11-25T15:17:54.000Z",
+    "dataPubblicazione": "2026-11-25T15:20:25.000Z",
     "dataIncerta": false,
     "scadenza": "2026-11-19",
     "importo": null,
@@ -1290,9 +1316,7 @@
     "scadenza": null,
     "importo": null,
     "descrizioneBreve": "Pubblicate le istruzioni per presentare domanda di finanziamento per progetti in Italia e all’estero nel prossimo anno. Le organizzazioni senza finalità di lucro possono proporre interventi sociali e sanitari, iniziative educative e culturali, azioni di integrazione, programmi di sviluppo e attività di risposta alle emergenze umanitarie, ambientali e climatiche. Le domande potranno essere presenta",
-    "requisiti": [
-      "Come si presenta: Le domande potranno essere presentate dal 7 gennaio 2027 tramite la piattaforma Juno."
-    ],
+    "requisiti": [],
     "chiPuoPartecipare": null,
     "ammissibilita": "ignota",
     "entePropostoId": null,
